@@ -68,7 +68,7 @@ public class WindowManager {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Game.saveGame();
+					SaveLoad.saveGame();
 				}catch(Exception ex) {
 					ex.printStackTrace();
 				}
@@ -84,7 +84,7 @@ public class WindowManager {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Game.loadGame();
+					SaveLoad.loadGame();
 				}catch(Exception ex) {
 					ex.printStackTrace();
 				}
