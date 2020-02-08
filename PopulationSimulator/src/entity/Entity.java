@@ -1,5 +1,7 @@
 package entity;
 
+import java.awt.Graphics;
+
 import math.*;
 
 public abstract class Entity {
@@ -10,10 +12,30 @@ public abstract class Entity {
 		return this.pos;
 	}
 	
+	public float getPos(int i) {
+		return this.pos.get(i);
+	}
+	
 	public Vector getVel() {
 		return this.vel;
 	}
 	
+	public float getVel(int i) {
+		return this.vel.get(i);
+	}
+	
+	public void setPos(Vector pos) {
+		this.pos = pos;
+	}
+	
+	public void setPos(int i, float pos) {
+		this.pos.set(i, pos);
+	}
+
+	public void setVel(int i, float vel) {
+		this.vel.set(i, vel);
+	}
+
 	public abstract void render(Graphics g);
 
 }
