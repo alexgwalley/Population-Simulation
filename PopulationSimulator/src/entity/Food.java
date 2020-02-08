@@ -7,8 +7,8 @@ import main.Game;
 import math.*;
 
 public class Food extends Entity {
-	
 	private String species;
+	private int food;
 	
 	public Food(Vector pos) {
 		setPos(pos);
@@ -18,6 +18,11 @@ public class Food extends Entity {
 	public Food(Vector pos, String spec) {
 		setPos(pos);
 		species = spec;
+	}
+	
+	public Food(Vector pos, String spec, int f) {
+		setPos(pos);
+		food = f;
 	}
 
 	@Override
@@ -35,6 +40,14 @@ public class Food extends Entity {
 	
 	public String getSpecies() {
 		return species;
+	}
+
+	public int getFood() {
+		return food;
+	}
+
+	public void setFood(int food) {
+		this.food = food;
 	}
 
 }

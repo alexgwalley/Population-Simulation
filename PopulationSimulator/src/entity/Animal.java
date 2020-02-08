@@ -14,7 +14,8 @@ public class Animal extends Entity{
 	private String name = "";
 	private int timeAlive = 0;
 	
-	public Animal(Vector pos, DNA dna, int food) {
+	public Animal(String name, Vector pos, DNA dna, int food) {
+		this.name = name;
 		setPos(pos);
 		setVel(new Vector(1*dna.getMoveSpeed(),0));
 		this.dna = dna;
@@ -32,7 +33,7 @@ public class Animal extends Entity{
 	public void render(Graphics g) {
 		Vector viewPos = Game.camera.toViewPos(getPos());
 		
-		g.setColor(Color.WHITE);
+		g.setColor(dna.getColor());
 		g.fillOval((int) viewPos.get(0), (int) viewPos.get(1), (int) (30/Game.camera.getZoomAmount()), (int) (30/Game.camera.getZoomAmount()));
 		g.setColor(Color.BLACK);
 		g.drawOval((int) viewPos.get(0), (int) viewPos.get(1), (int) (30/Game.camera.getZoomAmount()), (int) (30/Game.camera.getZoomAmount()));

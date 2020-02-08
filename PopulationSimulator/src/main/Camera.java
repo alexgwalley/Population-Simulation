@@ -94,7 +94,7 @@ public class Camera implements MouseMotionListener, MouseWheelListener{
 	}
 	
 	public Vector toViewPos(Vector pos) {
-		return pos.sub(this.pos).scale(1/zoomAmt);
+		return pos.sub(this.pos).scale(1/zoomAmt).add(Game.getScreenDimentions().scale(1f/2f));
 	}
 	
 	

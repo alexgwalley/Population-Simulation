@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 public class DNA {
 	
+	public static final DefaultPreyDNA defaultPrey = new DefaultPreyDNA();
+	
 	//"species" is the name of the species that this creature is.
 	private String species;
 	private Color color;
