@@ -7,13 +7,13 @@ import math.Vector;
 
 public class Camera implements MouseMotionListener{
 
-	Vector pos;
-	Vector prevPos;
+	private Vector pos;
+	private Vector prevMousePos;
 	float zoomAmt;
 	//Animal toFollow;
 	
 	public Camera() {
-
+		pos = new Vector(0, 0);
 	}
 	
 	public void update() {
@@ -23,23 +23,20 @@ public class Camera implements MouseMotionListener{
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		Vector mousePos = new Vector((float)e.getX(), (float)e.getY());
-		if(prevPos == null || prevPos.getLength() <= 0) {
-			prevPos = mousePos;
+		if(prevMousePos == null || prevMousePos.getLength() <= 0) {
+			prevMousePos = mousePos;
 			return;
 		}
 		
-		if(pos == null || pos.getLength() <= 0) {
-			pos = prevPos;
-		}
-		
-		Vector diff = mousePos.sub(prevPos);
+
+		Vector diff = mousePos.sub(prevMousePos);
 		
 		// Update position of camera
-		prevPos = pos;
-		pos = pos.add(diff);
+		pos = pos.sub(diff);
+		prevMousePos = mousePos;
 		
 		System.out.printf("E: ( %f, %f ) Diff: ( %f, %f ) MousePos: ( %f, %f ) PrevPos: ( %f, %f ) Camera Position ( %f, %f )  \n", 
-				(float)e.getX(), (float)e.getY(), diff.get(0), diff.get(1), mousePos.get(0), mousePos.get(1), prevPos.get(0), prevPos.get(1), pos.get(0), pos.get(1));
+				(float)e.getX(), (float)e.getY(), diff.get(0), diff.get(1), mousePos.get(0), mousePos.get(1), prevMousePos.get(0), prevMousePos.get(1), pos.get(0), pos.get(1));
 		
 	}
 
@@ -48,6 +45,9 @@ public class Camera implements MouseMotionListener{
 		
 	}
 	
+	public Vector getPos() {
+		return pos;
+	}
 	
 	
 }
