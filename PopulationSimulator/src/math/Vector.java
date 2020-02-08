@@ -11,6 +11,11 @@ public class Vector {
 	public float get(int i) {
 		return indices[i];
 	}
+	
+	public float set(int i, float value) {
+		return indices[i] = value;
+	}
+	
 	public float[] getIndices() {
 		return indices;
 	}
