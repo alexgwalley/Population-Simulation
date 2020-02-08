@@ -38,6 +38,7 @@ public class DNA {
 		this.matingMinimum = matingMinimum;
 	}
 
+
 	public String getSpecies() {
 		return species;
 	}

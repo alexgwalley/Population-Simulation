@@ -10,14 +10,21 @@ public class Animal extends Entity{
 	
 	private DNA dna;
 	private int food;
-	private State state = State.SEEK_MATE;
+	private State state = State.SEEK_FOOD;
 	private String name = "";
 	private int timeAlive = 0;
 	
 	public Animal(String name, Vector pos, DNA dna, int food) {
 		this.name = name;
 		setPos(pos);
-		setPos(new Vector(0,0));
+		setVel(new Vector(1*dna.getMoveSpeed(),0));
+		this.dna = dna;
+		this.food = food;
+	}
+	
+	public Animal(Vector pos, Vector vel, DNA dna, int food) {
+		setPos(pos);
+		setVel(vel);
 		this.dna = dna;
 		this.food = food;
 	}
@@ -35,12 +42,36 @@ public class Animal extends Entity{
 
 	@Override
 	public void update() {
-		setPos(getPos().add(this.getVel().scale(1f/60f)));
-		timeAlive += 1;
+		if(state != State.EAT)
+			setPos(getPos().add(this.getVel().scale(Game.getSimSpeed()*(0.005f))));
+		
+		timeAlive += Game.getSimSpeed();
+		
+		if(state == State.SEEK_FOOD) {
+			seekFood();
+		}
+	}
+	
+	private void checkEatFood() {
+		
+	}
+	
+	private Food getFoodInSight() {
+		boolean foundFood = false;
+		
+		for(Food f : Game.food) {
+			//TODO: Check if we can see food, if we found, return that food
+		}
+		
+		return null;
 	}
 	
 	private void seekFood() {
 		//TODO:  Write function to have animals to look for food.
+		if(getFoodInSight() != null) {
+			//TODO: Turn towards the food
+		}
+		
 	}
 	
 	private void seekMate() {

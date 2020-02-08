@@ -32,6 +32,10 @@ public abstract class Entity {
 	public void setPos(int i, float pos) {
 		this.pos.set(i, pos);
 	}
+	
+	public void setVel(Vector v) {
+		this.vel = v;
+	}
 
 	public void setVel(int i, float vel) {
 		this.vel.set(i, vel);
