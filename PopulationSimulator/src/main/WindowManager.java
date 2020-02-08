@@ -2,6 +2,8 @@ package main;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 
@@ -15,12 +17,15 @@ public class WindowManager {
 	private int width;
 	private int height;
 	
-	public WindowManager(String t, int w, int h) {
+	private Game gameRef;
+	public WindowManager(String t, int w, int h, Game game) {
 		title = t;
 		width = w;
 		height = h;
 		
 		createWindow();
+		
+		gameRef = game;
 		
 	}
 	
@@ -40,8 +45,9 @@ public class WindowManager {
 		canvas.setMinimumSize(new Dimension(width, height));
 		canvas.setMaximumSize(new Dimension(width, height));
 		
-		frame.add(canvas);
+		canvas.addMouseMotionListener((MouseMotionListener) Game.camera);
 		
+		frame.add(canvas);
 		
 		frame.pack(); // Resize to fit all components
 	}

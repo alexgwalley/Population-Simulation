@@ -15,6 +15,10 @@ public class Vector {
 		return indices;
 	}
 	
+	public int getLength() {
+		return indices.length;
+	}
+	
 	public Vector add(Vector addend) {
 		if(addend.indices.length != this.indices.length) return null;
 		float[] out = new float[indices.length];
