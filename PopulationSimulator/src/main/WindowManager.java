@@ -2,8 +2,8 @@ package main;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.JFrame;
 
@@ -46,6 +46,7 @@ public class WindowManager {
 		canvas.setMaximumSize(new Dimension(width, height));
 		
 		canvas.addMouseMotionListener((MouseMotionListener) Game.camera);
+		canvas.addMouseWheelListener((MouseWheelListener) Game.camera);
 		
 		frame.add(canvas);
 		
