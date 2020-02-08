@@ -25,7 +25,7 @@ public class SaveLoad {
 	
 	private static void saveAnimalData() throws IOException{
 		//TODO: Add in text for food data.
-		BufferedWriter bw = new BufferedWriter(new FileWriter(new File("res\\game1.sim"), true));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(new File("res/game1.sim"), true));
 		for(Animal a : Game.animals) {
 			DNA d = a.getDna();
 			String line = "a," + a.getName() + "," + a.getPos(0) + "," + a.getPos(1) + "," + a.getFood() + "," + d.getSpecies() + "," 
@@ -40,7 +40,7 @@ public class SaveLoad {
 	}
 	
 	private static void saveFoodData() throws IOException{
-		BufferedWriter bw = new BufferedWriter(new FileWriter(new File("res\\game1.sim"), true));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(new File("res/game1.sim"), true));
 		bw.newLine();
 		for(Food f : Game.food) {
 			String line = "f," + f.getPos(0) + "," + f.getPos(1) + "," + f.getFood();
@@ -58,12 +58,11 @@ public class SaveLoad {
 	
 	private static void loadAnimals() throws IOException{
 		Game.animals = new TreeSet<>(new CustomAnimalComparator());
-		BufferedReader br = new BufferedReader(new FileReader("res\\game1.sim"));
+		BufferedReader br = new BufferedReader(new FileReader("res/game1.sim"));
 		String line = "";
 		while((line = br.readLine()) != null) {
 			String[] data = line.split(",");
 			if(!data[0].equals("a")) continue;
-			DNA d = new DNA(data[5],Color.WHITE,DNA.defaultPrey.getFood(),Float.parseFloat(data[7]),Integer.parseInt(data[8]),Integer.parseInt(data[9]),Integer.parseInt(data[10]),Float.parseFloat(data[11]),Integer.parseInt(data[12]),Integer.parseInt(data[13]),Integer.parseInt(data[14]));
 			Game.animals.add(new Animal(data[1], new Vector(Float.parseFloat(data[2]),Float.parseFloat(data[3])), d, Integer.parseInt(data[4])));
 		}
 		br.close();
@@ -71,7 +70,7 @@ public class SaveLoad {
 	
 	private static void loadFood() throws IOException{
 		Game.food = new ArrayList<Food>();
-		BufferedReader br = new BufferedReader(new FileReader("res\\game1.sim"));
+		BufferedReader br = new BufferedReader(new FileReader("res/game1.sim"));
 		String line = "";
 		while((line = br.readLine()) != null) {
 			String data[] = line.split(",");
