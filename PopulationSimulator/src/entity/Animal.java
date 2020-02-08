@@ -35,6 +35,7 @@ public class Animal extends Entity{
 	@Override
 	public void update() {
 		setPos(getPos().add(this.getVel().scale(1f/60f)));
+		timeAlive += 1;
 	}
 	
 	private void seekFood() {

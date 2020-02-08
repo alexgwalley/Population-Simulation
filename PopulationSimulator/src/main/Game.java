@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import comparator.CustomAnimalComparator;
+import entity.Animal;
 import entity.Food;
 import generator.FoodGenerator;
 import math.Vector;
@@ -32,17 +36,17 @@ public class Game implements Runnable {
 	
 	// Simulation
 	public static ArrayList<Food> food = new ArrayList<>();
+	public static SortedSet<Animal> animals = new TreeSet<>(new CustomAnimalComparator());
 	
 	private final static Vector[] bounds = {
 			new Vector(-500, -500),
 			new Vector(500, 500)
 	};
-	
-	private final static int worldWidth = 1000;
-	private final static int worldHeight = 1000;
+	private final static Vector worldDim = new Vector(1000, 1000);
 	
 	private static FoodGenerator foodGenerator;
 
+	private static boolean paused;
 	
 	public Game(String t, int w, int h) {
 		title = t;
@@ -50,15 +54,12 @@ public class Game implements Runnable {
 		height = h;
 	}
 	
-	public static void main(String[] args) {
-		
-	}
-
 	@Override
 	public void run() {
 		init();
+		paused = false;
 		
-		while(running) {
+		while(running && !paused) {
 			update();
 			render();
 		}
@@ -76,6 +77,14 @@ public class Game implements Runnable {
 		
 		startNew();
 		
+	}
+
+	public void pause() {
+		foodGenerator.pause();
+	}
+	
+	public void play() {
+		foodGenerator.play();
 	}
 	
 	private void startNew() {
@@ -112,14 +121,16 @@ public class Game implements Runnable {
 		g.drawRect((int)boundsTopLeft.get(0), (int)boundsTopLeft.get(1), 
 				boundsCamWidth, boundsCamHeight);
 		 
-		Vector size = new Vector(100, 100);
-		size = size.scale(1/camera.getZoomAmount());
-		
-
+		// Render all Food
 		for(Food f : food) {
 			f.render(g);
 		}
 		
+		// Render all Animals
+		for(Animal a : animals) {
+			a.update();
+			a.render(g);
+		}
 		
 		
 		// Showing and clean-up
@@ -162,19 +173,11 @@ public class Game implements Runnable {
 		return bounds;
 	}
 	
-	public static int getWorldWidth() {
-		return worldWidth;
+	public static Vector getWorldDimentions() {
+		return worldDim;
 	}
 	
-	public static int getWorldHeight() {
-		return worldHeight;
-	}
-	
-	public static int getScreenWidth() {
-		return width;
-	}
-	
-	public static int getScreenHeight() {
-		return height;
+	public static Vector getScreenDimentions() {
+		return new Vector(width, height);
 	}
 }

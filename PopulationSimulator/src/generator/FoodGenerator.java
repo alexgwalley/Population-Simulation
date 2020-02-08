@@ -11,6 +11,8 @@ public class FoodGenerator {
 	private long lastSpawnedTime;
 	private int spawnPeriod = 3000;
 	
+	private long timeDifference;
+	
 	Random random;
 	
 	public FoodGenerator() {
@@ -33,11 +35,19 @@ public class FoodGenerator {
 	
 	// Spawns a new piece of food at a random position in bounds
 	private void spawn() {
-		Vector pos = new Vector(random.nextFloat()*Game.getWorldWidth() - Game.getWorldWidth()/2, 
-				random.nextFloat()*Game.getWorldHeight() - Game.getWorldHeight()/2);
+		Vector pos = new Vector(random.nextFloat(), random.nextFloat());
+		pos = pos.scale(Game.getWorldDimentions());
+		pos = pos.sub(Game.getWorldDimentions().scale((float) 0.5));
 		Food newFood = new Food(pos);
 		Game.food.add(newFood);
 	}
 	
+	public void pause() {
+		timeDifference = System.currentTimeMillis() - lastSpawnedTime;
+	}
+	
+	public void play() {
+		lastSpawnedTime = System.currentTimeMillis() - timeDifference;
+	}
 
 }
