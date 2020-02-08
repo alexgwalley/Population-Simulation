@@ -5,6 +5,17 @@ public class Game implements Runnable {
 	private WindowManager window;
 
 	private Thread thread;
+	private boolean running;
+	
+	private String title;
+	private int width;
+	private int height;
+	
+	public Game(String t, int w, int h) {
+		title = t;
+		width = w;
+		height = h;
+	}
 	
 	public static void main(String[] args) {
 		
@@ -14,17 +25,17 @@ public class Game implements Runnable {
 	public void run() {
 		init();
 		
-		while(true) {
+		while(running) {
 			update();
 			render();
 		}
 		
+		stop();
+		
 	}
 	
 	private void init() {
-		window = new WindowManager("Population Simulator", 600, 400);
-		
-		
+		window = new WindowManager(title, width, height);
 		
 	}
 	
@@ -36,4 +47,24 @@ public class Game implements Runnable {
 		
 	}
 	
+	public synchronized void start() {
+		if(running) return;
+		
+		running = true;
+		thread = new Thread(this);
+		System.out.println("Game thread created");
+		
+		thread.start();
+		
+	}
+	
+	public synchronized void stop() {
+		if(!running) return;
+		
+		try {
+			thread.join();
+		}catch (InterruptedException e){
+			e.printStackTrace();
+		}
+	}
 }

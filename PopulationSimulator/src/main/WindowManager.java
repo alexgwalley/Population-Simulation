@@ -33,6 +33,8 @@ public class WindowManager {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		canvas = new Canvas(); // New canvas element for the JFrame, handles drawing
 		canvas.setPreferredSize(new Dimension(width, height));
 		canvas.setMinimumSize(new Dimension(width, height));
