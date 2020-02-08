@@ -19,10 +19,12 @@ public class Camera implements MouseMotionListener, MouseWheelListener{
 	private float maxZoomAmt = 50;
 	//Animal toFollow;
 	
+	private float moveSpeed = 3;
+	
 	private boolean mouseDown = false;
 	
 	public Camera() {
-		pos = new Vector(0, 0);
+		pos = new Vector(-Game.getScreenWidth(), -Game.getScreenHeight());
 	}
 
 	@Override
@@ -43,7 +45,8 @@ public class Camera implements MouseMotionListener, MouseWheelListener{
 		if(mouseDown == true) {
 
 			Vector diff = mousePos.sub(prevMousePos);
-			diff = diff.scale(1/zoomAmt);
+			diff.scale(moveSpeed);
+			//diff = diff.scale(1/zoomAmt);
 			
 			// Update position of camera
 			pos = pos.sub(diff);
