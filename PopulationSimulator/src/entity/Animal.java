@@ -55,5 +55,45 @@ public class Animal extends Entity{
 	private void die() {
 		//TODO
 	}
+
+	public DNA getDna() {
+		return dna;
+	}
+
+	public void setDna(DNA dna) {
+		this.dna = dna;
+	}
+
+	public int getFood() {
+		return food;
+	}
+
+	public void setFood(int food) {
+		this.food = food;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getTimeAlive() {
+		return timeAlive;
+	}
+
+	public void setTimeAlive(int timeAlive) {
+		this.timeAlive = timeAlive;
+	}
 	
 }
