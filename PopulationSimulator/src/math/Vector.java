@@ -39,7 +39,7 @@ public class Vector {
 	}
 	
 	public float dot(Vector v) {
-		if(v.indices.length != this.indices.length) return null;
+		if(v.indices.length != this.indices.length) return 0;
 		float out = 0;
 		for(int i = 0; i < indices.length; i++)
 			out += indices[i]*v.get(i);
