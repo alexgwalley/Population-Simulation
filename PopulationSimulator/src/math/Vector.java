@@ -63,6 +63,22 @@ public class Vector {
 		return out;
 	}
 	
+	public float getMag() {
+		float mag = 0;
+		for(float i : indices) {
+			mag += i*i;
+		}
+		return (float) Math.sqrt(mag);
+	}
+	
+	public Vector normalized() {
+		float mag = this.getMag();
+		float[] out = new float[indices.length];
+		for(int i = 0; i < this.indices.length; i++) {
+			out[i] = indices[i]/mag;
+		}
+		return new Vector(out);
+	}
 	
 
 }
