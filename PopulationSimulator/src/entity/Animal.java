@@ -25,7 +25,7 @@ public class Animal extends Entity{
 	public void render(Graphics g) {
 		Vector viewPos = Game.camera.toViewPos(getPos());
 		
-		g.setColor(Color.WHITE);
+		g.setColor(dna.getColor());
 		g.fillOval((int) viewPos.get(0), (int) viewPos.get(1), (int) (30/Game.camera.getZoomAmount()), (int) (30/Game.camera.getZoomAmount()));
 		g.setColor(Color.BLACK);
 		g.drawOval((int) viewPos.get(0), (int) viewPos.get(1), (int) (30/Game.camera.getZoomAmount()), (int) (30/Game.camera.getZoomAmount()));
@@ -35,6 +35,7 @@ public class Animal extends Entity{
 	@Override
 	public void update() {
 		setPos(getPos().add(this.getVel().scale(1f/60f)));
+		timeAlive += 1;
 	}
 	
 	private void seekFood() {

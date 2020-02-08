@@ -5,6 +5,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+import entity.Animal;
 import math.Vector;
 
 public class Camera implements MouseMotionListener, MouseWheelListener{
@@ -23,12 +24,21 @@ public class Camera implements MouseMotionListener, MouseWheelListener{
 	
 	private boolean mouseDown = false;
 	
+	private boolean followingAnimal = false;
+	private Animal animalToFollow;
+	
 	public Camera() {
-		pos = new Vector(-Game.getScreenWidth(), -Game.getScreenHeight());
+		pos = Game.getScreenDimentions().scale(-1);
 	}
 
+	public void update() {
+		if(!followingAnimal) return;
+		pos = animalToFollow.getPos().sub(Game.getScreenDimentions().scale((float) 0.5));
+	}
+	
 	@Override
 	public void mouseDragged(MouseEvent e) {
+		followingAnimal = false;
 		
 		Vector mousePos = new Vector((float)e.getX(), (float)e.getY());
 		if(mouseDown == false && e.getButton() == MouseEvent.BUTTON1) {
@@ -68,6 +78,11 @@ public class Camera implements MouseMotionListener, MouseWheelListener{
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if(mouseDown == true && e.getButton() == MouseEvent.NOBUTTON) mouseDown = false;
+	}
+	
+	public void followAnimal(Animal a) {
+		followingAnimal = true;
+		animalToFollow = a;
 	}
 	
 	public float getZoomAmount(){

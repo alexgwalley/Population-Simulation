@@ -8,8 +8,11 @@ import math.*;
 
 public class Food extends Entity {
 	
-	public Food(Vector pos) {
+	private int food;
+	
+	public Food(Vector pos, int food) {
 		setPos(pos);
+		this.food = food;
 	}
 
 	@Override
@@ -24,5 +27,13 @@ public class Food extends Entity {
 
 	@Override
 	public void update() {}
+
+	public int getFood() {
+		return food;
+	}
+
+	public void setFood(int food) {
+		this.food = food;
+	}
 
 }

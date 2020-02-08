@@ -47,6 +47,14 @@ public class Vector {
 		return new Vector(out);
 	}
 	
+	public Vector scale(Vector addend) {
+		if(addend.indices.length != this.indices.length) return null;
+		float[] out = new float[indices.length];
+		for(int i = 0; i < indices.length; i++)
+			out[i] = addend.get(i)*indices[i];
+		return new Vector(out);
+	}
+	
 	public float dot(Vector v) {
 		if(v.indices.length != this.indices.length) return 0;
 		float out = 0;
@@ -54,5 +62,7 @@ public class Vector {
 			out += indices[i]*v.get(i);
 		return out;
 	}
+	
+	
 
 }
