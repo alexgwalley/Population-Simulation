@@ -1,9 +1,10 @@
 package entity;
 
+import java.awt.Color;
 import java.util.HashMap;
 
 public class DefaultPreyDNA extends DNA {
-	
+
 	private HashMap<String, Integer> food = new HashMap<String, Integer>(){
 		put("Food", 100);
 	};

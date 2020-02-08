@@ -3,12 +3,19 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import comparator.CustomAnimalComparator;
 import entity.Animal;
+import entity.DNA;
 import entity.Food;
 import generator.FoodGenerator;
 import math.Vector;
@@ -159,6 +166,59 @@ public class Game implements Runnable {
 		}catch (InterruptedException e){
 			e.printStackTrace();
 		}
+	}
+	
+	public static void saveGame() throws IOException {
+		saveAnimalData();
+		saveFoodData();
+	}
+	
+	private static void saveAnimalData() throws IOException{
+		//TODO: Add in text for food data.
+		BufferedWriter bw = new BufferedWriter(new FileWriter(new File("res\\game1.sim"), true));
+		for(Animal a : animals) {
+			DNA d = a.getDna();
+			String line = "a," + a.getName() + "," + a.getPos() + "," + a.getFood() + "," + d.getSpecies() + "," 
+					+ d.getColor() + "," + d.getFieldOfViewAngle() + "," + d.getFieldOfViewRadius() + "," 
+					+ d.getMoveSpeed() + "," + d.getRadius() + "," + d.getMutationRate() + "," + d.getEatingRate() + "," 
+					+ d.getFleeRadius() + "," + d.getMatingMinimum();
+			bw.write(line);
+			bw.newLine();
+		}
+		bw.flush();
+		bw.close();
+	}
+	
+	private static void saveFoodData() throws IOException{
+		BufferedWriter bw = new BufferedWriter(new FileWriter(new File("res\\game1.sim"), true));
+		bw.newLine();
+		for(Food f : food) {
+			String line = "f," + f.getPos(0) + "," + f.getPos(1) + "," + f.getFood();
+			bw.write(line);
+			bw.newLine();
+		}
+		bw.flush();
+		bw.close();
+	}
+	
+	public static void loadGame() throws IOException{
+		loadAnimals();
+		loadFood();
+	}
+	
+	private static void loadAnimals() throws IOException{
+		animals = new TreeSet<>(new CustomAnimalComparator());
+		BufferedReader br = new BufferedReader(new FileReader("res\\game1.sim"));
+		String line = "";
+		while((line = br.readLine()) != null) {
+			String[] data = line.split(",");
+			if(!data[0].equals("a")) continue;
+			DNA d = new DNA(data[4],Color.WHITE,DNA.defaultPrey.getFood(),Float.parseFloat(data[6]),Integer.parseInt(data[7]),Integer.parseInt(data[8]),Integer.parseInt(data[9]),Float.parseFloat(data[10]),Integer.parseInt(data[11]),Integer.parseInt(data[12]),Integer.parseInt(data[13]));
+		}
+	}
+	
+	private static void loadFood() throws IOException{
+		
 	}
 	
 	public float getSimSpeed() {
