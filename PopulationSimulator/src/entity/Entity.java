@@ -6,7 +6,8 @@ import math.*;
 
 public abstract class Entity {
 	
-	private Vector pos, vel;
+	private Vector pos;
+	private Vector vel;
 	
 	public Vector getPos() {
 		return this.pos;
@@ -37,5 +38,6 @@ public abstract class Entity {
 	}
 
 	public abstract void render(Graphics g);
+	public abstract void update();
 
 }

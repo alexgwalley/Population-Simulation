@@ -2,11 +2,12 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import math.*;
 
 public class Food extends Entity {
 	
-	public Food() {
-		
+	public Food(Vector pos) {
+		setPos(pos);
 	}
 
 	@Override
@@ -16,5 +17,8 @@ public class Food extends Entity {
 		g.setColor(Color.BLACK);
 		g.drawOval((int) getPos().get(0), (int) getPos().get(1), 10, 10);
 	}
+
+	@Override
+	public void update() {}
 
 }
