@@ -2,6 +2,8 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import main.Game;
 import math.*;
 
 public class Animal extends Entity{
@@ -20,11 +22,13 @@ public class Animal extends Entity{
 
 	@Override
 	public void render(Graphics g) {
+		Vector viewPos = Game.camera.toViewPos(getPos());
+		
 		g.setColor(Color.WHITE);
-		g.fillOval((int) getPos(0), (int) getPos(1), 30, 30);
+		g.fillOval((int) viewPos.get(0), (int) viewPos.get(1), (int) (30/Game.camera.getZoomAmount()), (int) (30/Game.camera.getZoomAmount()));
 		g.setColor(Color.BLACK);
-		g.drawOval((int) getPos(0), (int) getPos(1), 30, 30);
-		g.drawString(name, (int) getPos(0), (int) getPos(1) - 20);
+		g.drawOval((int) viewPos.get(0), (int) viewPos.get(1), (int) (30/Game.camera.getZoomAmount()), (int) (30/Game.camera.getZoomAmount()));
+		g.drawString(name, (int) viewPos.get(0), (int) viewPos.get(1) - 20);
 	}
 
 	@Override
