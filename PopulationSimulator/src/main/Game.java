@@ -1,7 +1,10 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+
+import math.Vector;
 
 public class Game implements Runnable {
 	
@@ -63,6 +66,7 @@ public class Game implements Runnable {
 	}
 	
 	private void render() {
+		
 		bs = window.getCanvas().getBufferStrategy();
 		if(bs == null) {
 			window.getCanvas().createBufferStrategy(3);
@@ -73,6 +77,17 @@ public class Game implements Runnable {
 		g = bs.getDrawGraphics();
 		// Drawing stuff here
 		
+		//Clear screen
+		g.setColor(new Color(255, 255, 255));
+		g.fillRect(0, 0, width, height);
+		
+		Vector size = new Vector(100, 100);
+		size = size.scale(1/camera.getZoomAmount());
+		
+		
+		g.setColor(new Color(0));
+		g.drawRect((int)(100-camera.getPos().get(0)), (int)(100-camera.getPos().get(1)), 
+				(int)size.get(0), (int)size.get(1));
 		
 		// Showing and clean-up
 		bs.show();
