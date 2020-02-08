@@ -5,12 +5,12 @@ import java.util.HashMap;
 
 public class DefaultPreyDNA extends DNA {
 
-	private HashMap<String, Integer> food = new HashMap<String, Integer>(){
-		put("Food", 100);
+	private static HashMap<String, Integer> f = new HashMap<String, Integer>(){
+		{put("Food", 100);}
 	};
 	
 	public DefaultPreyDNA() {
-		super("Prey", COLOR.BROWN, food, 2.0f, 50, 5, 30, 0.0f, 10, 30, 70);
+		super("Prey", Color.WHITE, f, 2.0f, 50, 5, 30, 0.0f, 10, 30, 70);
 	}
 
 }

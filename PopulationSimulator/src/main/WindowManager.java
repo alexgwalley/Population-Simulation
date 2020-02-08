@@ -79,6 +79,19 @@ public class WindowManager {
 		load = new JMenuItem("Load");
 		menubar.add(load);
 		
+		load.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Game.loadGame();
+				}catch(Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+			
+		});
+		
 		frame.setJMenuBar(menubar);
 		
 		frame.pack();  //Resize to fit all components
