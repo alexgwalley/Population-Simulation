@@ -14,7 +14,8 @@ public class Animal extends Entity{
 	private String name = "";
 	private int timeAlive = 0;
 	
-	public Animal(Vector pos, DNA dna, int food) {
+	public Animal(String name, Vector pos, DNA dna, int food) {
+		this.name = name;
 		setPos(pos);
 		setPos(new Vector(0,0));
 		this.dna = dna;
