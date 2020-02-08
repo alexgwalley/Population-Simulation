@@ -8,8 +8,16 @@ import math.*;
 
 public class Food extends Entity {
 	
+	private String species;
+	
 	public Food(Vector pos) {
 		setPos(pos);
+		species = "food";
+	}
+	
+	public Food(Vector pos, String spec) {
+		setPos(pos);
+		species = spec;
 	}
 
 	@Override
@@ -24,5 +32,9 @@ public class Food extends Entity {
 
 	@Override
 	public void update() {}
+	
+	public String getSpecies() {
+		return species;
+	}
 
 }

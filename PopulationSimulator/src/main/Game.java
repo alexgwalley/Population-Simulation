@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import comparator.CustomAnimalComparator;
 import entity.Animal;
 import entity.Food;
+import generator.AnimalGenerator;
 import generator.FoodGenerator;
 import math.Vector;
 
@@ -33,6 +34,8 @@ public class Game implements Runnable {
 	// Updating
 	private static float simSpeed;
 	public static Camera camera;
+	private long prevTime;
+	public static long dt = -1;
 	
 	// Simulation
 	public static ArrayList<Food> food = new ArrayList<>();
@@ -45,6 +48,7 @@ public class Game implements Runnable {
 	private final static Vector worldDim = new Vector(1000, 1000);
 	
 	private static FoodGenerator foodGenerator;
+	private static AnimalGenerator animalGenerator;
 
 	private static boolean paused;
 	
@@ -52,6 +56,8 @@ public class Game implements Runnable {
 		title = t;
 		width = w;
 		height = h;
+		
+		simSpeed = 1;
 	}
 	
 	@Override
@@ -74,6 +80,7 @@ public class Game implements Runnable {
 		window = new WindowManager(title, width, height, this);
 		
 		foodGenerator = new FoodGenerator();
+		animalGenerator = new AnimalGenerator();
 		
 		startNew();
 		
@@ -89,10 +96,21 @@ public class Game implements Runnable {
 	
 	private void startNew() {
 		foodGenerator.generateStartingSpawn();
+		animalGenerator.generateAnimals(5);
 	}
 	
 	private void update() {
+		
+		if(prevTime <= 0) prevTime = System.currentTimeMillis();
+		dt = System.currentTimeMillis() - prevTime;
+		prevTime = System.currentTimeMillis();
+		
+		
 		foodGenerator.update();
+		
+		for(Animal a : animals) {
+			a.update();
+		}
 	}
 	
 	private void render() {
@@ -128,7 +146,6 @@ public class Game implements Runnable {
 		
 		// Render all Animals
 		for(Animal a : animals) {
-			a.update();
 			a.render(g);
 		}
 		
@@ -161,7 +178,7 @@ public class Game implements Runnable {
 		}
 	}
 	
-	public float getSimSpeed() {
+	public static float getSimSpeed() {
 		return simSpeed;
 	}
 	

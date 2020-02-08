@@ -21,7 +21,7 @@ public class DNA {
 	private int matingMinimum;
 	
 	public DNA(String species, Color color, HashMap<String, Integer> food, float fieldOfViewAngle, 
-			int fieldOfViewRadius, int moveSpeed, int radius, int mutationRate, int eatingRate, int fleeRadius, 
+			int fieldOfViewRadius, int moveSpeed, int radius, float mutationRate, int eatingRate, int fleeRadius, 
 			int matingMinimum) {
 		this.species = species;
 		this.color = color;
@@ -35,6 +35,7 @@ public class DNA {
 		this.fleeRadius = fleeRadius;
 		this.matingMinimum = matingMinimum;
 	}
+
 
 	public String getSpecies() {
 		return species;
