@@ -16,6 +16,7 @@ public class Animal extends Entity{
 	
 	public Animal(Vector pos, DNA dna, int food) {
 		setPos(pos);
+		setPos(new Vector(0,0));
 		this.dna = dna;
 		this.food = food;
 	}
