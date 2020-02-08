@@ -20,9 +20,11 @@ public class Food extends Entity {
 		species = spec;
 	}
 	
-	public Food(Vector pos, String spec, int f) {
+	public Food(Vector pos, int f) {
 		setPos(pos);
 		food = f;
+		species = "food";
+		
 	}
 
 	@Override
