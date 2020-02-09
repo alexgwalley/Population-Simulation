@@ -1,15 +1,20 @@
-package main;
+package chart;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import entity.Animal;
 import entity.DNA;
+import main.Game;
 
 public class SaveLoadChart {
 	
 	public static void saveData() throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter("chart.dna", true));
+		BufferedWriter bw = new BufferedWriter(new FileWriter("res/chart.dna", true));
 		ArrayList<String> species = new ArrayList<String>();
 		for(Animal a : Game.animals)
 			if(!species.contains(a.getDna().getSpecies())) species.add(a.getDna().getSpecies());
@@ -45,6 +50,33 @@ public class SaveLoadChart {
 			bw.newLine();
 		}
 		bw.close();
+	}
+	
+	public static Object[] loadData(String specie, DataType d) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("res/chart.dna"));
+		String[] lines = (String[]) br.lines().toArray();
+		ArrayList<Object> out = new ArrayList<Object>;
+		int index = 0;
+		switch(d) {
+		case TIME: index=0; break;
+		case NUM: index=2; break;
+		case FOOD: index=3; break;
+		case FOVA: index=4; break;
+		case FOVR: index=5; break;
+		case MOVESPEED: index=6; break;
+		case RADIUS: index=7; break;
+		case MUTATIONRATE: index=8; break;
+		case EATINGRATE: index=9; break;
+		case FLEERADIUS: index=10; break;
+		case MATINGMIN: index=11; break;
+		default: index=1; break;
+		}
+		for(String line : lines) {
+			String[] data = line.split(",");
+			if(!data[1].equals(specie)) continue;
+			out.add(data[index]);
+		}
+		return out.toArray();
 	}
 
 }
