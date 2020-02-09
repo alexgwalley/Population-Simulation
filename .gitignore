@@ -3,3 +3,5 @@ PopulationSimulator/.classpath
 PopulationSimulator/.settings/org.eclipse.jdt.core.prefs
 /.recommenders/
 *.dna
+PopulationSimulator/res/chart.dna
+PopulationSimulator/res/chart.dna

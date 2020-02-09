@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.sound.sampled.Line;
+
+import chart.DataType;
 import chart.SaveLoadChart;
 import comparator.CustomAnimalComparator;
 import entity.Animal;
@@ -129,15 +132,30 @@ public class Game implements Runnable {
 			
 			String data = "";
 			String[] lines;
+			float[] values;
+			float[] times;
 			try {
 				SaveLoadChart.saveData();
 				lines = SaveLoadChart.loadData("basic", window.getCurrentDisplay());
-				for(String line : lines)
-					data += line+"\n";
+				values = new float[lines.length];
+				for(int i = 0; i < lines.length; i++) {
+					data += lines[i]+"\n";
+					values[i] = Float.parseFloat(lines[i]);
+				}
+				lines = SaveLoadChart.loadData("basic", DataType.TIME);
+				times = new float[lines.length];
+				for(int i = 0; i < lines.length; i++) {
+					data += lines[i]+"\n";
+					times[i] = Float.parseFloat(lines[i]);
+				}
+				
+				window.updateChart("basic", times, values);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			window.setChartText(data);
+			
 			prevTime2+=1000;
 		}
 	}

@@ -13,6 +13,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
 
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
 import chart.DataType;
@@ -31,6 +33,7 @@ public class WindowManager {
 	private JMenuItem num, food, fova, fovr, movespeed, radius, mutrate, eatrate, fleerad, matemin;
 	private JTextArea chartdata;
 	private XYChart chart;
+	private XChartPanel<XYChart> chartPanel;
 	private DataType currentDisplay = DataType.NUM;
 	
 	private String title;
@@ -111,10 +114,16 @@ public class WindowManager {
 		
 		chartFrame = new JFrame("Chart");
 		chartFrame.setVisible(true);
-		chartFrame.setSize(200, height);
+		chartFrame.setSize(300, height);
 		chartFrame.setLocationRelativeTo(frame);
 		chartFrame.setResizable(false);
 		chartFrame.setLayout(null);
+		chartFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+		chart = new XYChart(200,200);
+		chart.addSeries(currentDisplay.toString(), new double[]{1d}, new double[]{1d});
+		chartPanel = new XChartPanel<XYChart>(chart);
+		chartFrame.add(chartPanel);
 		
 		chMenubar = new JMenuBar();
 		chartFrame.setJMenuBar(chMenubar);
@@ -156,12 +165,17 @@ public class WindowManager {
 		
 		chartdata = new JTextArea();
 		chartdata.setSize(200, height);
-		chartFrame.add(chartdata);
+		//chartFrame.add(chartdata);
 		chartFrame.repaint();
 	}
 	
 	public void setChartText(String text) {
 		chartdata.setText(text);
+	}
+	
+	public void updateChart(String seriesName, float[] xAxis, float[] yAxis) {
+		chart.addSeries(seriesName, xAxis, yAxis);
+		chartFrame.repaint();
 	}
 	
 	public Canvas getCanvas() {
