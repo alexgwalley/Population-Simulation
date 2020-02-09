@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.Random;
 
 import generator.PercentGenerator;
 
@@ -86,42 +87,109 @@ public class DNA {
 	}
 	
 	public static DNA combine(Animal a1, Animal a2) {
+		Random rand = new Random();
 		DNA d1 = a1.getDna();
 		DNA d2 = a2.getDna();
+		
+		float scale = 1;
 		
 		Species species = d1.getSpecies();
 		float weight = PercentGenerator.newPercent();
 		float mutationRate = weight*d1.getMutationRate()+(1-weight)*d2.getMutationRate();
+		
 		weight = PercentGenerator.newPercent();
-		float scale = PercentGenerator.relPercent(mutationRate);
-		float colorRed = (weight*d1.getColor().getRed()+(1-weight)*d2.getColor().getRed())+scale;
+		float colorRed = (weight*d1.getColor().getRed()+(1-weight)*d2.getColor().getRed());
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			colorRed += scale;
+			colorRed = Math.min(255, colorRed);
+			colorRed = Math.max(0, colorRed);
+		}
+		
 		weight = PercentGenerator.newPercent();
-		scale = PercentGenerator.relPercent(mutationRate);
-		float colorBlue = (weight*d1.getColor().getBlue()+(1-weight)*d2.getColor().getBlue())+scale;
+		float colorBlue = (weight*d1.getColor().getBlue()+(1-weight)*d2.getColor().getBlue());
 		weight = PercentGenerator.newPercent();
-		scale = PercentGenerator.relPercent(mutationRate);
-		float colorGreen = (weight*d1.getColor().getGreen()+(1-weight)*d2.getColor().getGreen())+scale;
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			colorBlue += scale;
+			colorBlue = Math.min(255, colorBlue);
+			colorBlue = Math.max(0, colorBlue);
+		}
+		
+		weight = PercentGenerator.newPercent();
+		float colorGreen = (weight*d1.getColor().getGreen()+(1-weight)*d2.getColor().getGreen());
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			colorGreen += scale;
+			colorGreen = Math.min(255, colorGreen);
+			colorGreen = Math.max(0, colorGreen);
+		}
+		
 		HashMap<String, Integer> food = d1.getFood();
 		weight = PercentGenerator.newPercent();
-		scale = PercentGenerator.relPercent(mutationRate);
-		float fieldOfViewAngle = (weight*d1.getFieldOfViewAngle()+(1-weight)*d2.getFieldOfViewAngle())+scale;
+		
+		
 		weight = PercentGenerator.newPercent();
-		scale = PercentGenerator.relPercent(mutationRate);
-		int fieldOfViewRadius = (int) ((weight*d1.getFieldOfViewRadius()+(1-weight)*d2.getFieldOfViewRadius())+scale);
+		float fieldOfViewAngle = (weight*d1.getFieldOfViewAngle()+(1-weight)*d2.getFieldOfViewAngle());
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			fieldOfViewAngle += scale;
+			fieldOfViewAngle = Math.min(360, fieldOfViewAngle);
+			fieldOfViewAngle = Math.max(0, fieldOfViewAngle);
+		}
+		
+		
 		weight = PercentGenerator.newPercent();
-		scale = PercentGenerator.relPercent(mutationRate);
-		int moveSpeed = (int) ((weight*d1.getMoveSpeed()+(1-weight)*d2.getMoveSpeed())+scale);
+		int fieldOfViewRadius = (int) ((weight*d1.getFieldOfViewRadius()+(1-weight)*d2.getFieldOfViewRadius()));
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			fieldOfViewRadius += scale;
+			fieldOfViewRadius = Math.max(0, fieldOfViewRadius);
+		}
+		
+		
+
+		weight = PercentGenerator.newPercent();
+		int moveSpeed = (int) ((weight*d1.getMoveSpeed()+(1-weight)*d2.getMoveSpeed()));
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			moveSpeed += scale;
+			moveSpeed = Math.max(0, moveSpeed);
+		}
+		
 		weight = PercentGenerator.newPercent();
 		int radius = (int) ((weight*d1.getRadius()+(1-weight)*d2.getRadius())+scale);
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			radius += scale;
+			radius = Math.max(0, radius);
+		}
+		
 		weight = PercentGenerator.newPercent();
-		scale = PercentGenerator.relPercent(mutationRate);
-		int eatingRate = (int) ((weight*d1.getEatingRate()+(1-weight)*d2.getEatingRate()+scale));
+		int eatingRate = (int) ((weight*d1.getEatingRate()+(1-weight)*d2.getEatingRate()));
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			eatingRate += scale;
+			eatingRate = Math.max(0, moveSpeed);
+		}
+		
+		
 		weight = PercentGenerator.newPercent();
-		scale = PercentGenerator.relPercent(mutationRate);
-		int fleeRadius = (int) ((weight*d1.getFleeRadius()+(1-weight)*d2.getFleeRadius())+scale);
+		int fleeRadius = (int) ((weight*d1.getFleeRadius()+(1-weight)*d2.getFleeRadius()));
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			fleeRadius += scale;
+			fleeRadius = Math.max(0, fleeRadius);
+		}
+
 		weight = PercentGenerator.newPercent();
-		scale = PercentGenerator.relPercent(mutationRate);
-		int matingMinimum = (int) ((weight*d1.getMatingMinimum()+(1-weight)*d2.getMatingMinimum())+scale);
+		int matingMinimum = (int) ((weight*d1.getMatingMinimum()+(1-weight)*d2.getMatingMinimum()));
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			matingMinimum += scale;
+			matingMinimum = Math.max(0, matingMinimum);
+		}
+		
 		return new DNA(species, new Color((int)colorRed, (int)colorGreen, (int)colorBlue),food,fieldOfViewAngle,fieldOfViewRadius,moveSpeed,radius,mutationRate,eatingRate,fleeRadius,matingMinimum);
 	}
 

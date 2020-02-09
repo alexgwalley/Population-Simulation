@@ -66,7 +66,6 @@ public class WindowManager {
 		frame.setSize(width, height);
 		frame.setResizable(true);
 		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -78,7 +77,13 @@ public class WindowManager {
 		canvas.addMouseMotionListener((MouseMotionListener) Game.camera);
 		canvas.addMouseWheelListener((MouseWheelListener) Game.camera);
 		canvas.addMouseListener(Game.camera);
+		
+		canvas.addKeyListener(Game.keyboardManager);
+		
 		frame.add(canvas);
+		
+		frame.setVisible(true);
+		
 		
 		menubar = new JMenuBar();
 		

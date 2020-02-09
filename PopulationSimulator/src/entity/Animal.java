@@ -15,6 +15,8 @@ public class Animal extends Entity{
 	private String name = "";
 	private int timeAlive = 0;
 	
+	private int minMateAge = 400000;
+	
 	private Vector heading;
 	
 	private Animal chasedBy;
@@ -215,7 +217,7 @@ public class Animal extends Entity{
 		chasedBy = beingChased();
 		if(chasedBy != null) {
 			state = State.FLEE;
-		}else if(food > dna.getMatingMinimum()) {
+		}else if(food > dna.getMatingMinimum() && timeAlive > minMateAge) {
 			state = State.SEEK_MATE; 
 			return;
 		}else {
@@ -226,7 +228,7 @@ public class Animal extends Entity{
 	private void seekMate() {
 		//TODO:  Write function to have animals to look for a mate;
 		Animal a = checkMateInRange();
-		if(a != null) {
+		if(a != null && this.timeAlive > minMateAge && a.timeAlive > a.minMateAge) {
 			Vector to = a.getPos().sub(this.getPos());
 			heading = to.normalized();
 			state = State.GOING_TO_MATE;
@@ -254,13 +256,15 @@ public class Animal extends Entity{
 	}
 	
 	private void mate(Animal partner) {
+		
+		
 		//TODO:  Write function for when animals mate.
 		state = State.MATING;
 		// Combine DNA
 		DNA childDNA = this.dna.combine(this, partner);
 		
 		// Create new animal with dna
-		Animal a = new Animal(NameGenerator.newName(), this.getPos(), childDNA, 50); // Food should be the sum of the dna.matingLoss
+		Animal a = new Animal(NameGenerator.newName(), this.getPos(), childDNA, 30); // Food should be the sum of the dna.matingLoss
 		Game.animals.add(a);
 		
 		// this.food -= dna.matingLoss
@@ -285,7 +289,8 @@ public class Animal extends Entity{
 		
 		if(f instanceof Food) {
 			food += f.getFood();
-			Game.food.remove(f);
+			int index = Game.getChunkIndex(f.getPos());
+			Game.foodChunks[index].remove(f);
 		}else {
 			f.subFood(dna.getEatingRate());
 			food += Math.min(dna.getEatingRate(), f.getFood());

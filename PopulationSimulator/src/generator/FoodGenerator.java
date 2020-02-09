@@ -9,7 +9,7 @@ import math.Vector;
 public class FoodGenerator {
 	
 	private long lastSpawnedTime;
-	private int spawnPeriod = 6000;
+	private int spawnPeriod = 10000;
 	
 	private long timeDifference;
 	
@@ -29,7 +29,7 @@ public class FoodGenerator {
 	}
 	
 	public void generateStartingSpawn() {
-		for(int i = 0; i < 50; i++) spawn();
+		for(int i = 0; i < 30; i++) spawn();
 		
 	}
 	

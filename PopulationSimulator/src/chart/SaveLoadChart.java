@@ -36,7 +36,7 @@ public class SaveLoadChart {
 		ArrayList<Species> species = new ArrayList<Species>();
 		for(Animal a : Game.animals)
 			if(!species.contains(a.getDna().getSpecies())) species.add(a.getDna().getSpecies());
-		double time = (System.currentTimeMillis() - Game.getStartTime())/1000;
+		double time = Game.gameTime/1000;
 		for(Species specie : species) {
 			int totNum = 0;
 			int totFood = 0;

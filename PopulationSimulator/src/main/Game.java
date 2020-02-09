@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
@@ -39,8 +40,11 @@ public class Game implements Runnable {
 	// Updating
 	private static float simSpeed;
 	public static Camera camera;
+	public static KeyboardManager keyboardManager;
 	private long prevTime, prevTime2 = System.currentTimeMillis();
 	public static long dt = -1;
+	
+	public static long gameTime;
 	
 	// Simulation
 	private static long startTime;
@@ -67,7 +71,7 @@ public class Game implements Runnable {
 		width = w;
 		height = h;
 		
-		simSpeed = 25;
+		simSpeed = 50;
 	}
 	
 	@Override
@@ -78,6 +82,8 @@ public class Game implements Runnable {
 		while(running && !paused) {
 			update();
 			render();
+			
+			gameTime += simSpeed;
 		}
 		
 		stop();
@@ -93,6 +99,7 @@ public class Game implements Runnable {
 		startTime = System.currentTimeMillis();
 		
 		camera = new Camera();
+		keyboardManager = new KeyboardManager();
 		window = new WindowManager(title, width, height, this);
 		
 		foodGenerator = new FoodGenerator();
@@ -234,6 +241,9 @@ public class Game implements Runnable {
 			}
 		}catch (Exception e) {}
 		
+		// Render simSpeed
+		g.setColor(new Color(200, 200, 200));
+		g.drawString("x"+simSpeed, 10, height - 50);
 		
 		// Showing and clean-up
 		bs.show();
@@ -301,5 +311,15 @@ public class Game implements Runnable {
 	
 	public static long getStartTime() {
 		return startTime;
+	}
+	
+	public static void increaseSimSpeed() {
+		simSpeed *= 2;
+		simSpeed = Math.min(500, simSpeed);
+	}
+	
+	public static void decreaseSimSpeed() {
+		simSpeed /= 2;
+		simSpeed = Math.max(1, simSpeed);
 	}
 }

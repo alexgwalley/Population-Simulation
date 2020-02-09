@@ -26,8 +26,11 @@ public class AnimalGenerator {
 			pos = pos.scale(Game.getWorldDimentions());
 			//pos = pos.sub(Game.getWorldDimentions().scale((float) 0.5));
 			
-			DNA dna = new DNA(Species.getSpecies("basic"), new Color(200, 0, 0), food, (float)65, 100, 1, 30, (float)5, 10, 80, 60);
-			Animal a = new Animal(pos, dna, 50);
+			Color color = new Color((int)random.nextFloat()*255, (int)random.nextFloat()*255, (int)random.nextFloat()*255);
+			float foodAmt = 30;
+			int matingMin = 80;
+			DNA dna = new DNA(Species.getSpecies("basic"), color, food, (float)65, 100, 1, 30, (float)0.5, 10, 80, matingMin);
+			Animal a = new Animal(pos, dna, foodAmt);
 			
 			Game.animals.add(a);
 			
