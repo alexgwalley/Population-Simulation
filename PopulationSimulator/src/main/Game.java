@@ -3,11 +3,13 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import chart.SaveLoadChart;
 import comparator.CustomAnimalComparator;
 import entity.Animal;
 import entity.Food;
@@ -128,9 +130,9 @@ public class Game implements Runnable {
 		}
 		
 		//Adjusts screen whenever resized.
-		if(WindowManager.getFrame().getWidth() != width || WindowManager.getFrame().getHeight() != height) {
-			width = WindowManager.getFrame().getWidth();
-			height = WindowManager.getFrame().getHeight();
+		if(window.getFrame().getWidth() != width || window.getFrame().getHeight() != height) {
+			width = window.getFrame().getWidth();
+			height = window.getFrame().getHeight();
 		}
 	
 		g = bs.getDrawGraphics();
@@ -167,6 +169,17 @@ public class Game implements Runnable {
 		// Showing and clean-up
 		bs.show();
 		g.dispose();
+		
+		String data = "";
+		String[] lines;
+		try {
+			lines = SaveLoadChart.loadData("basic", window.getCurrentDisplay());
+			for(String line : lines)
+				data += line+"\n";
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		window.setChartText(data);
 		
 	}
 

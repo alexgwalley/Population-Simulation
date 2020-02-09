@@ -17,7 +17,7 @@ import chart.DataType;
 
 public class WindowManager {
 
-	private static JFrame frame;
+	private JFrame frame;
 	private Canvas canvas;
 	private JMenuBar menubar;
 	private JMenuItem save;
@@ -145,6 +145,10 @@ public class WindowManager {
 		chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	public void setChartText(String text) {
+		chartdata.setText(text);
+	}
+	
 	public Canvas getCanvas() {
 		return canvas;
 	}
@@ -153,7 +157,7 @@ public class WindowManager {
 		return this.currentDisplay;
 	}
 	
-	public static JFrame getFrame() {
+	public JFrame getFrame() {
 		return frame;
 	}
 	

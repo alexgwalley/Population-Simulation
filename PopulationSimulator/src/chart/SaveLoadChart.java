@@ -52,10 +52,10 @@ public class SaveLoadChart {
 		bw.close();
 	}
 	
-	public static Object[] loadData(String specie, DataType d) throws IOException {
+	public static String[] loadData(String specie, DataType d) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("res/chart.dna"));
 		String[] lines = (String[]) br.lines().toArray();
-		ArrayList<Object> out = new ArrayList<Object>();
+		ArrayList<String> out = new ArrayList<String>();
 		int index = 0;
 		switch(d) {
 		case TIME: index=0; break;
@@ -76,7 +76,7 @@ public class SaveLoadChart {
 			if(!data[1].equals(specie)) continue;
 			out.add(data[index]);
 		}
-		return out.toArray();
+		return (String[]) out.toArray();
 	}
 
 }
