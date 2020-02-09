@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
@@ -9,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
 import chart.DataType;
 import chart.SaveLoadChart;
+import comparator.CustomAnimalComparator;
 import entity.Animal;
 import entity.Food;
 import entity.Species;
@@ -268,11 +267,28 @@ public class Game implements Runnable {
 		g.drawString("x"+simSpeed, 10, height - 50);
 		
 		camera.render(g);
+		showLeaderBoard();
 		
 		// Showing and clean-up
 		bs.show();
 		g.dispose();
 		
+	}
+	
+	private void showLeaderBoard() {
+		int x = 0;
+		int y = 0;
+		int padding = 20;
+		
+		g.setColor(new Color(55, 55, 55, 175));
+		g.fillRect(x, y, 125, 125);
+		g.setColor(Color.WHITE);
+		x += padding*1.25;
+		y += padding;
+		for(int i = 0; i < 5; i++) {
+			g.drawString(i+1 + ". " + animals.get(i).getName(), x, y);
+			y+=padding;
+		}
 	}
 	
 	public static int getChunkIndex(Vector v) {
@@ -345,5 +361,9 @@ public class Game implements Runnable {
 	public static void decreaseSimSpeed() {
 		simSpeed /= 2;
 		simSpeed = Math.max(1, simSpeed);
+	}
+	
+	public static void sortLeaderboard() {
+		animals.sort(new CustomAnimalComparator());
 	}
 }

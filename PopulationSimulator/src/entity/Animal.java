@@ -282,10 +282,10 @@ public class Animal extends Entity{
 		Animal a = new Animal(NameGenerator.newName(), this.getPos().add(partner.heading.scale(2)), childDNA, 30); // Food should be the sum of the dna.matingLoss
 		Game.animals.add(a);
 		new Heart(getPos());
-		new Heart(getPos());
-		new Heart(getPos());
-		new Heart(getPos());
-		new Heart(getPos());
+//		new Heart(getPos());
+//		new Heart(getPos());
+//		new Heart(getPos());
+//		new Heart(getPos());
 		
 		// this.food -= dna.matingLoss
 		// partner.food -= partner.dna.matingLoss
@@ -329,6 +329,7 @@ public class Animal extends Entity{
 	private void die() {
 		//TODO
 		Game.animals.remove(this);
+		Game.sortLeaderboard();
 	}
 
 	public DNA getDna() {
