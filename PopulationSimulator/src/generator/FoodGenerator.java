@@ -9,7 +9,7 @@ import math.Vector;
 public class FoodGenerator {
 	
 	private long lastSpawnedTime;
-	private int spawnPeriod = 3000;
+	private int spawnPeriod = 6000;
 	
 	private long timeDifference;
 	
@@ -21,7 +21,7 @@ public class FoodGenerator {
 	
 	public void update() {
 		
-		if(System.currentTimeMillis() - lastSpawnedTime > spawnPeriod) {
+		if(System.currentTimeMillis() - lastSpawnedTime > spawnPeriod/Game.getSimSpeed()) {
 			lastSpawnedTime = System.currentTimeMillis();
 			spawn();
 		}

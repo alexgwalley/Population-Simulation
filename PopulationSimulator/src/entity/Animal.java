@@ -20,7 +20,6 @@ public class Animal extends Entity{
 	public Animal(String name, Vector pos, DNA dna, int food) {
 		this.name = name;
 		setPos(pos);
-		setVel(new Vector(1*dna.getMoveSpeed(),0));
 		this.dna = dna;
 		this.food = food;
 		Random rand = new Random();
@@ -51,10 +50,7 @@ public class Animal extends Entity{
 		g.setColor(Color.BLACK);
 		g.drawOval((int) (viewPos.get(0)), (int) (viewPos.get(1)), (int) (diam/Game.camera.getZoomAmount()), (int) (diam/Game.camera.getZoomAmount()));
 		// Draw Name
-		if(state == State.SEEK_MATE)
-			g.drawString(name + "(seeking mate)", (int) viewPos.get(0), (int) viewPos.get(1) - 20);
-		else
-			g.drawString(name, (int) viewPos.get(0), (int) viewPos.get(1) - 20);
+		g.drawString(name, (int) viewPos.get(0), (int) viewPos.get(1) - 20);
 		
 		// Draw Arc
 		g.setColor(Color.GRAY);
@@ -85,6 +81,8 @@ public class Animal extends Entity{
 			this.food -= (dna.getMoveSpeed()*Game.getSimSpeed()*(0.005f))/175f;
 			
 			if(this.food <= 0) this.die();
+			
+			this.revaluateState();
 			
 		}
 		

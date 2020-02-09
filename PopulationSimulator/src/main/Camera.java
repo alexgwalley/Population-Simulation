@@ -4,11 +4,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.Iterator;
+
+import javax.swing.event.MouseInputListener;
 
 import entity.Animal;
 import math.Vector;
 
-public class Camera implements MouseMotionListener, MouseWheelListener{
+public class Camera implements MouseMotionListener, MouseWheelListener, MouseInputListener{
 
 	
 	private static float scrollSpeedDampener = 2;
@@ -33,7 +36,9 @@ public class Camera implements MouseMotionListener, MouseWheelListener{
 
 	public void update() {
 		if(!followingAnimal) return;
-		pos = animalToFollow.getPos().sub(Game.getScreenDimentions().scale((float) 0.5));
+		zoomAmt = minZoomAmt;
+		pos = animalToFollow.getPos();
+		//System.out.println("Moving to animal");
 	}
 	
 	@Override
@@ -69,6 +74,7 @@ public class Camera implements MouseMotionListener, MouseWheelListener{
 	
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
+		followingAnimal = false;
 		zoomAmt += e.getUnitsToScroll() / scrollSpeedDampener;
 		if(zoomAmt < minZoomAmt) zoomAmt = minZoomAmt;
 		if(zoomAmt > maxZoomAmt) zoomAmt = maxZoomAmt;
@@ -95,6 +101,59 @@ public class Camera implements MouseMotionListener, MouseWheelListener{
 	
 	public Vector toViewPos(Vector pos) {
 		return pos.sub(this.pos).scale(1/zoomAmt).add(Game.getScreenDimentions().scale(1f/2f));
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+		Vector mousePos = new Vector(e.getX(), e.getY());
+		
+		Iterator<Animal> animalIterator = Game.animals.iterator();
+		
+		// Render all Animals
+		try {
+			while(animalIterator.hasNext()) {
+				Animal a = animalIterator.next();
+				float diam = a.getDna().getRadius()*2;
+				Vector viewPos = toViewPos(a.getPos().sub(new Vector(diam*0.5f, diam*0.5f)));
+			
+				Vector diff = mousePos.sub(viewPos);
+				
+				System.out.printf(" ( %f, %f ) dist: %f \n", viewPos.get(0), viewPos.get(1), diff.getMag());
+				
+				if(diff.getMag() < a.getDna().getRadius()) {
+					followAnimal(a);
+					System.out.println("Clicked on animal");
+					break;
+				}
+			}
+		}catch (Exception ex) {}
+
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

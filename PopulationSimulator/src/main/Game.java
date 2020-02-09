@@ -60,7 +60,7 @@ public class Game implements Runnable {
 		width = w;
 		height = h;
 		
-		simSpeed = 5;
+		simSpeed = 10;
 	}
 	
 	@Override
@@ -112,6 +112,7 @@ public class Game implements Runnable {
 		
 		
 		foodGenerator.update();
+		camera.update();
 		
 		Iterator<Animal> animalIterator = animals.iterator();
 		

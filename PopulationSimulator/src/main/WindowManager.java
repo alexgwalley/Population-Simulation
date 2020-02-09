@@ -65,7 +65,7 @@ public class WindowManager {
 		
 		canvas.addMouseMotionListener((MouseMotionListener) Game.camera);
 		canvas.addMouseWheelListener((MouseWheelListener) Game.camera);
-		
+		canvas.addMouseListener(Game.camera);
 		frame.add(canvas);
 		
 		menubar = new JMenuBar();
