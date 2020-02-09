@@ -12,6 +12,7 @@ import javax.swing.event.MouseInputListener;
 
 import entity.Animal;
 import entity.State;
+import gui.LeaderboardButton;
 import math.Vector;
 
 public class Camera implements MouseMotionListener, MouseWheelListener, MouseInputListener{
@@ -134,6 +135,8 @@ public class Camera implements MouseMotionListener, MouseWheelListener, MouseInp
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if(mouseDown == true && e.getButton() == MouseEvent.NOBUTTON) mouseDown = false;
+		for(LeaderboardButton b : Game.leaderboard)
+			b.handleHovered(new Vector(e.getX(), e.getY()));
 	}
 	
 	public void followAnimal(Animal a) {
@@ -179,6 +182,12 @@ public class Camera implements MouseMotionListener, MouseWheelListener, MouseInp
 			}
 		}catch (Exception ex) {}
 
+		
+		Iterator<LeaderboardButton> lbIter = Game.leaderboard.iterator();
+		
+		while(lbIter.hasNext()) {
+			lbIter.next().handleMouseClick();
+		}
 		
 	}
 

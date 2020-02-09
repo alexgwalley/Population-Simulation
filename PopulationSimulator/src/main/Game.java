@@ -16,6 +16,7 @@ import entity.Food;
 import entity.Species;
 import generator.AnimalGenerator;
 import generator.FoodGenerator;
+import gui.LeaderboardButton;
 import math.Vector;
 import sprite.Sprite;
 
@@ -55,6 +56,8 @@ public class Game implements Runnable {
 	
 	private static int numChunks = 9;
 	public static ArrayList<Food>[] foodChunks = new ArrayList[numChunks];
+
+	public static List<LeaderboardButton> leaderboard = new ArrayList<>();
 	
 	private final static Vector[] bounds = {
 			new Vector(1, 1),
@@ -101,10 +104,13 @@ public class Game implements Runnable {
 		
 		camera = new Camera();
 		keyboardManager = new KeyboardManager();
+		
 		window = new WindowManager(title, width, height, this);
 		
 		foodGenerator = new FoodGenerator();
 		animalGenerator = new AnimalGenerator();
+		
+		initLeaderboard();
 		
 		startNew();
 		
@@ -276,18 +282,27 @@ public class Game implements Runnable {
 	}
 	
 	private void showLeaderBoard() {
+		for(int i = 0; i < 5; i++) {
+			leaderboard.get(i).render(g);
+		}
+	}
+	
+	private void initLeaderboard() {
 		int x = 0;
 		int y = 0;
-		int padding = 20;
-		
-		g.setColor(new Color(55, 55, 55, 175));
-		g.fillRect(x, y, 125, 125);
-		g.setColor(Color.WHITE);
-		x += padding*1.25;
-		y += padding;
 		for(int i = 0; i < 5; i++) {
-			g.drawString(i+1 + ". " + animals.get(i).getName(), x, y);
-			y+=padding;
+			leaderboard.add(new LeaderboardButton(null, i+1, x, y, 100, 30));
+			y += 30;
+		}
+	}
+	
+	private static void updateLeaderboard() {
+		for(int i = 0; i < 5; i++) {
+			if(animals.get(i) != null) {
+				leaderboard.get(i).setAnimal(animals.get(i));
+			}else {
+				leaderboard.get(i).setAnimal(null);
+			}
 		}
 	}
 	
@@ -365,5 +380,7 @@ public class Game implements Runnable {
 	
 	public static void sortLeaderboard() {
 		animals.sort(new CustomAnimalComparator());
+		updateLeaderboard();
 	}
+
 }
