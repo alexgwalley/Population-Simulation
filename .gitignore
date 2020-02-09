@@ -6,3 +6,5 @@ PopulationSimulator/.settings/org.eclipse.jdt.core.prefs
 PopulationSimulator/res/chart.dna
 PopulationSimulator/res/chart.dna
 *.dna
+.recommenders/caches/identified-project-coordinates.json
+.recommenders/caches/manual-mappings.json
