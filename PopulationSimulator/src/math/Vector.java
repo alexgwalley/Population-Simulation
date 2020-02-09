@@ -82,12 +82,18 @@ public class Vector {
 	
 	public float getAngleDegrees() {
 		if(this.indices.length != 2) return -1000;
-		return (float)Math.toDegrees(Math.atan2(indices[1], indices[0]));
+		if(this.indices[0]>0) return (float)Math.toDegrees(Math.atan2(indices[1], indices[0]));
+		if(this.indices[0]<0) return (float)Math.toDegrees(Math.atan2(indices[1], indices[0]))+180f;
+		if(this.indices[1]>0) return 90f;
+		return 270f;
 	}
 	
 	public float getAngleRadians() {
 		if(this.indices.length != 2) return -1000;
-		return (float)Math.atan2(indices[1], indices[0]);
+		if(this.indices[0]>0) return (float)(Math.atan2(indices[1], indices[0]));
+		if(this.indices[0]<0) return (float)(Math.atan2(indices[1], indices[0])+Math.PI);
+		if(this.indices[1]>0) return (float) (Math.PI/2);
+		return (float) (3*Math.PI/2);
 	}
 	
 	public Vector rotateDegrees(float angle) {

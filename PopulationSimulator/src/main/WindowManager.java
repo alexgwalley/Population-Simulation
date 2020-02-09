@@ -19,6 +19,7 @@ import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
 
 import chart.DataType;
 
@@ -136,12 +137,16 @@ public class WindowManager {
 		
 		// XChart
 		// Create Chart
-		chart = QuickChart.getChart("Simple XChart Real-time Demo", "X", "Y", "b", new double[]{1.0, 2.0, 3.0}, new double[]{1.0, 2.0, 3.0});
-	 
-	    // Show it
+		chart = QuickChart.getChart("Simple XChart Real-time Demo", "Time", "Value", "b", new double[]{0}, new double[]{0});
+		//XYSeries popNumSeries = new XYSeries("popNum", new double[] {0}, new double[] {0}, new double[] {0}, org.knowm.xchart.internal.series.Series.DataType.Number);
+		//XYSeries foodNumSeries = new XYSeries("foodNum", new double[] {0}, new double[] {0}, new double[] {0}, org.knowm.xchart.internal.series.Series.DataType.Number);
+	    chart.addSeries("popNum", new double[] {0});
+	    chart.addSeries("foodNum", new double[] {0});
+		// Show it
 	    sw = new SwingWrapper<XYChart>(chart);
 	    sw.displayChart();
 
+	    
 		
 		dataTypes = new JMenu("Show Data");
 		
@@ -194,19 +199,24 @@ public class WindowManager {
 		chartTextData.setText(text);
 	}
 	
-	public void updateChart(String seriesName, float[] xAxis, float[] yAxis) {
+	public void updateChart(float[] xAxis, float[][] yAxis, DataType... filters) {
 		double[] errorBars = new double[xAxis.length];
 		for(int i = 0; i < errorBars.length; i++) {
 			errorBars[i] = 0;
 		}
-		double[] xAxisDoub = new double[xAxis.length];
-		double[] yAxisDoub = new double[yAxis.length];
+		double[][] popNum = new double[2][xAxis.length];
+		double[][] foodNum = new double[2][xAxis.length];
+		
 		for(int i = 0; i < xAxis.length; i++) {
-			xAxisDoub[i] = (double) xAxis[i];
-			yAxisDoub[i] = (double) yAxis[i];
-			System.out.println(yAxis[i]);
+			popNum[0][i] = (double) xAxis[i];
+			popNum[1][i] = (double) yAxis[1][i];
+			
+			foodNum[0][i] = (double) xAxis[i];
+			foodNum[1][i] = (double) yAxis[2][i];
 		}
-		chart.updateXYSeries("b", xAxisDoub, yAxisDoub, errorBars);
+		
+		chart.updateXYSeries("popNum", popNum[0], popNum[1], null);
+		chart.updateXYSeries("foodNum", foodNum[0], foodNum[1], null);
 		sw.repaintChart();
 
 		//chart.addSeries(seriesName, xAxis, yAxis);

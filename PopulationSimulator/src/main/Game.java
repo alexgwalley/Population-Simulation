@@ -6,6 +6,7 @@ import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -44,6 +45,8 @@ public class Game implements Runnable {
 	public static long dt = -1;
 	
 	// Simulation
+	private static long startTime;
+	
 	public static ArrayList<Food> food = new ArrayList<>();
 	public static ArrayList<Animal> animals = new ArrayList<>();
 	
@@ -81,6 +84,8 @@ public class Game implements Runnable {
 	}
 	
 	private void init() {
+		
+		startTime = System.currentTimeMillis();
 		
 		camera = new Camera();
 		window = new WindowManager(title, width, height, this);
@@ -140,31 +145,34 @@ public class Game implements Runnable {
 
 		if(System.currentTimeMillis()-prevTime2 >= 1000) {
 			
-			String data = "";
-			String[] lines;
-			float[] values;
-			float[] times;
+			List<String>[] lines = new List[3];
+			
+			
+			
+			
 			try {
 				SaveLoadChart.saveData();
-				lines = SaveLoadChart.loadData("basic", window.getCurrentDisplay());
-				values = new float[lines.length];
-				for(int i = 0; i < lines.length; i++) {
-					data += lines[i]+"\n";
-					values[i] = Float.parseFloat(lines[i]);
-				}
-				lines = SaveLoadChart.loadData("basic", DataType.TIME);
-				times = new float[lines.length];
-				for(int i = 0; i < lines.length; i++) {
-					data += lines[i]+"\n";
-					times[i] = Float.parseFloat(lines[i]);
+				lines = SaveLoadChart.loadData("basic", DataType.TIME, DataType.NUM, DataType.FOOD);
+				
+//				for(int i = 0; i < 3; i++) {
+//					System.out.println(lines[i]);
+//				}
+				
+				float[][] allValues = new float[3][lines[0].size()];
+				float[] times;
+				
+				for(int i = 0; i < 3; i++) {
+					for(int j = 0; j < lines[0].size(); j++) {
+						allValues[i][j] = Float.parseFloat(lines[i].get(j));
+					}
 				}
 				
-				window.updateChart("b", times, values);
+				
+				window.updateChart(allValues[0], allValues, DataType.TIME, DataType.NUM, DataType.FOOD);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			window.setChartText(data);
 			
 			prevTime2+=1000;
 		}
@@ -260,5 +268,9 @@ public class Game implements Runnable {
 	
 	public static Vector getScreenDimentions() {
 		return new Vector(width, height);
+	}
+	
+	public static long getStartTime() {
+		return startTime;
 	}
 }

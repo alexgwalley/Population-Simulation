@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import entity.Animal;
@@ -19,7 +21,7 @@ public class SaveLoadChart {
 		ArrayList<String> species = new ArrayList<String>();
 		for(Animal a : Game.animals)
 			if(!species.contains(a.getDna().getSpecies())) species.add(a.getDna().getSpecies());
-		double time = System.currentTimeMillis();
+		double time = (System.currentTimeMillis() - Game.getStartTime())/1000;
 		for(String specie : species) {
 			int totNum = 0;
 			int totFood = 0;
@@ -53,35 +55,34 @@ public class SaveLoadChart {
 		bw.close();
 	}
 	
-	public static String[] loadData(String specie, DataType d) throws IOException {
+	public static List<String>[] loadData(String specie, DataType... fil) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("res/chart.dna"));
 		Object[] temp = br.lines().toArray();
 		String[] lines = new String[temp.length];
 		for(int i = 0; i<lines.length; i++) lines[i] = temp[i].toString();
 		ArrayList<String> out = new ArrayList<String>();
-		int index = 0;
-		switch(d) {
-		case TIME: index=0; break;
-		case NUM: index=2; break;
-		case FOOD: index=3; break;
-		case FOVA: index=4; break;
-		case FOVR: index=5; break;
-		case MOVESPEED: index=6; break;
-		case RADIUS: index=7; break;
-		case MUTATIONRATE: index=8; break;
-		case EATINGRATE: index=9; break;
-		case FLEERADIUS: index=10; break;
-		case MATINGMIN: index=11; break;
-		default: index=1; break;
+		List<DataType> filters = Arrays.asList(fil);
+
+		List<String>[] outData = new ArrayList[fil.length];
+		for(int i = 0; i < fil.length; i++) {
+			outData[i] = new ArrayList<String>();
 		}
+		
 		for(String line : lines) {
 			String[] data = line.split(",");
-			if(data.length > 1 && !data[1].equals(specie)) continue;
-			out.add(data[index]);
+			
+			int index = 0;
+			for(int j = 0; j < data.length; j++) {
+				if(data.length > 1 && !data[1].equals(specie)) continue;
+				if(filters.contains(DataType.valueOf(j))) {
+					outData[index].add(data[j]);
+					index += 1;
+				}
+//				out.add(data[index]);
+			}
 		}
-		String[] out2 = new String[out.toArray().length];
-		for(int i = 0; i<out2.length; i++) out2[i] = out.get(i);
-		return out2;
+
+		return outData;
 	}
 
 }
