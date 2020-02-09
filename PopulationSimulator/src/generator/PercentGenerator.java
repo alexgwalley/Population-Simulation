@@ -12,7 +12,7 @@ public class PercentGenerator {
 	}
 	
 	public static final float relPercent(float stdv) {
-		return (float) (r.nextGaussian())*stdv+1f;
+		return (float) (r.nextGaussian())*stdv;
 	}
 
 }
