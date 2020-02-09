@@ -51,10 +51,10 @@ public class AnimalGenerator {
 			
 			Game.animals.add(a);
 			new Heart(pos);
-			new Heart(pos);
-			new Heart(pos);
-			new Heart(pos);
-			new Heart(pos);
+//			new Heart(pos);
+//			new Heart(pos);
+//			new Heart(pos);
+//			new Heart(pos);
 			
 			Game.animals.sort(new CustomAnimalComparator());
 			
@@ -67,7 +67,7 @@ public class AnimalGenerator {
 		
 		HashMap food = new HashMap();
 		food.put("food", 30);
-		food.put("basic", 70);
+		food.put("basic", 100);
 		//food.put("basic", 30);
 		for(int i = 0; i < num; i++) { 
 			Vector pos = new Vector(random.nextFloat(), random.nextFloat());
@@ -88,7 +88,7 @@ public class AnimalGenerator {
 			float moveSpeed = (float) (1 + PercentGenerator.relPercent(mutationRate)*0.15);
 			int radius = (int) (30 + PercentGenerator.relPercent(mutationRate));
 			int eatingRate = (int) (10 + PercentGenerator.relPercent(mutationRate));
-			int fleeRadius = (int) (radius + 15 + PercentGenerator.relPercent(mutationRate));
+			int fleeRadius = (int) (radius + 30 + PercentGenerator.relPercent(mutationRate));
 			int matingMinimum = 80;
 			
 			DNA dna = new DNA(Species.getSpecies("predator"), color, food, fieldOfViewAngle, fieldOfViewRadius, moveSpeed, radius, mutationRate, eatingRate, fleeRadius, matingMin);

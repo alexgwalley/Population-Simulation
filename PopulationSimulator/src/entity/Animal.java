@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Random;
 
@@ -72,12 +73,13 @@ public class Animal extends Entity{
 		g.setColor(Color.BLACK);
 		g.drawOval((int) (viewPos.get(0)), (int) (viewPos.get(1)), (int) (diam/Game.camera.getZoomAmount()), (int) (diam/Game.camera.getZoomAmount()));
 		// Draw Name
+		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));
 		if(state == State.HUNTING)
-			g.drawString(name + "(Hunting)", (int) viewPos.get(0), (int) viewPos.get(1) - 20);
+			g.drawString(name + "(Hunting)", (int) viewPos.get(0) - dna.getRadius(), (int) viewPos.get(1) - 20);
 		else if(state == State.FLEE)
-			g.drawString(name + "(Fleeing)", (int) viewPos.get(0), (int) viewPos.get(1) - 20);
+			g.drawString(name + "(Fleeing)", (int) viewPos.get(0) - dna.getRadius(), (int) viewPos.get(1) - 20);
 		else
-			g.drawString(name, (int) viewPos.get(0), (int) viewPos.get(1) - 20);
+			g.drawString(name, (int) viewPos.get(0) - dna.getRadius(), (int) viewPos.get(1) - 20);
 		
 		// Draw Arc
 
@@ -148,7 +150,7 @@ public class Animal extends Entity{
 	private Entity getFoodInSight() {
 		
 		for(Animal a : Game.animals) {
-			if(!dna.getFood().containsKey(a.dna.getSpecies().toString())) {continue;}
+			if(!dna.getFood().containsKey(a.dna.getSpecies().toString())) continue;
 			if(food > dna.getFood().get(a.dna.getSpecies().toString())) continue; // If not desperate enough
 			
 			Vector to = a.getPos().sub(this.getPos());
@@ -259,6 +261,7 @@ public class Animal extends Entity{
 		for(Animal a : Game.animals) {
 			if(a == this) continue;
 			if(a.state != State.SEEK_MATE && a.state != State.GOING_TO_MATE) continue;
+			if(a.dna.getSpecies() != this.dna.getSpecies()) continue;
 			
 			Vector to = a.getPos().sub(this.getPos());
 			if(to.getMag() < dna.getMatingMinimum()+dna.getRadius()+a.getDna().getRadius() &&
@@ -322,8 +325,6 @@ public class Animal extends Entity{
 			f.subFood(dna.getEatingRate());
 			food += Math.min(dna.getEatingRate(), f.getFood());
 		}
-		
-		revaluateState();
 	}
 	
 	private void die() {

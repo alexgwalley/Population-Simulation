@@ -28,8 +28,8 @@ public class FoodGenerator {
 		
 	}
 	
-	public void generateStartingSpawn() {
-		for(int i = 0; i < 30; i++) spawn();
+	public void generateStartingSpawn(int num) {
+		for(int i = 0; i < num; i++) spawn();
 		
 	}
 	

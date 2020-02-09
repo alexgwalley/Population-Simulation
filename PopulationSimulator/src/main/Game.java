@@ -54,16 +54,16 @@ public class Game implements Runnable {
 	public static ArrayList<Animal> animals = new ArrayList<Animal>();
 	public static ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 	
-	private static int numChunks = 9;
+	private static int numChunks = 16;
 	public static ArrayList<Food>[] foodChunks = new ArrayList[numChunks];
 
 	public static List<LeaderboardButton> leaderboard = new ArrayList<>();
 	
 	private final static Vector[] bounds = {
 			new Vector(1, 1),
-			new Vector(2001, 2001)
+			new Vector(4001, 4001)
 	};
-	final static Vector worldDim = new Vector(2000, 2000);
+	final static Vector worldDim = new Vector(4000, 4000);
 	
 	private static FoodGenerator foodGenerator;
 	private static AnimalGenerator animalGenerator;
@@ -127,11 +127,14 @@ public class Game implements Runnable {
 	}
 	
 	private void startNew() {
+		
+		
+		
 		new Species("basic");
 		new Species("predator");
 		
-		foodGenerator.generateStartingSpawn();
-		animalGenerator.generateBasics(5);
+		foodGenerator.generateStartingSpawn(100);
+		animalGenerator.generateBasics(18);
 		animalGenerator.generatePredators(5);
 		
 		SaveLoadChart.wipeData();

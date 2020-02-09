@@ -84,6 +84,8 @@ public class Camera implements MouseMotionListener, MouseWheelListener, MouseInp
 		y += padding;
 		g.drawString("Eating Rate: " + animalToFollow.getDna().getEatingRate(), x, y);
 		y += padding;
+		g.drawString("Radius: " + animalToFollow.getDna().getRadius(), x, y);
+		y += padding;
 		g.drawString("Flee Radius: " + animalToFollow.getDna().getFleeRadius(), x, y);
 		y += padding;
 		g.drawString("Mating Minimum: " + animalToFollow.getDna().getMatingMinimum(), x, y);

@@ -33,9 +33,9 @@ public class LeaderboardButton {
 			g.setColor(new Color(55, 55, 55, 175));
 		else
 			g.setColor(new Color(111, 111, 111, 175));
-		g.fillRect(x+ 20, (int) (y), width, height);
+		g.fillRect(x, (int) (y), width, height);
 		g.setColor(new Color(255, 255, 255));
-		g.drawString(number + ". " + animal.getName(), x, y+height/2);
+		g.drawString(number + ". " + animal.getName(), x+20, y+height/2);
 	}
 	
 	public void setAnimal(Animal a) {
