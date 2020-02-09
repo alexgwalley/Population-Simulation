@@ -19,6 +19,7 @@ import javax.swing.SpinnerNumberModel;
 
 import entity.DNA;
 import entity.Species;
+import generator.AnimalGenerator;
 import generator.NameGenerator;
 
 public class AddSpecies extends JFrame {
@@ -48,13 +49,14 @@ public class AddSpecies extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Species s = new Species(SpeciesName.getText());
-				HashMap<String,Integer> food = new HashMap<String,Integer>(){
-					for(int i = 0; i < Species.speciesList.size(); i++){
-							put(Species.speciesList.get(i), Integer.parseInt(speciesTolerance[i].getText()));
+				HashMap<String,Integer> food = new HashMap<String,Integer>() {
+					{
+						for(int i = 0; i < Species.speciesList.size(); i++)
+							put(Species.speciesList.get(i).toString(), Integer.parseInt(speciesTolerance[i].getText()));
 					}
 				};
-				DNA d = new DNA(s, new Color(colorRed.getNumber(), colorGreen.getNumber(), colorBlue.getNumber()), food, fova.getNumber(), fovr.getNumber(),movespeed.getNumber(),radius.getNumber(),eatrate.getNumber(),fleeradius.getNumber(),matemin.getNumber(),mutrate.getNumber());
-				
+				DNA d = new DNA(s, new Color((int)colorRed.getNumber(), (int)colorGreen.getNumber(), (int)colorBlue.getNumber()), food, (float)fova.getNumber(), (int)fovr.getNumber(),(float)movespeed.getNumber(),(int)radius.getNumber(),(float)mutrate.getNumber(),(int)eatrate.getNumber(),(int)fleeradius.getNumber(),(int)matemin.getNumber());
+				AnimalGenerator.generateSpecies(s, 10);
 			}
 			
 		});

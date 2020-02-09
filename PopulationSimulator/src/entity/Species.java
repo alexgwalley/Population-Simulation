@@ -9,7 +9,7 @@ public class Species {
 	public static ArrayList<Species> speciesList = new ArrayList<Species>();
 	
 	private String name;
-	private DNA baseDNA;
+	public DNA baseDNA;
 	public static boolean needsUpdate = false;
 	
 	public Species(String name, DNA baseDNA) {
