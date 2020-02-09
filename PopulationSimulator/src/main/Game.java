@@ -51,6 +51,7 @@ public class Game implements Runnable {
 	
 	public static ArrayList<Food> food = new ArrayList<Food>();
 	public static ArrayList<Animal> animals = new ArrayList<Animal>();
+	public static ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 	
 	private static int numChunks = 9;
 	public static ArrayList<Food>[] foodChunks = new ArrayList[numChunks];
@@ -149,6 +150,8 @@ public class Game implements Runnable {
 			
 		}
 		
+		for(Sprite sprite: sprites) sprite.update();
+		
 		//Check if the system needs to be saved or loaded.
 		//This is done so that saving and loading doesn't run into concurrent use errors.
 	
@@ -240,6 +243,8 @@ public class Game implements Runnable {
 				animalIterator.next().render(g);
 			}
 		}catch (Exception e) {}
+		
+		for(Sprite sprite:sprites) sprite.render();
 		
 		// Render simSpeed
 		g.setColor(new Color(200, 200, 200));
