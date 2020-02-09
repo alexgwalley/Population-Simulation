@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
+import generator.NameGenerator;
 import main.Game;
 import math.Vector;
 
@@ -29,6 +30,23 @@ public class Animal extends Entity{
 	
 	public Animal(String name, Vector pos, Vector heading, DNA dna, int food) {
 		this.name = name;
+		setPos(pos);
+		this.heading = heading;
+		this.dna = dna;
+		this.food = food;
+	}
+	
+	public Animal(Vector pos, DNA dna, int food) {
+		this.name = NameGenerator.newName();
+		setPos(pos);
+		this.dna = dna;
+		this.food = food;
+		Random rand = new Random();
+		this.heading = new Vector(rand.nextFloat(), rand.nextFloat()).normalized();
+	}
+	
+	public Animal(Vector pos, Vector heading, DNA dna, int food) {
+		this.name = NameGenerator.newName();
 		setPos(pos);
 		this.heading = heading;
 		this.dna = dna;
@@ -230,7 +248,7 @@ public class Animal extends Entity{
 		DNA childDNA = this.dna.combine(this, partner);
 		
 		// Create new animal with dna
-		Animal a = new Animal("Child", this.getPos(), childDNA, 50); // Food should be the sum of the dna.matingLoss
+		Animal a = new Animal(NameGenerator.newName(), this.getPos(), childDNA, 50); // Food should be the sum of the dna.matingLoss
 		Game.animals.add(a);
 		
 		// this.food -= dna.matingLoss
