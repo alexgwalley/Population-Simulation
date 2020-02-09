@@ -52,7 +52,7 @@ public class WindowManager {
 		System.out.println("JFrame Initiated");
 		
 		frame.setSize(width, height);
-		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
@@ -145,12 +145,20 @@ public class WindowManager {
 		chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	public void setChartText(String text) {
+		chartdata.setText(text);
+	}
+	
 	public Canvas getCanvas() {
 		return canvas;
 	}
 	
 	public DataType getCurrentDisplay() {
 		return this.currentDisplay;
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 	
 	private class ChangeData implements ActionListener{
