@@ -152,7 +152,7 @@ public class Game implements Runnable {
 
 		if(System.currentTimeMillis()-prevTime2 >= 1000) {
 			
-			List<String>[] lines = new List[3];
+			List<String>[] lines = new List[12];
 			
 			try {
 				SaveLoadChart.saveData();
@@ -183,7 +183,7 @@ public class Game implements Runnable {
 				e.printStackTrace();
 			}
 			
-			prevTime2+=1000;
+			prevTime2 = System.currentTimeMillis();
 		}
 	}
 	

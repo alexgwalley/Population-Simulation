@@ -88,7 +88,7 @@ public class SaveLoadChart {
 			
 			int index = 0;
 			for(int j = 0; j < data.length; j++) {
-				if(data.length > 1 && !data[1].equals(specie)) continue;
+				if(data.length > 1 && !data[1].equals(specie.toString())) continue;
 				if(filters.contains(DataType.valueOf(j))) {
 					outData[index].add(data[j]);
 					index += 1;
