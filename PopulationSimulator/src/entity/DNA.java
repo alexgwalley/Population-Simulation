@@ -115,11 +115,7 @@ public class DNA {
 		int radius = (int) ((weight*d1.getRadius()+(1-weight)*d2.getRadius())+scale);
 		weight = PercentGenerator.newPercent();
 		scale = PercentGenerator.relPercent(mutationRate);
-<<<<<<< HEAD
-		int eatingRate = (int) ((weight*d1.getEatingRate()+(1-weight)*d2.getEatingRate()*scale));
-=======
 		int eatingRate = (int) ((weight*d1.getEatingRate()+(1-weight)*d2.getEatingRate()+scale));
->>>>>>> a1ca35e8f29a14e712698345511462db18d6ffe7
 		weight = PercentGenerator.newPercent();
 		scale = PercentGenerator.relPercent(mutationRate);
 		int fleeRadius = (int) ((weight*d1.getFleeRadius()+(1-weight)*d2.getFleeRadius())+scale);
