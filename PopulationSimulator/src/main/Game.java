@@ -127,12 +127,14 @@ public class Game implements Runnable {
 	}
 	
 	private void startNew() {
-		new Species("basic");
+		new Species("herbivore");
+		new Species("omnivore");
 		new Species("predator");
 		
 		foodGenerator.generateStartingSpawn();
-		animalGenerator.generateBasics(5);
+		animalGenerator.generateHerbivores(10);
 		animalGenerator.generatePredators(5);
+		animalGenerator.generatePredators(2);
 		
 		SaveLoadChart.wipeData();
 		
@@ -192,7 +194,7 @@ public class Game implements Runnable {
 						DataType.RADIUS, DataType.MUTATIONRATE, DataType.EATINGRATE, 
 						DataType.FLEERADIUS, DataType.MATINGMIN};
 				
-				lines = SaveLoadChart.loadData(Species.getSpecies("basic"), filters);
+				lines = SaveLoadChart.loadData(Species.getSpecies("herbivore"), filters);
 				
 				float[][] allValues = new float[filters.length][lines[0].size()];
 				float[] times;
