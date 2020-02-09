@@ -139,6 +139,17 @@ public class WindowManager {
 		dataTypes.add(eatrate);
 		dataTypes.add(fleerad);
 		dataTypes.add(matemin);
+		ChangeData buttonAction = new ChangeData();
+		num.addActionListener(buttonAction);
+		food.addActionListener(buttonAction);
+		fova.addActionListener(buttonAction);
+		fovr.addActionListener(buttonAction);
+		movespeed.addActionListener(buttonAction);
+		radius.addActionListener(buttonAction);
+		mutrate.addActionListener(buttonAction);
+		eatrate.addActionListener(buttonAction);
+		fleerad.addActionListener(buttonAction);
+		matemin.addActionListener(buttonAction);
 		
 		chartdata = new JTextArea();
 		chartdata.setSize(200, height);
