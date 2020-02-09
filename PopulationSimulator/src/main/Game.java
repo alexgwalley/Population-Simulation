@@ -58,7 +58,7 @@ public class Game implements Runnable {
 		width = w;
 		height = h;
 		
-		simSpeed = 1;
+		simSpeed = 5;
 	}
 	
 	@Override
@@ -114,8 +114,12 @@ public class Game implements Runnable {
 		Iterator<Animal> animalIterator = animals.iterator();
 		
 		// Render all Animals
-		while(animalIterator.hasNext()) {
-			animalIterator.next().update();
+		try {
+			while(animalIterator.hasNext()) {
+				animalIterator.next().update();
+			}
+		}catch (Exception e) {
+			
 		}
 	}
 	
@@ -151,12 +155,11 @@ public class Game implements Runnable {
 		}
 		
 		Iterator<Animal> animalIterator = animals.iterator();
-		// Render all Animals
-		while(animalIterator.hasNext()) {
-			Animal a = animalIterator.next();
-			a.render(g);
-			//System.out.println(a);
-		}
+		try {
+			while(animalIterator.hasNext()) {
+				animalIterator.next().render(g);
+			}
+		}catch (Exception e) {}
 		
 		
 		// Showing and clean-up

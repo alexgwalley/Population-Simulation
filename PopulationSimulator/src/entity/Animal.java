@@ -10,7 +10,7 @@ import math.Vector;
 public class Animal extends Entity{
 	
 	private DNA dna;
-	private int food;
+	private float food;
 	private State state = State.SEEK_FOOD;
 	private String name = "";
 	private int timeAlive = 0;
@@ -44,7 +44,7 @@ public class Animal extends Entity{
 		Vector viewPos = Game.camera.toViewPos(getPos().sub(new Vector(diam*0.5f, diam*0.5f)));
 		Vector eyePos = Game.camera.toViewPos(getPos().add(heading.scale(20)));
 		Vector actPos = Game.camera.toViewPos(getPos());
-		g.setColor(dna.getColor());
+		g.setColor(new Color(dna.getColor().getRed(), dna.getColor().getGreen(), dna.getColor().getBlue()));
 		g.fillOval((int) (viewPos.get(0)), (int) (viewPos.get(1)), (int) (diam/Game.camera.getZoomAmount()), (int) (diam/Game.camera.getZoomAmount()));
 		// Draw outline
 		g.setColor(Color.BLACK);
@@ -67,7 +67,7 @@ public class Animal extends Entity{
 		g.drawLine((int)actPos.get(0), (int)actPos.get(1), (int)rightEnd.get(0), (int)rightEnd.get(1));
 		
 		// Draw mating circle
-		if(state == State.SEEK_MATE) {
+		if(state == State.SEEK_MATE || state == State.GOING_TO_MATE) {
 			g.setColor(Color.PINK);
 			float matingCircleDiam = dna.getMatingMinimum()*2;
 			Vector matingCirclePos = Game.camera.toViewPos(getPos().sub(new Vector(matingCircleDiam*0.5f, matingCircleDiam*0.5f)));
@@ -83,6 +83,12 @@ public class Animal extends Entity{
 		if(state != State.EAT && state != State.MATING) {
 			setPos(getPos().add(this.getVel().scale(Game.getSimSpeed()*(0.005f))));
 			heading = getVel().normalized();
+			
+			// Lose food from moving
+			//this.food -= (dna.getMoveSpeed()*Game.getSimSpeed()*(0.005f))*1e-7;
+			
+			if(this.food <= 0) this.die();
+			
 		}
 		
 		timeAlive += Game.getSimSpeed();
@@ -90,6 +96,10 @@ public class Animal extends Entity{
 		if(state == State.SEEK_FOOD) {
 			seekFood();
 		}
+		if(state == State.SEEK_MATE || state == State.GOING_TO_MATE)
+			seekMate();
+		
+
 	}
 	
 	private void checkAndRecalcHeadingEdges() {
@@ -133,7 +143,6 @@ public class Animal extends Entity{
 	private void revaluateState() {
 		if(food > dna.getMatingMinimum()) {
 			state = State.SEEK_MATE; 
-			System.out.println("Seeking MATE");
 			return;
 		}else {
 			state = State.SEEK_FOOD;
@@ -145,19 +154,26 @@ public class Animal extends Entity{
 		//TODO:  Write function to have animals to look for a mate;
 		Animal a = checkMateInRange();
 		if(a != null) {
-			System.out.println("I see mate!");
 			Vector to = a.getPos().sub(this.getPos());
 			heading = to.normalized();
+			state = State.GOING_TO_MATE;
+			if(to.getMag() < dna.getRadius() + a.getDna().getRadius()) {
+				mate(a);
+			}
+		}else {
+			revaluateState();
 		}
 	}
 	
 	private Animal checkMateInRange() {
 		for(Animal a : Game.animals) {
 			if(a == this) continue;
-			if(a.state != State.SEEK_MATE) continue;
+			if(a.state != State.SEEK_MATE && a.state != State.GOING_TO_MATE) continue;
 			
 			Vector to = a.getPos().sub(this.getPos());
-			if(to.getMag() < dna.getMatingMinimum()) {
+			if(to.getMag() < dna.getMatingMinimum()+dna.getRadius()+a.getDna().getRadius() &&
+					this.state !=  State.MATING &&
+					a.state != State.MATING) {
 				return a;
 			}
 		}
@@ -166,6 +182,20 @@ public class Animal extends Entity{
 	
 	private void mate(Animal partner) {
 		//TODO:  Write function for when animals mate.
+		state = State.MATING;
+		// Combine DNA
+		DNA childDNA = this.dna.combine(this, partner);
+		
+		// Create new animal with dna
+		Animal a = new Animal("Child", this.getPos(), childDNA, 50); // Food should be the sum of the dna.matingLoss
+		Game.animals.add(a);
+		
+		// this.food -= dna.matingLoss
+		// partner.food -= partner.dna.matingLoss
+		this.food -= 50;
+		partner.food -= 50;
+		this.revaluateState();
+		partner.revaluateState();
 	}
 	
 	private void flee(Animal predator) {
@@ -195,7 +225,7 @@ public class Animal extends Entity{
 		this.dna = dna;
 	}
 
-	public int getFood() {
+	public float getFood() {
 		return food;
 	}
 

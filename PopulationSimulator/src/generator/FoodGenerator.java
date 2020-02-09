@@ -38,7 +38,7 @@ public class FoodGenerator {
 		Vector pos = new Vector(random.nextFloat(), random.nextFloat());
 		pos = pos.scale(Game.getWorldDimentions());
 		pos = pos.sub(Game.getWorldDimentions().scale((float) 0.5));
-		Food newFood = new Food(pos, 100);
+		Food newFood = new Food(pos, 10);
 		Game.food.add(newFood);
 	}
 	
