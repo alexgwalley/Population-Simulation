@@ -15,6 +15,7 @@ import comparator.CustomAnimalComparator;
 import entity.Animal;
 import entity.DNA;
 import entity.Food;
+import entity.Species;
 import math.Vector;
 
 public class SaveLoadGame {
@@ -73,7 +74,7 @@ public class SaveLoadGame {
 			HashMap food = new HashMap();
 			food.put("food", 100);
 			
-			DNA d = new DNA(data[5],new Color(Integer.parseInt(data[6]),Integer.parseInt(data[7]),Integer.parseInt(data[8])),food,Float.parseFloat(data[9]),Integer.parseInt(data[10]),Integer.parseInt(data[11]),Integer.parseInt(data[12]),Float.parseFloat(data[13]),Integer.parseInt(data[14]),Integer.parseInt(data[15]),Integer.parseInt(data[16]));
+			DNA d = new DNA(Species.getSpecies(data[5]),new Color(Integer.parseInt(data[6]),Integer.parseInt(data[7]),Integer.parseInt(data[8])),food,Float.parseFloat(data[9]),Integer.parseInt(data[10]),Integer.parseInt(data[11]),Integer.parseInt(data[12]),Float.parseFloat(data[13]),Integer.parseInt(data[14]),Integer.parseInt(data[15]),Integer.parseInt(data[16]));
 			Game.animals.add(new Animal(data[1], new Vector(Float.parseFloat(data[2]),Float.parseFloat(data[3])), d, Float.parseFloat(data[4])));
 		}
 		br.close();

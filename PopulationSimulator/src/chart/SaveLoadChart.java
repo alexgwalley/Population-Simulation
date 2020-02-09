@@ -13,6 +13,7 @@ import java.util.List;
 
 import entity.Animal;
 import entity.DNA;
+import entity.Species;
 import main.Game;
 
 public class SaveLoadChart {
@@ -32,11 +33,11 @@ public class SaveLoadChart {
 	
 	public static void saveData() throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter("res/chart.dna", true));
-		ArrayList<String> species = new ArrayList<String>();
+		ArrayList<Species> species = new ArrayList<Species>();
 		for(Animal a : Game.animals)
 			if(!species.contains(a.getDna().getSpecies())) species.add(a.getDna().getSpecies());
 		double time = (System.currentTimeMillis() - Game.getStartTime())/1000;
-		for(String specie : species) {
+		for(Species specie : species) {
 			int totNum = 0;
 			int totFood = 0;
 			float totFOVa = 0;
@@ -69,7 +70,7 @@ public class SaveLoadChart {
 		bw.close();
 	}
 	
-	public static List<String>[] loadData(String specie, DataType... fil) throws IOException {
+	public static List<String>[] loadData(Species specie, DataType... fil) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("res/chart.dna"));
 		Object[] temp = br.lines().toArray();
 		String[] lines = new String[temp.length];

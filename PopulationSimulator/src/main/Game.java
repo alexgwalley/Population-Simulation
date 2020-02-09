@@ -13,6 +13,7 @@ import chart.DataType;
 import chart.SaveLoadChart;
 import entity.Animal;
 import entity.Food;
+import entity.Species;
 import generator.AnimalGenerator;
 import generator.FoodGenerator;
 import math.Vector;
@@ -44,8 +45,8 @@ public class Game implements Runnable {
 	// Simulation
 	private static long startTime;
 	
-	public static ArrayList<Food> food = new ArrayList<>();
-	public static ArrayList<Animal> animals = new ArrayList<>();
+	public static ArrayList<Food> food = new ArrayList<Food>();
+	public static ArrayList<Animal> animals = new ArrayList<Animal>();
 	
 	private static int numChunks = 9;
 	public static ArrayList<Food>[] foodChunks = new ArrayList[numChunks];
@@ -160,7 +161,7 @@ public class Game implements Runnable {
 						DataType.RADIUS, DataType.MUTATIONRATE, DataType.EATINGRATE, 
 						DataType.FLEERADIUS, DataType.MATINGMIN};
 				
-				lines = SaveLoadChart.loadData("basic", filters);
+				lines = SaveLoadChart.loadData(Species.getSpecies("basic"), filters);
 				
 				float[][] allValues = new float[filters.length][lines[0].size()];
 				float[] times;

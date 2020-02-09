@@ -10,7 +10,7 @@ public class DefaultPreyDNA extends DNA {
 	};
 	
 	public DefaultPreyDNA() {
-		super("Prey", Color.WHITE, f, 2.0f, 50, 5, 30, 0.0f, 10, 30, 70);
+		super(new Species("Prey"), Color.WHITE, f, 2.0f, 50, 5, 30, 0.0f, 10, 30, 70);
 	}
 
 }
