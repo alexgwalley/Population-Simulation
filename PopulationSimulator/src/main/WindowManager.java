@@ -174,7 +174,22 @@ public class WindowManager {
 	}
 	
 	public void updateChart(String seriesName, float[] xAxis, float[] yAxis) {
-		chart.addSeries(seriesName, xAxis, yAxis);
+		double[] errorBars = new double[xAxis.length];
+		for(int i = 0; i < errorBars.length; i++) {
+			errorBars[i] = 0;
+		}
+		double[] xAxisDoub = new double[xAxis.length];
+		double[] yAxisDoub = new double[yAxis.length];
+		for(int i = 0; i < xAxis.length; i++) {
+			xAxisDoub[i] = (double) xAxis[i];
+			yAxisDoub[i] = (double) yAxis[i];
+		}
+		if(chart.getSeriesMap() == null) {
+			chart.addSeries(seriesName, xAxisDoub, yAxisDoub, errorBars);
+		}else {
+			chart.updateXYSeries(seriesName, xAxisDoub, yAxisDoub, errorBars);
+		}
+		
 		chartFrame.repaint();
 	}
 	

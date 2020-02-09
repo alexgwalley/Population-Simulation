@@ -60,8 +60,8 @@ public class Animal extends Entity{
 		
 		// Draw Arc
 		g.setColor(Color.GRAY);
-		Vector leftEnd = heading.rotateDegrees((float) (dna.getFieldOfViewAngle()*0.5)).scale(20/Game.camera.getZoomAmount()).add(actPos);
-		Vector rightEnd = heading.rotateDegrees((float) (-dna.getFieldOfViewAngle()*0.5)).scale(20/Game.camera.getZoomAmount()).add(actPos);
+		Vector leftEnd = heading.rotateDegrees((float) (dna.getFieldOfViewAngle()*0.5)).normalized().scale(dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()).add(actPos);
+		Vector rightEnd = heading.rotateDegrees((float) (-dna.getFieldOfViewAngle()*0.5)).normalized().scale(dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()).add(actPos);
 		g.drawLine((int)actPos.get(0), (int)actPos.get(1), (int)leftEnd.get(0), (int)leftEnd.get(1));
 		g.drawLine((int)actPos.get(0), (int)actPos.get(1), (int)rightEnd.get(0), (int)rightEnd.get(1));
 		
@@ -177,7 +177,6 @@ public class Animal extends Entity{
 					eatFood(f);
 				}
 			}
-			
 			
 		}
 	}
