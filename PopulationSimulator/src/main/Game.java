@@ -18,6 +18,7 @@ import entity.Species;
 import generator.AnimalGenerator;
 import generator.FoodGenerator;
 import math.Vector;
+import sprite.Sprite;
 
 
 public class Game implements Runnable {
@@ -244,7 +245,7 @@ public class Game implements Runnable {
 			}
 		}catch (Exception e) {}
 		
-		for(Sprite sprite:sprites) sprite.render();
+		for(Sprite sprite:sprites) sprite.render(g);
 		
 		// Render simSpeed
 		g.setColor(new Color(200, 200, 200));
