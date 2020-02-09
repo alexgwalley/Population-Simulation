@@ -10,12 +10,13 @@ import math.Vector;
 public class Animal extends Entity{
 	
 	private DNA dna;
-	private float food;
 	private State state = State.SEEK_FOOD;
 	private String name = "";
 	private int timeAlive = 0;
 	
 	private Vector heading;
+	
+	private Animal chasedBy;
 	
 	public Animal(String name, Vector pos, DNA dna, int food) {
 		this.name = name;
@@ -50,7 +51,12 @@ public class Animal extends Entity{
 		g.setColor(Color.BLACK);
 		g.drawOval((int) (viewPos.get(0)), (int) (viewPos.get(1)), (int) (diam/Game.camera.getZoomAmount()), (int) (diam/Game.camera.getZoomAmount()));
 		// Draw Name
-		g.drawString(name, (int) viewPos.get(0), (int) viewPos.get(1) - 20);
+		if(state == State.HUNTING)
+			g.drawString(name + "(Hunting)", (int) viewPos.get(0), (int) viewPos.get(1) - 20);
+		else if(state == State.FLEE)
+			g.drawString(name + "(Fleeing)", (int) viewPos.get(0), (int) viewPos.get(1) - 20);
+		else
+			g.drawString(name, (int) viewPos.get(0), (int) viewPos.get(1) - 20);
 		
 		// Draw Arc
 		g.setColor(Color.GRAY);
@@ -82,9 +88,9 @@ public class Animal extends Entity{
 			
 			if(this.food <= 0) this.die();
 			
-			this.revaluateState();
-			
 		}
+		
+		this.revaluateState();
 		
 		timeAlive += Game.getSimSpeed();
 		
@@ -93,7 +99,8 @@ public class Animal extends Entity{
 		}
 		if(state == State.SEEK_MATE || state == State.GOING_TO_MATE)
 			seekMate();
-		
+		if(state == State.FLEE)
+			flee(chasedBy);
 
 	}
 	
@@ -107,9 +114,23 @@ public class Animal extends Entity{
 		
 	}
 	
-	private Food getFoodInSight() {
+	private Entity getFoodInSight() {
+		
+		for(Animal a : Game.animals) {
+			if(!dna.getFood().containsKey(a.dna.getSpecies())) continue;
+			if(food > dna.getFood().get(a.dna.getSpecies())) continue; // If not desperate enough
+			
+			Vector to = a.getPos().sub(this.getPos());
+			float dist = to.getMag();
+			if(dist < dna.getFieldOfViewAngle() &&  to.angleBetweenDegrees(this.heading) < dna.getFieldOfViewAngle()*0.5) { // TODO: Check within sight
+				return a;
+			}
+			
+		}
 		
 		for(Food f : Game.food) {
+			if(!dna.getFood().containsKey(f.getSpecies())) continue;
+			if(food > dna.getFood().get(f.getSpecies())) continue; // If not desperate enough
 			//TODO: Check if we can see food, if we found, return that food
 			Vector to = f.getPos().sub(this.getPos());
 			float dist = to.getMag();
@@ -122,27 +143,55 @@ public class Animal extends Entity{
 		return null;
 	}
 	
+	private Animal beingChased() {
+		for(Animal a : Game.animals) {
+			if(a == this) continue;
+			if(a.state != State.HUNTING) continue;
+			
+			Vector to = a.getPos().sub(this.getPos());
+			float dist = to.getMag();
+			if(dist < dna.getFleeRadius()-a.getDna().getRadius()) {
+				return a;
+			}
+		}
+		
+		return null;
+	}
+	
+	
 	private void seekFood() {
 		//TODO:  Write function to have animals to look for food.
-		Food f = getFoodInSight();
+		var f = getFoodInSight();
 		if(f != null) {
 			Vector to = f.getPos().sub(this.getPos());
 			heading = to.normalized();
 			
-			if(to.getMag() < dna.getRadius()) {
-				eatFood(f);
+			if(f instanceof Animal) {
+				state = State.HUNTING;
+				if(to.getMag() < dna.getRadius()+((Animal) f).getDna().getRadius()) {
+					eatFood(f);
+					System.out.println("Nom");
+				}
+			}else {
+				if(to.getMag() < dna.getRadius()) {
+					eatFood(f);
+				}
 			}
+			
+			
 		}
 	}
 	
 	private void revaluateState() {
-		if(food > dna.getMatingMinimum()) {
+		chasedBy = beingChased();
+		if(chasedBy != null) {
+			state = State.FLEE;
+		}else if(food > dna.getMatingMinimum()) {
 			state = State.SEEK_MATE; 
 			return;
 		}else {
 			state = State.SEEK_FOOD;
 		}
-		
 	}
 	
 	private void seekMate() {
@@ -195,14 +244,23 @@ public class Animal extends Entity{
 	
 	private void flee(Animal predator) {
 		//TODO:  Write function to flee from a predator in a certain radius.
+		Vector to = predator.getPos().sub(this.getPos());
+		heading = to.rotateDegrees(180).normalized();
 	}
 	
-	private void eatFood(Food f) {
+	private void eatFood(Entity f) {
 		state = State.EAT;
 		// Turn towards food
 		heading = (f.getPos().sub(this.getPos())).normalized();
-		food += f.getFood();
-		Game.food.remove(f);
+		
+		
+		if(f instanceof Food) {
+			food += f.getFood();
+			Game.food.remove(f);
+		}else {
+			f.subFood(dna.getEatingRate());
+			food += Math.min(dna.getEatingRate(), f.getFood());
+		}
 		
 		revaluateState();
 	}

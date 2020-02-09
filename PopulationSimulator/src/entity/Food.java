@@ -8,8 +8,7 @@ import math.*;
 
 public class Food extends Entity {
 	private String species;
-	private int food;
-	
+
 	public Food(Vector pos) {
 		setPos(pos);
 		species = "food";
@@ -42,10 +41,6 @@ public class Food extends Entity {
 	
 	public String getSpecies() {
 		return species;
-	}
-
-	public int getFood() {
-		return food;
 	}
 
 	public void setFood(int food) {

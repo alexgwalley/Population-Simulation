@@ -8,6 +8,7 @@ public abstract class Entity {
 	
 	private Vector pos;
 	private Vector vel;
+	protected float food;
 	
 	public Vector getPos() {
 		return this.pos;
@@ -41,6 +42,14 @@ public abstract class Entity {
 		this.vel.set(i, vel);
 	}
 
+	public float getFood() {
+		return food;
+	}
+	
+	public void subFood(float amt) {
+		food -= amt;
+	}
+	
 	public abstract void render(Graphics g);
 	public abstract void update();
 
