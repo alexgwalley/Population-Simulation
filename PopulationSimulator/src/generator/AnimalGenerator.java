@@ -104,7 +104,6 @@ public class AnimalGenerator {
 		random = new Random();
 		
 		HashMap food = new HashMap();
-		food.put("food", 30);
 		food.put("herbivore", 100);
 		food.put("omnivore", 50);
 		for(int i = 0; i < num; i++) { 
