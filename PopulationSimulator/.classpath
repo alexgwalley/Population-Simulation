@@ -12,6 +12,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/jts-core/jts-core-1.16.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/xchart-3.6.1/xchart-demo-3.6.1.jar"/>
+	<classpathentry kind="lib" path="/Users/alexwalley/Code/PersonalProjects/PopulationSimulator/Population-Simulation/PopulationSimulator/lib/JTS/jts-core-1.16.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

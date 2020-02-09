@@ -230,34 +230,34 @@ public class WindowManager {
 		
 		for(int i = 0; i < xAxis.length; i++) {
 			popNum[0][i] = (double) xAxis[i];
-			popNum[1][i] = (double) yAxis[1][i];
+			popNum[1][i] = (double) yAxis[2][i];
 			
 			foodNum[0][i] = (double) xAxis[i];
-			foodNum[1][i] = (double) yAxis[2][i];
+			foodNum[1][i] = (double) yAxis[3][i];
 			
 			fovaNum[0][i] = (double) xAxis[i];
-			fovaNum[1][i] = (double) yAxis[3][i];
+			fovaNum[1][i] = (double) yAxis[4][i];
 			
 			fovrNum[0][i] = (double) xAxis[i];
-			fovrNum[1][i] = (double) yAxis[4][i];
+			fovrNum[1][i] = (double) yAxis[5][i];
 
 			moveSpeedNum[0][i] = (double) xAxis[i];
-			moveSpeedNum[1][i] = (double) yAxis[5][i];
+			moveSpeedNum[1][i] = (double) yAxis[6][i];
 			
 			radiusNum[0][i] = (double) xAxis[i];
-			radiusNum[1][i] = (double) yAxis[6][i];
+			radiusNum[1][i] = (double) yAxis[7][i];
 			
 			mutationRateNum[0][i] = (double) xAxis[i];
-			mutationRateNum[1][i] = (double) yAxis[7][i];
+			mutationRateNum[1][i] = (double) yAxis[8][i];
 			
 			eatingRateNum[0][i] = (double) xAxis[i];
-			eatingRateNum[1][i] = (double) yAxis[8][i];
+			eatingRateNum[1][i] = (double) yAxis[9][i];
 			
 			fleeRadiusNum[0][i] = (double) xAxis[i];
-			fleeRadiusNum[1][i] = (double) yAxis[9][i];
+			fleeRadiusNum[1][i] = (double) yAxis[10][i];
 			
 			matingMinNum[0][i] = (double) xAxis[i];
-			matingMinNum[1][i] = (double) yAxis[10][i];
+			matingMinNum[1][i] = (double) yAxis[11][i];
 			
 		}
 		

@@ -9,7 +9,7 @@ import math.Vector;
 public class FoodGenerator {
 	
 	private long lastSpawnedTime;
-	private int spawnPeriod = 15000;
+	private int spawnPeriod = 6000;
 	
 	private long timeDifference;
 	
@@ -29,7 +29,7 @@ public class FoodGenerator {
 	}
 	
 	public void generateStartingSpawn() {
-		for(int i = 0; i < 30; i++) spawn();
+		for(int i = 0; i < 50; i++) spawn();
 		
 	}
 	
@@ -38,8 +38,13 @@ public class FoodGenerator {
 		Vector pos = new Vector(random.nextFloat(), random.nextFloat());
 		pos = pos.scale(Game.getWorldDimentions());
 		pos = pos.sub(Game.getWorldDimentions().scale((float) 0.5));
+		
+		int index = Game.getChunkIndex(pos);
+		
+		
+		
 		Food newFood = new Food(pos, 10);
-		Game.food.add(newFood);
+		Game.foodChunks[index].add(newFood);
 	}
 	
 	public void pause() {
