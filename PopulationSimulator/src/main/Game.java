@@ -149,7 +149,7 @@ public class Game implements Runnable {
 					times[i] = Float.parseFloat(lines[i]);
 				}
 				
-				window.updateChart("basic", times, values);
+				window.updateChart("b", times, values);
 				
 			} catch (IOException e) {
 				e.printStackTrace();

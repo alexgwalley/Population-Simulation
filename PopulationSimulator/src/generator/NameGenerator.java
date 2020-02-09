@@ -11,7 +11,7 @@ public class NameGenerator {
 	public static String newName() {
 		String name = "Jean";
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("res\\french_names.txt"));
+			BufferedReader br = new BufferedReader(new FileReader("res/french_names.txt"));
 			Object[] names = br.lines().toArray();
 			name = names[r.nextInt(274)].toString();
 		}catch (Exception e) {
