@@ -145,10 +145,10 @@ public class WindowManager {
 		
 		// XChart
 		// Create Chart
-		chart = QuickChart.getChart("Simple XChart Real-time Demo", "Time", "Value", "b", new double[]{0}, new double[]{0});
+		chart = QuickChart.getChart("Simple XChart Real-time Demo", "Time", "Value", "popNum", new double[] {0}, new double[] {0});
 		//XYSeries popNumSeries = new XYSeries("popNum", new double[] {0}, new double[] {0}, new double[] {0}, org.knowm.xchart.internal.series.Series.DataType.Number);
 		//XYSeries foodNumSeries = new XYSeries("foodNum", new double[] {0}, new double[] {0}, new double[] {0}, org.knowm.xchart.internal.series.Series.DataType.Number);
-	    chart.addSeries("popNum", new double[] {0});
+	    //chart.addSeries("popNum", new double[] {0});
 	    chart.addSeries("foodNum", new double[] {0});
 	    chart.addSeries("fovrNum", new double[] {0});
 	    chart.addSeries("fovaNum", new double[] {0});
@@ -284,47 +284,47 @@ public class WindowManager {
 		if(food.isSelected())
 			chart.updateXYSeries("foodNum", foodNum[0], foodNum[1], null);
 		else
-			chart.updateXYSeries("foodNum", new double[]{0}, new double[]{0}, null);
+			chart.updateXYSeries("foodNum", new double[]{}, new double[]{}, null);
 		
 		if(fova.isSelected())
 			chart.updateXYSeries("fovaNum", fovaNum[0], fovaNum[1], null);
 		else
-			chart.updateXYSeries("fovaNum", new double[]{0}, new double[]{0}, null);
+			chart.updateXYSeries("fovaNum", new double[]{}, new double[]{}, null);
 		
 		if(fovr.isSelected())
 			chart.updateXYSeries("fovrNum", fovrNum[0], fovrNum[1], null);
 		else
-			chart.updateXYSeries("fovrNum", new double[]{0}, new double[]{0}, null);
+			chart.updateXYSeries("fovrNum", new double[]{}, new double[]{}, null);
 		
 		if(movespeed.isSelected())
 			chart.updateXYSeries("moveSpeedNum", moveSpeedNum[0], moveSpeedNum[1], null);
 		else
-			chart.updateXYSeries("moveSpeedNum", new double[]{0}, new double[]{0}, null);
+			chart.updateXYSeries("moveSpeedNum", new double[]{}, new double[]{}, null);
 		
 		if(radius.isSelected())
 			chart.updateXYSeries("radiusNum", radiusNum[0], radiusNum[1], null);
 		else
-			chart.updateXYSeries("radiusNum", new double[]{0}, new double[]{0}, null);
+			chart.updateXYSeries("radiusNum", new double[]{}, new double[]{}, null);
 		
 		if(mutrate.isSelected())
 			chart.updateXYSeries("mutationRateNum", mutationRateNum[0], mutationRateNum[1], null);
 		else
-			chart.updateXYSeries("mutationRateNum", new double[]{0}, new double[]{0}, null);
+			chart.updateXYSeries("mutationRateNum", new double[]{}, new double[]{}, null);
 		
 		if(eatrate.isSelected())
 			chart.updateXYSeries("eatRateNum", eatingRateNum[0], eatingRateNum[1], null);
 		else
-			chart.updateXYSeries("eatRateNum", new double[]{0}, new double[]{0}, null);
+			chart.updateXYSeries("eatRateNum", new double[]{}, new double[]{}, null);
 		
 		if(fleerad.isSelected())
 			chart.updateXYSeries("fleeRateNum", fleeRadiusNum[0], fleeRadiusNum[1], null);
 		else
-			chart.updateXYSeries("fleeRateNum", new double[]{0}, new double[]{0}, null);
+			chart.updateXYSeries("fleeRateNum", new double[]{}, new double[]{}, null);
 		
 		if(matemin.isSelected())
 			chart.updateXYSeries("mateMinNum", matingMinNum[0], matingMinNum[1], null);
 		else
-			chart.updateXYSeries("mateMinNum", new double[]{0}, new double[]{0}, null);
+			chart.updateXYSeries("mateMinNum", new double[]{}, new double[]{}, null);
 		
 		
 		sw.repaintChart();

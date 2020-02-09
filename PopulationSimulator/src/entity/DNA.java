@@ -18,7 +18,7 @@ public class DNA {
 	private HashMap<String, Integer> food;
 	private float fieldOfViewAngle;
 	private int fieldOfViewRadius;
-	private int moveSpeed;
+	private float moveSpeed;
 	private int radius;
 	private float mutationRate;
 	private int eatingRate;
@@ -26,7 +26,7 @@ public class DNA {
 	private int matingMinimum;
 	
 	public DNA(Species species, Color color, HashMap<String, Integer> food, float fieldOfViewAngle, 
-			int fieldOfViewRadius, int moveSpeed, int radius, float mutationRate, int eatingRate, int fleeRadius, 
+			int fieldOfViewRadius, float moveSpeed, int radius, float mutationRate, int eatingRate, int fleeRadius, 
 			int matingMinimum) {
 		this.species = species;
 		this.color = color;
@@ -62,7 +62,7 @@ public class DNA {
 		return fieldOfViewRadius;
 	}
 
-	public int getMoveSpeed() {
+	public float getMoveSpeed() {
 		return moveSpeed;
 	}
 

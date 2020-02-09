@@ -16,7 +16,7 @@ public class Animal extends Entity{
 	private String name = "";
 	private double timeAlive = 0;
 	
-	private int minMateAge = 400000;
+	private int minMateAge = 500;
 	
 	private Vector heading;
 	
@@ -216,7 +216,6 @@ public class Animal extends Entity{
 					eatFood(f);
 				}
 			}
-			
 		}
 	}
 	
@@ -370,6 +369,9 @@ public class Animal extends Entity{
 
 	public void setTimeAlive(int timeAlive) {
 		this.timeAlive = timeAlive;
+	}
+	public Vector getHeading() {
+		return heading;
 	}
 	
 }
