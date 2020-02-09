@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Random;
 
+import comparator.CustomAnimalComparator;
 import entity.Animal;
 import entity.DNA;
 import main.Game;
@@ -24,10 +25,14 @@ public class AnimalGenerator {
 			pos = pos.scale(Game.getWorldDimentions());
 			pos = pos.sub(Game.getWorldDimentions().scale((float) 0.5));
 			
-			DNA dna = new DNA("basic", new Color(200, 0, 0), food, (float)65, 10, 1, 5, (float)5, 10, 20, 60);
+			DNA dna = new DNA("basic", new Color(200, 0, 0), food, (float)65, 10, 1, 30, (float)5, 10, 20, 60);
 			Animal a = new Animal("Bob", pos, dna, 50);
 			
 			Game.animals.add(a);
+			
+			Game.animals.sort(new CustomAnimalComparator());
+			
+			System.out.println(Game.animals);
 		}
 	}
 	

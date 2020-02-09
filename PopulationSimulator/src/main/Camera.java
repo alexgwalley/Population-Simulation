@@ -20,7 +20,7 @@ public class Camera implements MouseMotionListener, MouseWheelListener{
 	private float maxZoomAmt = 50;
 	//Animal toFollow;
 	
-	private float moveSpeed = 3;
+	private float moveSpeed = 5;
 	
 	private boolean mouseDown = false;
 	
@@ -56,7 +56,7 @@ public class Camera implements MouseMotionListener, MouseWheelListener{
 
 			Vector diff = mousePos.sub(prevMousePos);
 			diff.scale(moveSpeed);
-			//diff = diff.scale(1/zoomAmt);
+			diff = diff.scale(zoomAmt);
 			
 			// Update position of camera
 			pos = pos.sub(diff);
