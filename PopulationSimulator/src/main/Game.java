@@ -125,7 +125,8 @@ public class Game implements Runnable {
 		new Species("predator");
 		
 		foodGenerator.generateStartingSpawn();
-		animalGenerator.generateAnimals(5);
+		animalGenerator.generateBasics(5);
+		animalGenerator.generatePredators(5);
 		
 		SaveLoadChart.wipeData();
 		
