@@ -209,7 +209,16 @@ public class WindowManager {
 		p.add(eatrate);
 		p.add(fleerad);
 		p.add(matemin);
+		p.add(addSpecies);
 		
+		addSpecies.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddSpecies();
+			}
+			
+		});
 		
 		chartFrame.add(p);
 		

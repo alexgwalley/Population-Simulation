@@ -50,12 +50,6 @@ public class AnimalGenerator {
 			
 			Game.animals.add(a);
 			new Heart(pos);
-<<<<<<< HEAD
-//			new Heart(pos);
-//			new Heart(pos);
-//			new Heart(pos);
-//			new Heart(pos);
-=======
 			
 			Game.animals.sort(new CustomAnimalComparator());
 			
