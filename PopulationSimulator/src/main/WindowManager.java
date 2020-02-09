@@ -11,6 +11,7 @@ import java.awt.event.MouseWheelListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -42,6 +43,7 @@ public class WindowManager {
 	private JCheckBox num, food, fova, fovr, movespeed, radius, mutrate, eatrate, fleerad, matemin;
 	private JList speciesOptions;
 	private DefaultListModel<String> l;
+	private JButton addSpecies;
 	private JTextArea chartTextData;
 	private XYChart chart;
 	private XChartPanel<XYChart> chartPanel;
@@ -140,7 +142,7 @@ public class WindowManager {
 		chartFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 		chart = new XYChart(200,200);
-		chart.addSeries("basic", new double[]{1d}, new double[]{1d});
+		chart.addSeries("herbivore", new double[]{1d}, new double[]{1d});
 		chartPanel = new XChartPanel<XYChart>(chart);
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         chartPanel.setBackground(Color.white);
@@ -187,6 +189,8 @@ public class WindowManager {
 			l.addElement(Species.speciesList.get(i).getName());
 		speciesOptions = new JList<String>(l);
 		
+		addSpecies = new JButton("Add Species");
+		
 		chartFrame.add(speciesOptions);
 		
 		num.setSelected(true);
@@ -212,25 +216,6 @@ public class WindowManager {
 		
 		chartFrame.show();
 		chMenubar.add(dataTypes);
-		//chartFrame.setJMenuBar(chMenubar);
-		
-//		ChangeData buttonAction = new ChangeData();
-//		num.addActionListener(buttonAction);
-//		food.addActionListener(buttonAction);
-//		fova.addActionListener(buttonAction);
-//		fovr.addActionListener(buttonAction);
-//		movespeed.addActionListener(buttonAction);
-//		radius.addActionListener(buttonAction);
-//		mutrate.addActionListener(buttonAction);
-//		eatrate.addActionListener(buttonAction);
-//		fleerad.addActionListener(buttonAction);
-//		matemin.addActionListener(buttonAction);
-		
-		chartTextData = new JTextArea();
-		chartTextData.setSize(400, height);
-
-		
-		//chartFrame.pack();
 	}
 	
 	public void setChartText(String text) {
