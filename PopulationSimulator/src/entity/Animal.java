@@ -156,7 +156,9 @@ public class Animal extends Entity{
 			
 		}
 		
-		for(Food f : Game.food) {
+		int foodChunkIndex = Game.getChunkIndex(getPos());
+		
+		for(Food f : Game.foodChunks[foodChunkIndex]) {
 			if(!dna.getFood().containsKey(f.getSpecies())) continue;
 			if(food > dna.getFood().get(f.getSpecies())) continue; // If not desperate enough
 			//TODO: Check if we can see food, if we found, return that food

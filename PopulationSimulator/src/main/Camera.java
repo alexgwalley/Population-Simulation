@@ -31,7 +31,7 @@ public class Camera implements MouseMotionListener, MouseWheelListener, MouseInp
 	private Animal animalToFollow;
 	
 	public Camera() {
-		pos = Game.getScreenDimentions().scale(-1);
+		pos = Game.getWorldDimentions().sub(Game.getScreenDimentions().scale(2));
 	}
 
 	public void update() {
