@@ -6,13 +6,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.event.MouseInputListener;
 
 import entity.Animal;
-import entity.Species;
+import entity.State;
 import math.Vector;
 
 public class Camera implements MouseMotionListener, MouseWheelListener, MouseInputListener{
@@ -47,11 +46,11 @@ public class Camera implements MouseMotionListener, MouseWheelListener, MouseInp
 	
 	public void render(Graphics g) {
 		if(!followingAnimal) return;
-		int x = (int)Game.getScreenDimentions().get(0)-200;
-		int y = (int)Game.getScreenDimentions().get(1)-250;
+		int x = (int)Game.getScreenDimentions().get(0)-250;
+		int y = (int)Game.getScreenDimentions().get(1)-300;
 		int padding = 20;
 		g.setColor(new Color(55, 55, 55, 175));
-		g.fillRect(x, y, 200, 200);
+		g.fillRect(x, y, 250, 300);
 		/*private Species species;
 		private Color color;
 		//The String is for the species that is considered food, 
@@ -71,6 +70,10 @@ public class Camera implements MouseMotionListener, MouseWheelListener, MouseInp
 		g.drawString("Species: " + animalToFollow.getDna().getSpecies().toString(), x, y);
 		y += padding;
 		g.drawString("Time Alive: " + (int)animalToFollow.getTimeAlive(), x, y);
+		y += padding;
+		g.drawString("Food: " + animalToFollow.getFood(), x, y);
+		y += padding;
+		g.drawString("State: " + animalToFollow.getState(), x, y);
 		y += padding;
 		g.drawString("FOVA: " + animalToFollow.getDna().getFieldOfViewAngle(), x, y);
 		y += padding;

@@ -38,7 +38,7 @@ public class AnimalGenerator {
 			
 			float fieldOfViewAngle = 65 + PercentGenerator.relPercent(mutationRate);
 			int fieldOfViewRadius = (int) (100 + PercentGenerator.relPercent(mutationRate));
-			int moveSpeed = (int) (1 + PercentGenerator.relPercent(mutationRate)*0.15);
+			float moveSpeed = (float) (1 + PercentGenerator.relPercent(mutationRate)*0.15);
 			int radius = (int) (30 + PercentGenerator.relPercent(mutationRate));
 			int eatingRate = (int) (10 + PercentGenerator.relPercent(mutationRate));
 			int fleeRadius = (int) (radius + 15 + PercentGenerator.relPercent(mutationRate));

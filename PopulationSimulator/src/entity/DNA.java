@@ -16,7 +16,7 @@ public class DNA {
 	private HashMap<String, Integer> food;
 	private float fieldOfViewAngle;
 	private int fieldOfViewRadius;
-	private int moveSpeed;
+	private float moveSpeed;
 	private int radius;
 	private float mutationRate;
 	private int eatingRate;
@@ -24,7 +24,7 @@ public class DNA {
 	private int matingMinimum;
 	
 	public DNA(Species species, Color color, HashMap<String, Integer> food, float fieldOfViewAngle, 
-			int fieldOfViewRadius, int moveSpeed, int radius, float mutationRate, int eatingRate, int fleeRadius, 
+			int fieldOfViewRadius, float moveSpeed, int radius, float mutationRate, int eatingRate, int fleeRadius, 
 			int matingMinimum) {
 		this.species = species;
 		this.color = color;
@@ -60,7 +60,7 @@ public class DNA {
 		return fieldOfViewRadius;
 	}
 
-	public int getMoveSpeed() {
+	public float getMoveSpeed() {
 		return moveSpeed;
 	}
 
@@ -156,11 +156,11 @@ public class DNA {
 		
 
 		weight = PercentGenerator.newPercent();
-		int moveSpeed = (int) ((weight*d1.getMoveSpeed()+(1-weight)*d2.getMoveSpeed()));
+		float moveSpeed = ((weight*d1.getMoveSpeed()+(1-weight)*d2.getMoveSpeed()));
 		if(rand.nextFloat() < 0.05*mutationRate) {
 			scale = PercentGenerator.relPercent(mutationRate);
 			moveSpeed += scale;
-			moveSpeed = Math.max(0, moveSpeed);
+			moveSpeed = Math.max(0.25f, moveSpeed);
 		}
 		
 		weight = PercentGenerator.newPercent();
@@ -176,7 +176,7 @@ public class DNA {
 		if(rand.nextFloat() < 0.05*mutationRate) {
 			scale = PercentGenerator.relPercent(mutationRate);
 			eatingRate += scale;
-			eatingRate = Math.max(0, moveSpeed);
+			eatingRate = Math.max(1, eatingRate);
 		}
 		
 		
@@ -195,7 +195,6 @@ public class DNA {
 			matingMinimum += scale;
 			matingMinimum = Math.max(0, matingMinimum);
 		}
-		
 		return new DNA(species, new Color((int)colorRed, (int)colorGreen, (int)colorBlue),food,fieldOfViewAngle,fieldOfViewRadius,moveSpeed,radius,mutationRate,eatingRate,fleeRadius,matingMinimum);
 	}
 

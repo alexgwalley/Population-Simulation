@@ -16,7 +16,7 @@ public class Animal extends Entity{
 	private String name = "";
 	private double timeAlive = 0;
 	
-	private int minMateAge = 400000;
+	private int minMateAge = 500;
 	
 	private Vector heading;
 	
@@ -216,7 +216,6 @@ public class Animal extends Entity{
 					eatFood(f);
 				}
 			}
-			
 		}
 	}
 	
@@ -283,10 +282,10 @@ public class Animal extends Entity{
 		Animal a = new Animal(NameGenerator.newName(), this.getPos().add(partner.heading.scale(2)), childDNA, 30); // Food should be the sum of the dna.matingLoss
 		Game.animals.add(a);
 		new Heart(getPos());
-		new Heart(getPos());
-		new Heart(getPos());
-		new Heart(getPos());
-		new Heart(getPos());
+//		new Heart(getPos());
+//		new Heart(getPos());
+//		new Heart(getPos());
+//		new Heart(getPos());
 		
 		// this.food -= dna.matingLoss
 		// partner.food -= partner.dna.matingLoss
@@ -330,6 +329,7 @@ public class Animal extends Entity{
 	private void die() {
 		//TODO
 		Game.animals.remove(this);
+		Game.sortLeaderboard();
 	}
 
 	public DNA getDna() {
@@ -370,6 +370,9 @@ public class Animal extends Entity{
 
 	public void setTimeAlive(int timeAlive) {
 		this.timeAlive = timeAlive;
+	}
+	public Vector getHeading() {
+		return heading;
 	}
 	
 }
