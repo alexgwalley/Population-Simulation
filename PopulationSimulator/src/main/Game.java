@@ -253,6 +253,8 @@ public class Game implements Runnable {
 		g.setColor(new Color(200, 200, 200));
 		g.drawString("x"+simSpeed, 10, height - 50);
 		
+		camera.render(g);
+		
 		// Showing and clean-up
 		bs.show();
 		g.dispose();

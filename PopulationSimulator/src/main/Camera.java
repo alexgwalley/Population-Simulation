@@ -1,14 +1,18 @@
 package main;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.event.MouseInputListener;
 
 import entity.Animal;
+import entity.Species;
 import math.Vector;
 
 public class Camera implements MouseMotionListener, MouseWheelListener, MouseInputListener{
@@ -39,6 +43,49 @@ public class Camera implements MouseMotionListener, MouseWheelListener, MouseInp
 		zoomAmt = minZoomAmt;
 		pos = animalToFollow.getPos();
 		//System.out.println("Moving to animal");
+	}
+	
+	public void render(Graphics g) {
+		if(!followingAnimal) return;
+		int x = (int)Game.getScreenDimentions().get(0)-200;
+		int y = (int)Game.getScreenDimentions().get(1)-250;
+		int padding = 20;
+		g.setColor(new Color(55, 55, 55, 175));
+		g.fillRect(x, y, 200, 200);
+		/*private Species species;
+		private Color color;
+		//The String is for the species that is considered food, 
+		//and the Integer is how low the food has to be before being willing to eat it.
+		private HashMap<String, Integer> food;
+		private float fieldOfViewAngle;
+		private int fieldOfViewRadius;
+		private int moveSpeed;
+		private int radius;
+		private float mutationRate;
+		private int eatingRate;
+		private int fleeRadius;
+		private int matingMinimum;*/
+		g.setColor(Color.WHITE);
+		y+=padding*1.25;
+		x+=padding;
+		g.drawString("Species: " + animalToFollow.getDna().getSpecies().toString(), x, y);
+		y += padding;
+		g.drawString("Time Alive: " + (int)animalToFollow.getTimeAlive(), x, y);
+		y += padding;
+		g.drawString("FOVA: " + animalToFollow.getDna().getFieldOfViewAngle(), x, y);
+		y += padding;
+		g.drawString("FOVR: " + animalToFollow.getDna().getFieldOfViewRadius(), x, y);
+		y += padding;
+		g.drawString("Move Speed: " + animalToFollow.getDna().getMoveSpeed(), x, y);
+		y += padding;
+		g.drawString("Eating Rate: " + animalToFollow.getDna().getEatingRate(), x, y);
+		y += padding;
+		g.drawString("Flee Radius: " + animalToFollow.getDna().getFleeRadius(), x, y);
+		y += padding;
+		g.drawString("Mating Minimum: " + animalToFollow.getDna().getMatingMinimum(), x, y);
+		
+		
+		
 	}
 	
 	@Override
