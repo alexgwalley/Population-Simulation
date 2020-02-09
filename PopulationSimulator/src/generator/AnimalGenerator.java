@@ -25,11 +25,27 @@ public class AnimalGenerator {
 			Vector pos = new Vector(random.nextFloat(), random.nextFloat());
 			pos = pos.scale(Game.getWorldDimentions());
 			//pos = pos.sub(Game.getWorldDimentions().scale((float) 0.5));
+			int r = (int)random.nextFloat()*255;
+			int g = (int)random.nextFloat()*255;
+			int b = (int)random.nextFloat()*255;
+			System.out.printf(" (%d, %d, %d) ", r, g, b);
+			Color color = new Color(r, g, b);
 			
-			Color color = new Color((int)random.nextFloat()*255, (int)random.nextFloat()*255, (int)random.nextFloat()*255);
+			float mutationRate = 0.5f;
+			
+			int matingMin = (int) (80 + PercentGenerator.relPercent(mutationRate));
+			
+			float fieldOfViewAngle = 65 + PercentGenerator.relPercent(mutationRate);
+			int fieldOfViewRadius = (int) (100 + PercentGenerator.relPercent(mutationRate));
+			int moveSpeed = (int) (1 + PercentGenerator.relPercent(mutationRate)*0.15);
+			int radius = (int) (30 + PercentGenerator.relPercent(mutationRate));
+			int eatingRate = (int) (10 + PercentGenerator.relPercent(mutationRate));
+			int fleeRadius = (int) (radius + 15 + PercentGenerator.relPercent(mutationRate));
+			int matingMinimum = 80;
+			
+			DNA dna = new DNA(Species.getSpecies("basic"), color, food, fieldOfViewAngle, fieldOfViewRadius, moveSpeed, radius, mutationRate, eatingRate, fleeRadius, matingMin);
+			
 			float foodAmt = 30;
-			int matingMin = 80;
-			DNA dna = new DNA(Species.getSpecies("basic"), color, food, (float)65, 100, 1, 30, (float)0.5, 10, 80, matingMin);
 			Animal a = new Animal(pos, dna, foodAmt);
 			
 			Game.animals.add(a);
