@@ -99,7 +99,6 @@ public class AnimalGenerator {
 			
 			Game.animals.add(a);
 			new Heart(pos);
->>>>>>> 280e3b39b812ce3d2aa9fd3081b0706c6e0ceb25
 			
 			Game.animals.sort(new CustomAnimalComparator());
 			
@@ -112,7 +111,7 @@ public class AnimalGenerator {
 		
 		HashMap food = new HashMap();
 		food.put("food", 30);
-		food.put("basic", 100);
+		//food.put("basic", 100);
 		//food.put("basic", 30);
 		food.put("herbivore", 100);
 		food.put("omnivore", 50);
