@@ -55,7 +55,7 @@ public class SaveLoadChart {
 	public static Object[] loadData(String specie, DataType d) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("res/chart.dna"));
 		String[] lines = (String[]) br.lines().toArray();
-		ArrayList<Object> out = new ArrayList<Object>;
+		ArrayList<Object> out = new ArrayList<Object>();
 		int index = 0;
 		switch(d) {
 		case TIME: index=0; break;
