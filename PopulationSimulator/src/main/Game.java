@@ -66,7 +66,7 @@ public class Game implements Runnable {
 		width = w;
 		height = h;
 		
-		simSpeed = 10;
+		simSpeed = 25;
 	}
 	
 	@Override
@@ -109,6 +109,8 @@ public class Game implements Runnable {
 		foodGenerator.generateStartingSpawn();
 		animalGenerator.generateAnimals(5);
 		
+		SaveLoadChart.wipeData();
+		
 		System.out.println(animals);
 	}
 	
@@ -136,39 +138,41 @@ public class Game implements Runnable {
 		//Check if the system needs to be saved or loaded.
 		//This is done so that saving and loading doesn't run into concurrent use errors.
 	
-		try {
-			if(SaveLoadGame.setToSave) SaveLoadGame.saveGame();
-			if(SaveLoadGame.setToLoad) SaveLoadGame.loadGame();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+//		try {
+//			if(SaveLoadGame.setToSave) SaveLoadGame.saveGame();
+//			if(SaveLoadGame.setToLoad) SaveLoadGame.loadGame();
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
 
 		if(System.currentTimeMillis()-prevTime2 >= 1000) {
 			
 			List<String>[] lines = new List[3];
 			
-			
-			
-			
 			try {
 				SaveLoadChart.saveData();
-				lines = SaveLoadChart.loadData("basic", DataType.TIME, DataType.NUM, DataType.FOOD);
+				DataType[] filters = new DataType[] {DataType.TIME, DataType.DEFAULT, DataType.NUM, DataType.FOOD, 
+						DataType.FOVA, DataType.FOVR, DataType.MOVESPEED, 
+						DataType.RADIUS, DataType.MUTATIONRATE, DataType.EATINGRATE, 
+						DataType.FLEERADIUS, DataType.MATINGMIN};
 				
-//				for(int i = 0; i < 3; i++) {
-//					System.out.println(lines[i]);
-//				}
+				lines = SaveLoadChart.loadData("basic", filters);
 				
-				float[][] allValues = new float[3][lines[0].size()];
+				float[][] allValues = new float[filters.length][lines[0].size()];
 				float[] times;
 				
-				for(int i = 0; i < 3; i++) {
+				for(int i = 0; i < filters.length; i++) {
 					for(int j = 0; j < lines[0].size(); j++) {
-						allValues[i][j] = Float.parseFloat(lines[i].get(j));
+						if(i == 1) continue;
+						try {
+							allValues[i][j] = Float.parseFloat(lines[i].get(j));
+						}catch (Exception e){
+							System.out.println("Error Parsing: " + lines[i].get(j) + " i: " + i);
+						}
 					}
 				}
 				
-				
-				window.updateChart(allValues[0], allValues, DataType.TIME, DataType.NUM, DataType.FOOD);
+				window.updateChart(allValues[0], allValues, filters);
 				
 			} catch (IOException e) {
 				e.printStackTrace();

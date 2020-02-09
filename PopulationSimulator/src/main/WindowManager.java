@@ -9,6 +9,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,7 +20,6 @@ import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries;
 
 import chart.DataType;
 
@@ -34,7 +34,7 @@ public class WindowManager {
 	private JFrame chartFrame;
 	private JMenuBar chMenubar;
 	private JMenu dataTypes;
-	private JMenuItem num, food, fova, fovr, movespeed, radius, mutrate, eatrate, fleerad, matemin;
+	private JCheckBoxMenuItem num, food, fova, fovr, movespeed, radius, mutrate, eatrate, fleerad, matemin;
 	private JTextArea chartTextData;
 	private XYChart chart;
 	private XChartPanel<XYChart> chartPanel;
@@ -142,6 +142,14 @@ public class WindowManager {
 		//XYSeries foodNumSeries = new XYSeries("foodNum", new double[] {0}, new double[] {0}, new double[] {0}, org.knowm.xchart.internal.series.Series.DataType.Number);
 	    chart.addSeries("popNum", new double[] {0});
 	    chart.addSeries("foodNum", new double[] {0});
+	    chart.addSeries("fovrNum", new double[] {0});
+	    chart.addSeries("fovaNum", new double[] {0});
+	    chart.addSeries("moveSpeedNum", new double[] {0});
+	    chart.addSeries("radiusNum", new double[] {0});
+	    chart.addSeries("mutationRateNum", new double[] {0});
+	    chart.addSeries("eatRateNum", new double[] {0});
+	    chart.addSeries("fleeRateNum", new double[] {0});
+	    chart.addSeries("mateMinNum", new double[] {0});
 		// Show it
 	    sw = new SwingWrapper<XYChart>(chart);
 	    sw.displayChart();
@@ -150,16 +158,18 @@ public class WindowManager {
 		
 		dataTypes = new JMenu("Show Data");
 		
-		num = new JMenuItem("Pop. Size");
-		food = new JMenuItem("Hunger");
-		fova = new JMenuItem("FOV Angle");
-		fovr = new JMenuItem("FOV Radius");
-		movespeed = new JMenuItem("Move Speed");
-		radius = new JMenuItem("Size");
-		mutrate = new JMenuItem("Mutation Rate");
-		eatrate = new JMenuItem("Eating Speed");
-		fleerad = new JMenuItem("Flee Radius");
-		matemin = new JMenuItem("Mate Minimum");
+		num = new JCheckBoxMenuItem("Pop. Size");
+		food = new JCheckBoxMenuItem("Hunger");
+		fova = new JCheckBoxMenuItem("FOV Angle");
+		fovr = new JCheckBoxMenuItem("FOV Radius");
+		movespeed = new JCheckBoxMenuItem("Move Speed");
+		radius = new JCheckBoxMenuItem("Size");
+		mutrate = new JCheckBoxMenuItem("Mutation Rate");
+		eatrate = new JCheckBoxMenuItem("Eating Speed");
+		fleerad = new JCheckBoxMenuItem("Flee Radius");
+		matemin = new JCheckBoxMenuItem("Mate Minimum");
+		
+		num.setState(true);
 		
 		dataTypes.add(num);
 		dataTypes.add(food);
@@ -171,6 +181,8 @@ public class WindowManager {
 		dataTypes.add(eatrate);
 		dataTypes.add(fleerad);
 		dataTypes.add(matemin);
+		
+		
 		
 		chMenubar.add(dataTypes);
 		chartFrame.setJMenuBar(chMenubar);
@@ -204,8 +216,17 @@ public class WindowManager {
 		for(int i = 0; i < errorBars.length; i++) {
 			errorBars[i] = 0;
 		}
+		
 		double[][] popNum = new double[2][xAxis.length];
 		double[][] foodNum = new double[2][xAxis.length];
+		double[][] fovaNum = new double[2][xAxis.length];
+		double[][] fovrNum = new double[2][xAxis.length];
+		double[][] moveSpeedNum = new double[2][xAxis.length];
+		double[][] radiusNum = new double[2][xAxis.length];
+		double[][] mutationRateNum = new double[2][xAxis.length];
+		double[][] eatingRateNum = new double[2][xAxis.length];
+		double[][] fleeRadiusNum = new double[2][xAxis.length];
+		double[][] matingMinNum = new double[2][xAxis.length];
 		
 		for(int i = 0; i < xAxis.length; i++) {
 			popNum[0][i] = (double) xAxis[i];
@@ -213,11 +234,57 @@ public class WindowManager {
 			
 			foodNum[0][i] = (double) xAxis[i];
 			foodNum[1][i] = (double) yAxis[2][i];
+			
+			fovaNum[0][i] = (double) xAxis[i];
+			fovaNum[1][i] = (double) yAxis[3][i];
+			
+			fovrNum[0][i] = (double) xAxis[i];
+			fovrNum[1][i] = (double) yAxis[4][i];
+
+			moveSpeedNum[0][i] = (double) xAxis[i];
+			moveSpeedNum[1][i] = (double) yAxis[5][i];
+			
+			radiusNum[0][i] = (double) xAxis[i];
+			radiusNum[1][i] = (double) yAxis[6][i];
+			
+			mutationRateNum[0][i] = (double) xAxis[i];
+			mutationRateNum[1][i] = (double) yAxis[7][i];
+			
+			eatingRateNum[0][i] = (double) xAxis[i];
+			eatingRateNum[1][i] = (double) yAxis[8][i];
+			
+			fleeRadiusNum[0][i] = (double) xAxis[i];
+			fleeRadiusNum[1][i] = (double) yAxis[9][i];
+			
+			matingMinNum[0][i] = (double) xAxis[i];
+			matingMinNum[1][i] = (double) yAxis[10][i];
+			
 		}
 		
-		chart.updateXYSeries("popNum", popNum[0], popNum[1], null);
-		chart.updateXYSeries("foodNum", foodNum[0], foodNum[1], null);
+		
+		if(num.getState())
+			chart.updateXYSeries("popNum", popNum[0], popNum[1], null);
+		if(food.getState())
+			chart.updateXYSeries("foodNum", foodNum[0], foodNum[1], null);
+		if(fova.getState())
+			chart.updateXYSeries("fovaNum", fovaNum[0], fovaNum[1], null);
+		if(fovr.getState())
+			chart.updateXYSeries("fovrNum", fovrNum[0], fovrNum[1], null);
+		if(movespeed.getState())
+			chart.updateXYSeries("moveSpeedNum", moveSpeedNum[0], moveSpeedNum[1], null);
+		if(radius.getState())
+			chart.updateXYSeries("radiusNum", radiusNum[0], radiusNum[1], null);
+		if(mutrate.getState())
+			chart.updateXYSeries("mutationRateNum", mutationRateNum[0], mutationRateNum[1], null);
+		if(eatrate.getState())
+			chart.updateXYSeries("eatRateNum", eatingRateNum[0], eatingRateNum[1], null);
+		if(fleerad.getState())
+			chart.updateXYSeries("fleeRateNum", fleeRadiusNum[0], fleeRadiusNum[1], null);
+		if(matemin.getState())
+			chart.updateXYSeries("mateMinNum", matingMinNum[0], matingMinNum[1], null);
+		
 		sw.repaintChart();
+
 
 		//chart.addSeries(seriesName, xAxis, yAxis);
 		chartPanel.revalidate();
