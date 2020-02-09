@@ -10,8 +10,10 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -24,6 +26,7 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
 import chart.DataType;
+import entity.Species;
 
 public class WindowManager {
 
@@ -37,6 +40,8 @@ public class WindowManager {
 	private JMenuBar chMenubar;
 	private JMenu dataTypes;
 	private JCheckBox num, food, fova, fovr, movespeed, radius, mutrate, eatrate, fleerad, matemin;
+	private JList speciesOptions;
+	private DefaultListModel<String> l;
 	private JTextArea chartTextData;
 	private XYChart chart;
 	private XChartPanel<XYChart> chartPanel;
@@ -177,6 +182,13 @@ public class WindowManager {
 		fleerad = new JCheckBox("Flee Radius");
 		matemin = new JCheckBox("Mate Minimum");
 		
+		l = new DefaultListModel<String>();
+		for(int i = 0; i < Species.speciesList.size(); i++)
+			l.addElement(Species.speciesList.get(i).getName());
+		speciesOptions = new JList<String>(l);
+		
+		chartFrame.add(speciesOptions);
+		
 		num.setSelected(true);
 		
 		JPanel p = new JPanel();
@@ -223,6 +235,13 @@ public class WindowManager {
 	
 	public void setChartText(String text) {
 		chartTextData.setText(text);
+	}
+	
+	public void updateList() {
+		l.clear();
+		for(int i = 0; i < Species.speciesList.size(); i++)
+			l.addElement(Species.speciesList.get(i).getName());
+		chartFrame.repaint();
 	}
 	
 	public void updateChart(float[] xAxis, float[][] yAxis, DataType... filters) {

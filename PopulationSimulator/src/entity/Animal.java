@@ -148,8 +148,8 @@ public class Animal extends Entity{
 	private Entity getFoodInSight() {
 		
 		for(Animal a : Game.animals) {
-			if(!dna.getFood().containsKey(a.dna.getSpecies())) continue;
-			if(food > dna.getFood().get(a.dna.getSpecies())) continue; // If not desperate enough
+			if(!dna.getFood().containsKey(a.dna.getSpecies().toString())) {continue;}
+			if(food > dna.getFood().get(a.dna.getSpecies().toString())) continue; // If not desperate enough
 			
 			Vector to = a.getPos().sub(this.getPos());
 			float dist = to.getMag();

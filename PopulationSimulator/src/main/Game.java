@@ -128,9 +128,11 @@ public class Game implements Runnable {
 	
 	private void startNew() {
 		new Species("basic");
+		new Species("predator");
 		
 		foodGenerator.generateStartingSpawn();
-		animalGenerator.generateAnimals(5);
+		animalGenerator.generateBasics(5);
+		animalGenerator.generatePredators(5);
 		
 		SaveLoadChart.wipeData();
 		
@@ -210,6 +212,11 @@ public class Game implements Runnable {
 				
 			} catch (IOException e) {
 				e.printStackTrace();
+			}
+			
+			if(Species.needsUpdate) {
+				window.updateList();
+				Species.needsUpdate = false;
 			}
 			
 			prevTime2 = System.currentTimeMillis();
