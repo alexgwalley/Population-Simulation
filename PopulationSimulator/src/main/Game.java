@@ -125,12 +125,18 @@ public class Game implements Runnable {
 		}
 
 		if(System.currentTimeMillis()-prevTime2 >= 1000) {
+			
+			String data = "";
+			String[] lines;
 			try {
 				SaveLoadChart.saveData();
-				System.out.println("Yes!");
+				lines = SaveLoadChart.loadData("basic", window.getCurrentDisplay());
+				for(String line : lines)
+					data += line+"\n";
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			window.setChartText(data);
 			prevTime2+=1000;
 		}
 	}
@@ -182,17 +188,6 @@ public class Game implements Runnable {
 		// Showing and clean-up
 		bs.show();
 		g.dispose();
-		
-		String data = "";
-		String[] lines;
-		try {
-			lines = SaveLoadChart.loadData("basic", window.getCurrentDisplay());
-			for(String line : lines)
-				data += line+"\n";
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		window.setChartText(data);
 		
 	}
 
