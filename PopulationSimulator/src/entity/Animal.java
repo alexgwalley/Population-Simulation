@@ -77,9 +77,21 @@ public class Animal extends Entity{
 			g.drawString(name, (int) viewPos.get(0), (int) viewPos.get(1) - 20);
 		
 		// Draw Arc
+
+//		g.setColor(Color.GRAY);
+//		Vector leftEnd = Game.camera.toViewPos(getPos().add(heading.scale(dna.getFieldOfViewRadius()).rotateDegrees(-dna.getFieldOfViewAngle()*0.5)));
+//		Vector rightEnd = Game.camera.toViewPos(getPos().add(heading.scale(dna.getFieldOfViewRadius())));
+//		g.drawLine((int)actPos.get(0), (int)actPos.get(1), (int)leftEnd.get(0), (int)leftEnd.get(1));
+//		g.drawLine((int)actPos.get(0), (int)actPos.get(1), (int)rightEnd.get(0), (int)rightEnd.get(1));
+		
+//		float angleRight = (float) leftEnd.getAngleDegrees();
+//		g.setColor(new Color(255, 255, 255, 120));
+//		g.fillArc((int)(actPos.get(0)-dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()/2), (int)(actPos.get(1)-dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()/2), (int) (dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()), (int)(dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()), (int) (angleRight), (int) dna.getFieldOfViewAngle());
+
 		float angleRight = (float) (-(heading).getAngleDegrees()-dna.getFieldOfViewAngle()*0.5);
 		g.setColor(new Color(200, 200, 200, 120));
 		g.fillArc((int)(actPos.get(0)-dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()/2), (int)(actPos.get(1)-dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()/2), (int) (dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()), (int)(dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()), (int) (angleRight), (int) dna.getFieldOfViewAngle());
+
 		
 		// Draw mating circle
 		if(state == State.SEEK_MATE || state == State.GOING_TO_MATE) {

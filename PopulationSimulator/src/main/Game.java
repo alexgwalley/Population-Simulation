@@ -7,20 +7,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
-import javax.sound.sampled.Line;
+import org.locationtech.jts.index.quadtree.Quadtree;
 
 import chart.DataType;
 import chart.SaveLoadChart;
-import comparator.CustomAnimalComparator;
 import entity.Animal;
 import entity.Food;
 import entity.Species;
 import generator.AnimalGenerator;
 import generator.FoodGenerator;
 import math.Vector;
+
 
 public class Game implements Runnable {
 	
@@ -51,11 +49,14 @@ public class Game implements Runnable {
 	public static ArrayList<Food> food = new ArrayList<Food>();
 	public static ArrayList<Animal> animals = new ArrayList<Animal>();
 	
+	private static int numChunks = 9;
+	public static ArrayList<Food>[] foodChunks = new ArrayList[numChunks];
+	
 	private final static Vector[] bounds = {
-			new Vector(-500, -500),
-			new Vector(500, 500)
+			new Vector(-1000, -1000),
+			new Vector(1000, 1000)
 	};
-	private final static Vector worldDim = new Vector(1000, 1000);
+	private final static Vector worldDim = new Vector(2000, 2000);
 	
 	private static FoodGenerator foodGenerator;
 	private static AnimalGenerator animalGenerator;
@@ -231,6 +232,14 @@ public class Game implements Runnable {
 		bs.show();
 		g.dispose();
 		
+	}
+	
+	public static int getChunkIndex(Vector v) {
+		int idX = (int)(worldDim.get(0)/v.get(0))*numChunks;
+		int idY = (int)(worldDim.get(1)/v.get(1))*numChunks;
+		
+		int index = idX + idY * numChunks;
+		return index;
 	}
 
 	
