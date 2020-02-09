@@ -1,0 +1,5 @@
+For .sim files.
+a,<Name>,<Pos x>,<Pos y>,<Food>,<Species>,<Color red>,<Color green>,<Color blue>,<FOV angle>
+,<FOV radius>,<MoveSpeed>,<Radius>,<MutationRate>,<EatingRate>,<FleeRadius>,<MatingMinimum>
+
+f,<Pos x>,<Pos y>,<Food>
