@@ -174,7 +174,7 @@ public class WindowManager {
 	}
 	
 	public void updateChart(String seriesName, float[] xAxis, float[] yAxis) {
-		chart.addSeries(seriesName, xAxis, yAxis);
+		//chart.addSeries(seriesName, xAxis, yAxis);
 		chartFrame.repaint();
 	}
 	

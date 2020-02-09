@@ -26,7 +26,7 @@ public class AnimalGenerator {
 			pos = pos.sub(Game.getWorldDimentions().scale((float) 0.5));
 			
 			DNA dna = new DNA("basic", new Color(200, 0, 0), food, (float)65, 10, 1, 30, (float)5, 10, 80, 60);
-			Animal a = new Animal("Bob", pos, dna, 50);
+			Animal a = new Animal(pos, dna, 50);
 			
 			Game.animals.add(a);
 			
