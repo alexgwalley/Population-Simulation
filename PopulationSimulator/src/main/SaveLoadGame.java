@@ -1,4 +1,4 @@
-package main;
+ package main;
 
 import java.awt.Color;
 import java.io.BufferedReader;
@@ -16,7 +16,7 @@ import entity.DNA;
 import entity.Food;
 import math.Vector;
 
-public class SaveLoad {
+public class SaveLoadGame {
 	
 	public static void saveGame() throws IOException {
 		saveAnimalData();
