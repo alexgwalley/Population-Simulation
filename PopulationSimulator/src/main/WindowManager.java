@@ -17,7 +17,7 @@ import chart.DataType;
 
 public class WindowManager {
 
-	private JFrame frame;
+	private static JFrame frame;
 	private Canvas canvas;
 	private JMenuBar menubar;
 	private JMenuItem save;
@@ -52,7 +52,7 @@ public class WindowManager {
 		System.out.println("JFrame Initiated");
 		
 		frame.setSize(width, height);
-		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
@@ -151,6 +151,10 @@ public class WindowManager {
 	
 	public DataType getCurrentDisplay() {
 		return this.currentDisplay;
+	}
+	
+	public static JFrame getFrame() {
+		return frame;
 	}
 	
 	private class ChangeData implements ActionListener{

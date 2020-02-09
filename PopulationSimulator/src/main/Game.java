@@ -127,6 +127,11 @@ public class Game implements Runnable {
 			return;
 		}
 		
+		//Adjusts screen whenever resized.
+		if(WindowManager.getFrame().getWidth() != width || WindowManager.getFrame().getHeight() != height) {
+			width = WindowManager.getFrame().getWidth();
+			height = WindowManager.getFrame().getHeight();
+		}
 	
 		g = bs.getDrawGraphics();
 		// Drawing stuff here
