@@ -111,6 +111,8 @@ public class Game implements Runnable {
 	}
 	
 	private void startNew() {
+		new Species("basic");
+		
 		foodGenerator.generateStartingSpawn();
 		animalGenerator.generateAnimals(5);
 		
