@@ -3,17 +3,19 @@ package main;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import org.knowm.xchart.QuickChart;
@@ -34,7 +36,7 @@ public class WindowManager {
 	private JFrame chartFrame;
 	private JMenuBar chMenubar;
 	private JMenu dataTypes;
-	private JCheckBoxMenuItem num, food, fova, fovr, movespeed, radius, mutrate, eatrate, fleerad, matemin;
+	private JCheckBox num, food, fova, fovr, movespeed, radius, mutrate, eatrate, fleerad, matemin;
 	private JTextArea chartTextData;
 	private XYChart chart;
 	private XChartPanel<XYChart> chartPanel;
@@ -59,6 +61,7 @@ public class WindowManager {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void createWindow() {
 		frame = new JFrame(title);
 		System.out.println("JFrame Initiated");
@@ -124,7 +127,7 @@ public class WindowManager {
 		frame.pack();  //Resize to fit all components
 		
 		chartFrame = new JFrame("Chart");
-		chartFrame.setVisible(true);
+		
 		chartFrame.setSize(300, height);
 		chartFrame.setLocationRelativeTo(frame);
 		chartFrame.setResizable(false);
@@ -136,7 +139,7 @@ public class WindowManager {
 		chartPanel = new XChartPanel<XYChart>(chart);
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         chartPanel.setBackground(Color.white);
-		chartFrame.add(chartPanel);
+		//chartFrame.add(chartPanel);
 		
 		chMenubar = new JMenuBar();
 		
@@ -163,53 +166,59 @@ public class WindowManager {
 		
 		dataTypes = new JMenu("Show Data");
 		
-		num = new JCheckBoxMenuItem("Pop. Size");
-		food = new JCheckBoxMenuItem("Hunger");
-		fova = new JCheckBoxMenuItem("FOV Angle");
-		fovr = new JCheckBoxMenuItem("FOV Radius");
-		movespeed = new JCheckBoxMenuItem("Move Speed");
-		radius = new JCheckBoxMenuItem("Size");
-		mutrate = new JCheckBoxMenuItem("Mutation Rate");
-		eatrate = new JCheckBoxMenuItem("Eating Speed");
-		fleerad = new JCheckBoxMenuItem("Flee Radius");
-		matemin = new JCheckBoxMenuItem("Mate Minimum");
+		num = new JCheckBox("Pop. Size");
+		food = new JCheckBox("Hunger");
+		fova = new JCheckBox("FOV Angle");
+		fovr = new JCheckBox("FOV Radius");
+		movespeed = new JCheckBox("Move Speed");
+		radius = new JCheckBox("Size");
+		mutrate = new JCheckBox("Mutation Rate");
+		eatrate = new JCheckBox("Eating Speed");
+		fleerad = new JCheckBox("Flee Radius");
+		matemin = new JCheckBox("Mate Minimum");
 		
-		num.setState(true);
+		num.setSelected(true);
 		
-		dataTypes.add(num);
-		dataTypes.add(food);
-		dataTypes.add(fova);
-		dataTypes.add(fovr);
-		dataTypes.add(movespeed);
-		dataTypes.add(radius);
-		dataTypes.add(mutrate);
-		dataTypes.add(eatrate);
-		dataTypes.add(fleerad);
-		dataTypes.add(matemin);
+		JPanel p = new JPanel();
+		
+		chartFrame.setLayout(new GridLayout());
+		
+		p.add(num);
+		p.add(fova);
+		p.add(food);
+		p.add(fovr);
+		p.add(movespeed);
+		p.add(radius);
+		p.add(mutrate);
+		p.add(eatrate);
+		p.add(fleerad);
+		p.add(matemin);
 		
 		
+		chartFrame.add(p);
 		
+		
+		chartFrame.show();
 		chMenubar.add(dataTypes);
-		chartFrame.setJMenuBar(chMenubar);
+		//chartFrame.setJMenuBar(chMenubar);
 		
-		ChangeData buttonAction = new ChangeData();
-		num.addActionListener(buttonAction);
-		food.addActionListener(buttonAction);
-		fova.addActionListener(buttonAction);
-		fovr.addActionListener(buttonAction);
-		movespeed.addActionListener(buttonAction);
-		radius.addActionListener(buttonAction);
-		mutrate.addActionListener(buttonAction);
-		eatrate.addActionListener(buttonAction);
-		fleerad.addActionListener(buttonAction);
-		matemin.addActionListener(buttonAction);
+//		ChangeData buttonAction = new ChangeData();
+//		num.addActionListener(buttonAction);
+//		food.addActionListener(buttonAction);
+//		fova.addActionListener(buttonAction);
+//		fovr.addActionListener(buttonAction);
+//		movespeed.addActionListener(buttonAction);
+//		radius.addActionListener(buttonAction);
+//		mutrate.addActionListener(buttonAction);
+//		eatrate.addActionListener(buttonAction);
+//		fleerad.addActionListener(buttonAction);
+//		matemin.addActionListener(buttonAction);
 		
 		chartTextData = new JTextArea();
 		chartTextData.setSize(400, height);
-		//chartFrame.add(chartTextData);
-		chartFrame.repaint();
+
 		
-		chartFrame.pack();
+		//chartFrame.pack();
 	}
 	
 	public void setChartText(String text) {
@@ -267,26 +276,56 @@ public class WindowManager {
 		}
 		
 		
-		if(num.getState())
+		if(num.isSelected())
 			chart.updateXYSeries("popNum", popNum[0], popNum[1], null);
-		if(food.getState())
+		else
+			chart.updateXYSeries("popNum", new double[]{0}, new double[]{0}, null);
+		
+		if(food.isSelected())
 			chart.updateXYSeries("foodNum", foodNum[0], foodNum[1], null);
-		if(fova.getState())
+		else
+			chart.updateXYSeries("foodNum", new double[]{0}, new double[]{0}, null);
+		
+		if(fova.isSelected())
 			chart.updateXYSeries("fovaNum", fovaNum[0], fovaNum[1], null);
-		if(fovr.getState())
+		else
+			chart.updateXYSeries("fovaNum", new double[]{0}, new double[]{0}, null);
+		
+		if(fovr.isSelected())
 			chart.updateXYSeries("fovrNum", fovrNum[0], fovrNum[1], null);
-		if(movespeed.getState())
+		else
+			chart.updateXYSeries("fovrNum", new double[]{0}, new double[]{0}, null);
+		
+		if(movespeed.isSelected())
 			chart.updateXYSeries("moveSpeedNum", moveSpeedNum[0], moveSpeedNum[1], null);
-		if(radius.getState())
+		else
+			chart.updateXYSeries("moveSpeedNum", new double[]{0}, new double[]{0}, null);
+		
+		if(radius.isSelected())
 			chart.updateXYSeries("radiusNum", radiusNum[0], radiusNum[1], null);
-		if(mutrate.getState())
+		else
+			chart.updateXYSeries("radiusNum", new double[]{0}, new double[]{0}, null);
+		
+		if(mutrate.isSelected())
 			chart.updateXYSeries("mutationRateNum", mutationRateNum[0], mutationRateNum[1], null);
-		if(eatrate.getState())
+		else
+			chart.updateXYSeries("mutationRateNum", new double[]{0}, new double[]{0}, null);
+		
+		if(eatrate.isSelected())
 			chart.updateXYSeries("eatRateNum", eatingRateNum[0], eatingRateNum[1], null);
-		if(fleerad.getState())
+		else
+			chart.updateXYSeries("eatRateNum", new double[]{0}, new double[]{0}, null);
+		
+		if(fleerad.isSelected())
 			chart.updateXYSeries("fleeRateNum", fleeRadiusNum[0], fleeRadiusNum[1], null);
-		if(matemin.getState())
+		else
+			chart.updateXYSeries("fleeRateNum", new double[]{0}, new double[]{0}, null);
+		
+		if(matemin.isSelected())
 			chart.updateXYSeries("mateMinNum", matingMinNum[0], matingMinNum[1], null);
+		else
+			chart.updateXYSeries("mateMinNum", new double[]{0}, new double[]{0}, null);
+		
 		
 		sw.repaintChart();
 

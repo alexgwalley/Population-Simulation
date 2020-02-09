@@ -27,7 +27,7 @@ public class Game implements Runnable {
 	private WindowManager window;
 
 	private Thread thread;
-	private boolean running;
+	static boolean running;
 	
 	private String title;
 	private static int width;
@@ -58,8 +58,8 @@ public class Game implements Runnable {
 	public static ArrayList<Food>[] foodChunks = new ArrayList[numChunks];
 	
 	private final static Vector[] bounds = {
-			new Vector(0, 0),
-			new Vector(2000, 2000)
+			new Vector(1, 1),
+			new Vector(2001, 2001)
 	};
 	final static Vector worldDim = new Vector(2000, 2000);
 	
@@ -111,12 +111,14 @@ public class Game implements Runnable {
 		
 	}
 
-	public void pause() {
+	public static void pause() {
 		foodGenerator.pause();
+		paused = true;
 	}
 	
-	public void play() {
+	public static void play() {
 		foodGenerator.play();
+		paused = false; 
 	}
 	
 	private void startNew() {

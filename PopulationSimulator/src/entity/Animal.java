@@ -110,9 +110,9 @@ public class Animal extends Entity{
 		checkAndRecalcHeadingEdges();
 		setVel(heading.scale(dna.getMoveSpeed()));
 		
+		
 		if(state != State.EAT && state != State.MATING) {
 			setPos(getPos().add(this.getVel().scale(Game.getSimSpeed()*(0.005f))));
-			heading = getVel().normalized();
 			
 			// Lose food from moving
 			this.food -= (dna.getMoveSpeed()*Game.getSimSpeed()*(0.005f))/175f;
@@ -166,6 +166,7 @@ public class Animal extends Entity{
 			if(food > dna.getFood().get(f.getSpecies())) continue; // If not desperate enough
 			//TODO: Check if we can see food, if we found, return that food
 			Vector to = f.getPos().sub(this.getPos());
+			if(to.getMag() <= 0) resetHeading();
 			float dist = to.getMag();
 			if(dist < dna.getFieldOfViewAngle() &&  to.angleBetweenDegrees(this.heading) < dna.getFieldOfViewAngle()*0.5) { // TODO: Check within sight
 				return f;
@@ -197,7 +198,12 @@ public class Animal extends Entity{
 		var f = getFoodInSight();
 		if(f != null) {
 			Vector to = f.getPos().sub(this.getPos());
-			heading = to.normalized();
+			if(to.getMag() > 0)
+				 heading = to.normalized();
+			else {
+				resetHeading();
+				setPos(getPos().add(heading.scale(dna.getMoveSpeed())));
+			}
 			
 			if(f instanceof Animal) {
 				state = State.HUNTING;
@@ -212,6 +218,11 @@ public class Animal extends Entity{
 			}
 			
 		}
+	}
+	
+	private void resetHeading() {
+		Random rand = new Random();
+		heading = new Vector(rand.nextFloat(), rand.nextFloat()).normalized();
 	}
 	
 	private void revaluateState() {
@@ -231,7 +242,11 @@ public class Animal extends Entity{
 		Animal a = checkMateInRange();
 		if(a != null && this.timeAlive > minMateAge && a.timeAlive > a.minMateAge) {
 			Vector to = a.getPos().sub(this.getPos());
-			heading = to.normalized();
+			if(to.getMag() > 0) {
+				heading = to.normalized();
+			}else {
+				resetHeading();
+			}
 			state = State.GOING_TO_MATE;
 			if(to.getMag() < dna.getRadius() + a.getDna().getRadius()) {
 				mate(a);
@@ -265,7 +280,7 @@ public class Animal extends Entity{
 		DNA childDNA = this.dna.combine(this, partner);
 		
 		// Create new animal with dna
-		Animal a = new Animal(NameGenerator.newName(), this.getPos(), childDNA, 30); // Food should be the sum of the dna.matingLoss
+		Animal a = new Animal(NameGenerator.newName(), this.getPos().add(partner.heading.scale(2)), childDNA, 30); // Food should be the sum of the dna.matingLoss
 		Game.animals.add(a);
 		new Heart(getPos());
 		new Heart(getPos());
@@ -284,13 +299,20 @@ public class Animal extends Entity{
 	private void flee(Animal predator) {
 		//TODO:  Write function to flee from a predator in a certain radius.
 		Vector to = predator.getPos().sub(this.getPos());
-		heading = to.rotateDegrees(180).normalized();
+		if(to.getMag() > 0)
+			heading = to.rotateDegrees(180).normalized();
+		else
+			resetHeading();
 	}
 	
 	private void eatFood(Entity f) {
 		state = State.EAT;
 		// Turn towards food
-		heading = (f.getPos().sub(this.getPos())).normalized();
+		Vector to = f.getPos().sub(this.getPos());
+		if(to.getMag() > 0)
+			heading = (f.getPos().sub(this.getPos())).normalized();
+		else
+			resetHeading();
 		
 		
 		if(f instanceof Food) {

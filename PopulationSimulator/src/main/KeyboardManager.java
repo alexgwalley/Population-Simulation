@@ -22,7 +22,12 @@ public class KeyboardManager implements KeyListener{
 		if(e.getKeyCode() == 37) { // Left Arrow
 			Game.decreaseSimSpeed();
 		}
-		
+//		if(e.getKeyCode() == 32) { // Spacebar
+//			if(Game.running)
+//				Game.pause();
+//			else
+//				Game.play();
+//		}
 	}
 
 	@Override
