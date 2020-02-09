@@ -11,6 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JTextArea;
+
+import chart.DataType;
 
 public class WindowManager {
 
@@ -21,6 +24,11 @@ public class WindowManager {
 	private JMenuItem load;
 	
 	private JFrame chartFrame;
+	private JMenuBar chMenubar;
+	private JMenu dataTypes;
+	private JMenuItem num, food, fova, fovr, movespeed, radius, mutrate, eatrate, fleerad, matemin;
+	private JTextArea chartdata;
+	private DataType currentDisplay = DataType.NUM;
 	
 	private String title;
 	
@@ -104,11 +112,63 @@ public class WindowManager {
 		chartFrame.setLocationRelativeTo(frame);
 		chartFrame.setResizable(false);
 		
+		chMenubar = new JMenuBar();
+		chartFrame.setJMenuBar(chMenubar);
+		
+		dataTypes = new JMenu("Show Data");
+		chMenubar.add(dataTypes);
+		
+		num = new JMenuItem("Pop. Size");
+		food = new JMenuItem("Hunger");
+		fova = new JMenuItem("FOV Angle");
+		fovr = new JMenuItem("FOV Radius");
+		movespeed = new JMenuItem("Move Speed");
+		radius = new JMenuItem("Size");
+		mutrate = new JMenuItem("Mutation Rate");
+		eatrate = new JMenuItem("Eating Speed");
+		fleerad = new JMenuItem("Flee Radius");
+		matemin = new JMenuItem("Mate Minimum");
+		dataTypes.add(num);
+		dataTypes.add(food);
+		dataTypes.add(fova);
+		dataTypes.add(fovr);
+		dataTypes.add(movespeed);
+		dataTypes.add(radius);
+		dataTypes.add(mutrate);
+		dataTypes.add(eatrate);
+		dataTypes.add(fleerad);
+		dataTypes.add(matemin);
+		
+		chartdata = new JTextArea();
+		chartFrame.add(chartdata);
+		
 		chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public Canvas getCanvas() {
 		return canvas;
+	}
+	
+	public DataType getCurrentDisplay() {
+		return this.currentDisplay;
+	}
+	
+	private class ChangeData implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == num) {currentDisplay = DataType.NUM;}
+			if(e.getSource() == food) {currentDisplay = DataType.FOOD;}
+			if(e.getSource() == fova) {currentDisplay = DataType.FOVA;}
+			if(e.getSource() == fovr) {currentDisplay = DataType.FOVR;}
+			if(e.getSource() == movespeed) {currentDisplay = DataType.MOVESPEED;}
+			if(e.getSource() == radius) {currentDisplay = DataType.RADIUS;}
+			if(e.getSource() == mutrate) {currentDisplay = DataType.MUTATIONRATE;}
+			if(e.getSource() == eatrate) {currentDisplay = DataType.EATINGRATE;}
+			if(e.getSource() == fleerad) {currentDisplay = DataType.FLEERADIUS;}
+			if(e.getSource() == matemin) {currentDisplay = DataType.MATINGMIN;}
+		}
+		
 	}
 	
 }
