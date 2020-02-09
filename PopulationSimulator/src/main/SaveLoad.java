@@ -63,6 +63,7 @@ public class SaveLoad {
 		while((line = br.readLine()) != null) {
 			String[] data = line.split(",");
 			if(!data[0].equals("a")) continue;
+			DNA d = new DNA(data[5],Color.WHITE,DNA.defaultPrey.getFood(),Float.parseFloat(data[7]),Integer.parseInt(data[8]),Integer.parseInt(data[9]),Integer.parseInt(data[10]),Float.parseFloat(data[11]),Integer.parseInt(data[12]),Integer.parseInt(data[13]),Integer.parseInt(data[14]));
 			Game.animals.add(new Animal(data[1], new Vector(Float.parseFloat(data[2]),Float.parseFloat(data[3])), d, Integer.parseInt(data[4])));
 		}
 		br.close();

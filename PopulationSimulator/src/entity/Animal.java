@@ -79,6 +79,7 @@ public class Animal extends Entity{
 		//TODO:  Write function to have animals to look for food.
 		Food f = getFoodInSight();
 		if(f != null) {
+			System.out.println("Hit food!");
 			eatFood(f);
 		}
 	}
