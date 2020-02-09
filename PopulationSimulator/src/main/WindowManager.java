@@ -13,6 +13,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
 
+import org.knowm.xchart.XYChart;
+
 import chart.DataType;
 
 public class WindowManager {
@@ -28,6 +30,7 @@ public class WindowManager {
 	private JMenu dataTypes;
 	private JMenuItem num, food, fova, fovr, movespeed, radius, mutrate, eatrate, fleerad, matemin;
 	private JTextArea chartdata;
+	private XYChart chart;
 	private DataType currentDisplay = DataType.NUM;
 	
 	private String title;
