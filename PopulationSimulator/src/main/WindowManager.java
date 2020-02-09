@@ -1,18 +1,21 @@
 package main;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
 
+import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
@@ -31,7 +34,7 @@ public class WindowManager {
 	private JMenuBar chMenubar;
 	private JMenu dataTypes;
 	private JMenuItem num, food, fova, fovr, movespeed, radius, mutrate, eatrate, fleerad, matemin;
-	private JTextArea chartdata;
+	private JTextArea chartTextData;
 	private XYChart chart;
 	private XChartPanel<XYChart> chartPanel;
 	private DataType currentDisplay = DataType.NUM;
@@ -40,6 +43,8 @@ public class WindowManager {
 	
 	private int width;
 	private int height;
+	
+	private SwingWrapper<XYChart> sw;
 	
 	private Game gameRef;
 	public WindowManager(String t, int w, int h, Game game) {
@@ -84,7 +89,7 @@ public class WindowManager {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					SaveLoadGame.saveGame();
+					SaveLoadGame.setToSave = true;
 				}catch(Exception ex) {
 					ex.printStackTrace();
 				}
@@ -100,7 +105,7 @@ public class WindowManager {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					SaveLoadGame.loadGame();
+					SaveLoadGame.setToLoad = true;
 				}catch(Exception ex) {
 					ex.printStackTrace();
 				}
@@ -121,15 +126,24 @@ public class WindowManager {
 		chartFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 		chart = new XYChart(200,200);
-		chart.addSeries(currentDisplay.toString(), new double[]{1d}, new double[]{1d});
+		chart.addSeries("basic", new double[]{1d}, new double[]{1d});
 		chartPanel = new XChartPanel<XYChart>(chart);
+		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        chartPanel.setBackground(Color.white);
 		chartFrame.add(chartPanel);
 		
 		chMenubar = new JMenuBar();
-		chartFrame.setJMenuBar(chMenubar);
+		
+		// XChart
+		// Create Chart
+		chart = QuickChart.getChart("Simple XChart Real-time Demo", "X", "Y", "b", new double[]{1.0, 2.0, 3.0}, new double[]{1.0, 2.0, 3.0});
+	 
+	    // Show it
+	    sw = new SwingWrapper<XYChart>(chart);
+	    sw.displayChart();
+
 		
 		dataTypes = new JMenu("Show Data");
-		chMenubar.add(dataTypes);
 		
 		num = new JMenuItem("Pop. Size");
 		food = new JMenuItem("Hunger");
@@ -141,6 +155,7 @@ public class WindowManager {
 		eatrate = new JMenuItem("Eating Speed");
 		fleerad = new JMenuItem("Flee Radius");
 		matemin = new JMenuItem("Mate Minimum");
+		
 		dataTypes.add(num);
 		dataTypes.add(food);
 		dataTypes.add(fova);
@@ -151,6 +166,10 @@ public class WindowManager {
 		dataTypes.add(eatrate);
 		dataTypes.add(fleerad);
 		dataTypes.add(matemin);
+		
+		chMenubar.add(dataTypes);
+		chartFrame.setJMenuBar(chMenubar);
+		
 		ChangeData buttonAction = new ChangeData();
 		num.addActionListener(buttonAction);
 		food.addActionListener(buttonAction);
@@ -163,19 +182,36 @@ public class WindowManager {
 		fleerad.addActionListener(buttonAction);
 		matemin.addActionListener(buttonAction);
 		
-		chartdata = new JTextArea();
-		chartdata.setSize(200, height);
-		//chartFrame.add(chartdata);
+		chartTextData = new JTextArea();
+		chartTextData.setSize(400, height);
+		//chartFrame.add(chartTextData);
 		chartFrame.repaint();
+		
+		chartFrame.pack();
 	}
 	
 	public void setChartText(String text) {
-		chartdata.setText(text);
+		chartTextData.setText(text);
 	}
 	
 	public void updateChart(String seriesName, float[] xAxis, float[] yAxis) {
+		double[] errorBars = new double[xAxis.length];
+		for(int i = 0; i < errorBars.length; i++) {
+			errorBars[i] = 0;
+		}
+		double[] xAxisDoub = new double[xAxis.length];
+		double[] yAxisDoub = new double[yAxis.length];
+		for(int i = 0; i < xAxis.length; i++) {
+			xAxisDoub[i] = (double) xAxis[i];
+			yAxisDoub[i] = (double) yAxis[i];
+			System.out.println(yAxis[i]);
+		}
+		chart.updateXYSeries("b", xAxisDoub, yAxisDoub, errorBars);
+		sw.repaintChart();
+
 		//chart.addSeries(seriesName, xAxis, yAxis);
-		chartFrame.repaint();
+		chartPanel.revalidate();
+		chartPanel.repaint();
 	}
 	
 	public Canvas getCanvas() {

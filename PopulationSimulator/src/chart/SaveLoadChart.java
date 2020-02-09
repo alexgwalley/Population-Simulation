@@ -76,7 +76,7 @@ public class SaveLoadChart {
 		}
 		for(String line : lines) {
 			String[] data = line.split(",");
-			if(!data[1].equals(specie)) continue;
+			if(data.length > 1 && !data[1].equals(specie)) continue;
 			out.add(data[index]);
 		}
 		String[] out2 = new String[out.toArray().length];

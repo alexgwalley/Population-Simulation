@@ -19,7 +19,7 @@ public class Food extends Entity {
 		species = spec;
 	}
 	
-	public Food(Vector pos, int f) {
+	public Food(Vector pos, float f) {
 		setPos(pos);
 		food = f;
 		species = "food";
