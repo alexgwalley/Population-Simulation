@@ -44,7 +44,8 @@ public class Animal extends Entity{
 		Vector viewPos = Game.camera.toViewPos(getPos().sub(new Vector(diam*0.5f, diam*0.5f)));
 		Vector eyePos = Game.camera.toViewPos(getPos().add(heading.scale(20)));
 		Vector actPos = Game.camera.toViewPos(getPos());
-		g.setColor(new Color(dna.getColor().getRed(), dna.getColor().getGreen(), dna.getColor().getBlue(), 254));
+		int alpha = Math.min(255, (int)(255*this.food/dna.getMatingMinimum()));
+		g.setColor( new Color(dna.getColor().getRed(), dna.getColor().getGreen(), dna.getColor().getBlue(), alpha) );
 		g.fillOval((int) (viewPos.get(0)), (int) (viewPos.get(1)), (int) (diam/Game.camera.getZoomAmount()), (int) (diam/Game.camera.getZoomAmount()));
 		// Draw outline
 		g.setColor(Color.BLACK);
@@ -81,7 +82,7 @@ public class Animal extends Entity{
 			heading = getVel().normalized();
 			
 			// Lose food from moving
-			this.food -= (dna.getMoveSpeed()*Game.getSimSpeed()*(0.005f))/20000f;
+			this.food -= (dna.getMoveSpeed()*Game.getSimSpeed()*(0.005f))/175f;
 			
 			if(this.food <= 0) this.die();
 			
