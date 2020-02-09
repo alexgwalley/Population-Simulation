@@ -205,7 +205,7 @@ public class Animal extends Entity{
 					System.out.println("Nom");
 				}
 			}else {
-				if(to.getMag() < dna.getRadius()) {
+				if(dna.getRadius()/2f < to.getMag() && to.getMag() < dna.getRadius()) {
 					eatFood(f);
 				}
 			}
