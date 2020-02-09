@@ -7,6 +7,7 @@ import java.util.Random;
 import generator.NameGenerator;
 import main.Game;
 import math.Vector;
+import sprite.Heart;
 
 public class Animal extends Entity{
 	
@@ -266,6 +267,11 @@ public class Animal extends Entity{
 		// Create new animal with dna
 		Animal a = new Animal(NameGenerator.newName(), this.getPos(), childDNA, 30); // Food should be the sum of the dna.matingLoss
 		Game.animals.add(a);
+		new Heart(getPos());
+		new Heart(getPos());
+		new Heart(getPos());
+		new Heart(getPos());
+		new Heart(getPos());
 		
 		// this.food -= dna.matingLoss
 		// partner.food -= partner.dna.matingLoss
