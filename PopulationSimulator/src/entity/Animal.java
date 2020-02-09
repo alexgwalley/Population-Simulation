@@ -14,7 +14,7 @@ public class Animal extends Entity{
 	private DNA dna;
 	private State state = State.SEEK_FOOD;
 	private String name = "";
-	private int timeAlive = 0;
+	private double timeAlive = 0;
 	
 	private int minMateAge = 400000;
 	
@@ -123,7 +123,7 @@ public class Animal extends Entity{
 		
 		this.revaluateState();
 		
-		timeAlive += Game.getSimSpeed();
+		timeAlive += Game.getSimSpeed()/1000;
 		
 		if(state == State.SEEK_FOOD) {
 			seekFood();
@@ -364,7 +364,7 @@ public class Animal extends Entity{
 		this.name = name;
 	}
 
-	public int getTimeAlive() {
+	public double getTimeAlive() {
 		return timeAlive;
 	}
 
