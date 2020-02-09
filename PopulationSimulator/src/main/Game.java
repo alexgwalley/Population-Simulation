@@ -153,7 +153,16 @@ public class Game implements Runnable {
 			
 		}
 		
-		for(Sprite sprite: sprites) sprite.update();
+		Iterator<Sprite> spriteIterator = sprites.iterator();
+		
+		// Render all Sprites
+		try {
+			while(spriteIterator.hasNext()) {
+				spriteIterator.next().update();
+			}
+		}catch (Exception e) {
+			
+		}
 		
 		//Check if the system needs to be saved or loaded.
 		//This is done so that saving and loading doesn't run into concurrent use errors.
@@ -247,7 +256,12 @@ public class Game implements Runnable {
 			}
 		}catch (Exception e) {}
 		
-		for(Sprite sprite:sprites) sprite.render(g);
+		Iterator<Sprite> spriteIterator = sprites.iterator();
+		try {
+			while(spriteIterator.hasNext()) {
+				spriteIterator.next().render(g);
+			}
+		}catch (Exception e) {}
 		
 		// Render simSpeed
 		g.setColor(new Color(200, 200, 200));

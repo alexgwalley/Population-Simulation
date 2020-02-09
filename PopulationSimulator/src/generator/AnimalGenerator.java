@@ -10,6 +10,7 @@ import entity.DNA;
 import entity.Species;
 import main.Game;
 import math.Vector;
+import sprite.Heart;
 
 public class AnimalGenerator {
 
@@ -49,6 +50,11 @@ public class AnimalGenerator {
 			Animal a = new Animal(pos, dna, foodAmt);
 			
 			Game.animals.add(a);
+			new Heart(pos);
+			new Heart(pos);
+			new Heart(pos);
+			new Heart(pos);
+			new Heart(pos);
 			
 			Game.animals.sort(new CustomAnimalComparator());
 			
