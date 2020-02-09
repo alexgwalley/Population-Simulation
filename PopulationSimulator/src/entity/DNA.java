@@ -125,9 +125,17 @@ public class DNA {
 			colorGreen = Math.max(0, colorGreen);
 		}
 		
-		HashMap<String, Integer> food = d1.getFood();
-		weight = PercentGenerator.newPercent();
-		
+		HashMap<String, Integer> food = new HashMap<String,Integer>();
+		for(String specie : d1.getFood().keySet()) {
+			weight = PercentGenerator.newPercent();
+			int value = (int) (weight*d1.getFood().get(specie)+(1-weight)*d2.getFood().get(specie));
+			if(rand.nextFloat() < 0.05*mutationRate) {
+				scale = PercentGenerator.relPercent(mutationRate);
+				value += scale;
+				value = Math.max(0, value);
+			}
+			food.put(specie, value);
+		}
 		
 		weight = PercentGenerator.newPercent();
 		float fieldOfViewAngle = (weight*d1.getFieldOfViewAngle()+(1-weight)*d2.getFieldOfViewAngle());
