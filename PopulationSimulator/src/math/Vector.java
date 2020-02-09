@@ -80,5 +80,28 @@ public class Vector {
 		return new Vector(out);
 	}
 	
+	public float getAngleDegrees() {
+		if(this.indices.length != 2) return -1000;
+		return (float)Math.toDegrees(Math.atan2(indices[1], indices[0]));
+	}
+	
+	public float getAngleRadians() {
+		if(this.indices.length != 2) return -1000;
+		return (float)Math.atan2(indices[1], indices[0]);
+	}
+	
+	public Vector rotateDegrees(float angle) {
+		angle = (float)Math.toRadians(angle);
+		float[] out = new float[indices.length];
+		out[0] = (float) (Math.cos(angle) * this.get(0) + Math.sin(angle) * this.get(0));
+		out[1] = (float) (Math.cos(angle) * this.get(1) - Math.sin(angle) * this.get(1));
+		return new Vector(out);
+	}
 
+	public float angleBetweenDegrees(Vector b) {
+		float n = this.dot(b);
+		n /= (this.getMag() * b.getMag());
+		n = (float) Math.acos(n);
+		return (float) Math.toDegrees(n);
+	}
 }

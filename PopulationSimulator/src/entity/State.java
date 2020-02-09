@@ -2,6 +2,6 @@ package entity;
 
 public enum State {
 	
-	FLEE, SEEK_FOOD, SEEK_MATE, EAT, DIE
+	FLEE, SEEK_FOOD, SEEK_MATE, EAT, DIE, MATING
 
 }
