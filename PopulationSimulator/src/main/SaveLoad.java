@@ -57,7 +57,7 @@ public class SaveLoad {
 	}
 	
 	private static void loadAnimals() throws IOException{
-		Game.animals = new TreeSet<>(new CustomAnimalComparator());
+		Game.animals = new ArrayList<>();
 		BufferedReader br = new BufferedReader(new FileReader("res/game1.sim"));
 		String line = "";
 		while((line = br.readLine()) != null) {

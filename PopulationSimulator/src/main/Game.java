@@ -3,19 +3,13 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import comparator.CustomAnimalComparator;
 import entity.Animal;
-import entity.DNA;
 import entity.Food;
 import generator.AnimalGenerator;
 import generator.FoodGenerator;
@@ -46,7 +40,7 @@ public class Game implements Runnable {
 	
 	// Simulation
 	public static ArrayList<Food> food = new ArrayList<>();
-	public static SortedSet<Animal> animals = new TreeSet<>(new CustomAnimalComparator());
+	public static ArrayList<Animal> animals = new ArrayList<>();
 	
 	private final static Vector[] bounds = {
 			new Vector(-500, -500),
@@ -104,6 +98,8 @@ public class Game implements Runnable {
 	private void startNew() {
 		foodGenerator.generateStartingSpawn();
 		animalGenerator.generateAnimals(5);
+		
+		System.out.println(animals);
 	}
 	
 	private void update() {
@@ -115,8 +111,11 @@ public class Game implements Runnable {
 		
 		foodGenerator.update();
 		
-		for(Animal a : animals) {
-			a.update();
+		Iterator<Animal> animalIterator = animals.iterator();
+		
+		// Render all Animals
+		while(animalIterator.hasNext()) {
+			animalIterator.next().update();
 		}
 	}
 	
@@ -151,9 +150,12 @@ public class Game implements Runnable {
 			f.render(g);
 		}
 		
+		Iterator<Animal> animalIterator = animals.iterator();
 		// Render all Animals
-		for(Animal a : animals) {
+		while(animalIterator.hasNext()) {
+			Animal a = animalIterator.next();
 			a.render(g);
+			//System.out.println(a);
 		}
 		
 		
