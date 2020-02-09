@@ -90,7 +90,7 @@ public class WindowManager {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					SaveLoadGame.saveGame();
+					SaveLoadGame.setToSave = true;
 				}catch(Exception ex) {
 					ex.printStackTrace();
 				}
@@ -106,7 +106,7 @@ public class WindowManager {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					SaveLoadGame.loadGame();
+					SaveLoadGame.setToLoad = true;
 				}catch(Exception ex) {
 					ex.printStackTrace();
 				}

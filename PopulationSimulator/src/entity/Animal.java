@@ -19,7 +19,7 @@ public class Animal extends Entity{
 	
 	private Animal chasedBy;
 	
-	public Animal(String name, Vector pos, DNA dna, int food) {
+	public Animal(String name, Vector pos, DNA dna, float food) {
 		this.name = name;
 		setPos(pos);
 		this.dna = dna;
@@ -28,7 +28,7 @@ public class Animal extends Entity{
 		this.heading = new Vector(rand.nextFloat(), rand.nextFloat()).normalized();
 	}
 	
-	public Animal(String name, Vector pos, Vector heading, DNA dna, int food) {
+	public Animal(String name, Vector pos, Vector heading, DNA dna, float food) {
 		this.name = name;
 		setPos(pos);
 		this.heading = heading;
@@ -36,7 +36,7 @@ public class Animal extends Entity{
 		this.food = food;
 	}
 	
-	public Animal(Vector pos, DNA dna, int food) {
+	public Animal(Vector pos, DNA dna, float food) {
 		this.name = NameGenerator.newName();
 		setPos(pos);
 		this.dna = dna;
@@ -45,7 +45,7 @@ public class Animal extends Entity{
 		this.heading = new Vector(rand.nextFloat(), rand.nextFloat()).normalized();
 	}
 	
-	public Animal(Vector pos, Vector heading, DNA dna, int food) {
+	public Animal(Vector pos, Vector heading, DNA dna, float food) {
 		this.name = NameGenerator.newName();
 		setPos(pos);
 		this.heading = heading;
