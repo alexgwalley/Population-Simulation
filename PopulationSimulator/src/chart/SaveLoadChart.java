@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import entity.Animal;
 import entity.DNA;
@@ -54,7 +55,9 @@ public class SaveLoadChart {
 	
 	public static String[] loadData(String specie, DataType d) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("res/chart.dna"));
-		String[] lines = (String[]) br.lines().toArray();
+		Object[] temp = br.lines().toArray();
+		String[] lines = new String[temp.length];
+		for(int i = 0; i<lines.length; i++) lines[i] = temp[i].toString();
 		ArrayList<String> out = new ArrayList<String>();
 		int index = 0;
 		switch(d) {
@@ -76,7 +79,9 @@ public class SaveLoadChart {
 			if(!data[1].equals(specie)) continue;
 			out.add(data[index]);
 		}
-		return (String[]) out.toArray();
+		String[] out2 = new String[out.toArray().length];
+		for(int i = 0; i<out2.length; i++) out2[i] = out.get(i);
+		return out2;
 	}
 
 }

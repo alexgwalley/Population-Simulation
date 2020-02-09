@@ -111,6 +111,7 @@ public class WindowManager {
 		chartFrame.setSize(200, height);
 		chartFrame.setLocationRelativeTo(frame);
 		chartFrame.setResizable(false);
+		chartFrame.setLayout(null);
 		
 		chMenubar = new JMenuBar();
 		chartFrame.setJMenuBar(chMenubar);
@@ -140,9 +141,9 @@ public class WindowManager {
 		dataTypes.add(matemin);
 		
 		chartdata = new JTextArea();
+		chartdata.setSize(200, height);
 		chartFrame.add(chartdata);
-		
-		chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		chartFrame.repaint();
 	}
 	
 	public void setChartText(String text) {

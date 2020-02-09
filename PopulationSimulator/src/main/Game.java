@@ -37,7 +37,7 @@ public class Game implements Runnable {
 	// Updating
 	private static float simSpeed;
 	public static Camera camera;
-	private long prevTime;
+	private long prevTime, prevTime2 = System.currentTimeMillis();
 	public static long dt = -1;
 	
 	// Simulation
@@ -118,6 +118,16 @@ public class Game implements Runnable {
 		// Render all Animals
 		while(animalIterator.hasNext()) {
 			animalIterator.next().update();
+		}
+
+		if(System.currentTimeMillis()-prevTime2 >= 1000) {
+			try {
+				SaveLoadChart.saveData();
+				System.out.println("Yes!");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			prevTime2+=1000;
 		}
 	}
 	
