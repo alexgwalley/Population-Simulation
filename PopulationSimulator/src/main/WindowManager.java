@@ -20,6 +20,8 @@ public class WindowManager {
 	private JMenuItem save;
 	private JMenuItem load;
 	
+	private JFrame chartFrame;
+	
 	private String title;
 	
 	private int width;
@@ -68,7 +70,7 @@ public class WindowManager {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					SaveLoad.saveGame();
+					SaveLoadGame.saveGame();
 				}catch(Exception ex) {
 					ex.printStackTrace();
 				}
@@ -84,7 +86,7 @@ public class WindowManager {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					SaveLoad.loadGame();
+					SaveLoadGame.loadGame();
 				}catch(Exception ex) {
 					ex.printStackTrace();
 				}
@@ -95,6 +97,14 @@ public class WindowManager {
 		frame.setJMenuBar(menubar);
 		
 		frame.pack();  //Resize to fit all components
+		
+		chartFrame = new JFrame("Chart");
+		chartFrame.setVisible(true);
+		chartFrame.setSize(200, height);
+		chartFrame.setLocationRelativeTo(frame);
+		chartFrame.setResizable(false);
+		
+		chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public Canvas getCanvas() {
