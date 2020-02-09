@@ -37,11 +37,10 @@ public class FoodGenerator {
 	private void spawn() {
 		Vector pos = new Vector(random.nextFloat(), random.nextFloat());
 		pos = pos.scale(Game.getWorldDimentions());
-		pos = pos.sub(Game.getWorldDimentions().scale((float) 0.5));
+		//pos = pos.sub(Game.getWorldDimentions().scale((float) 0.5));
 		
 		int index = Game.getChunkIndex(pos);
-		
-		
+		//System.out.println("Index: " + index);
 		
 		Food newFood = new Food(pos, 10);
 		Game.foodChunks[index].add(newFood);

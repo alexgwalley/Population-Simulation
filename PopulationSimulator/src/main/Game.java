@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.locationtech.jts.index.quadtree.Quadtree;
 
 import chart.DataType;
 import chart.SaveLoadChart;
@@ -52,10 +51,10 @@ public class Game implements Runnable {
 	public static ArrayList<Food>[] foodChunks = new ArrayList[numChunks];
 	
 	private final static Vector[] bounds = {
-			new Vector(-1000, -1000),
-			new Vector(1000, 1000)
+			new Vector(0, 0),
+			new Vector(2000, 2000)
 	};
-	private final static Vector worldDim = new Vector(2000, 2000);
+	final static Vector worldDim = new Vector(2000, 2000);
 	
 	private static FoodGenerator foodGenerator;
 	private static AnimalGenerator animalGenerator;
@@ -85,6 +84,10 @@ public class Game implements Runnable {
 	}
 	
 	private void init() {
+		
+		for(int i = 0; i < numChunks; i++) {
+			foodChunks[i] = new ArrayList<Food>();
+		}
 		
 		startTime = System.currentTimeMillis();
 		
@@ -215,8 +218,10 @@ public class Game implements Runnable {
 				boundsCamWidth, boundsCamHeight);
 		 
 		// Render all Food
-		for(Food f : food) {
-			f.render(g);
+		for(int i = 0; i < numChunks; i++) {
+			for(Food f : foodChunks[i]) {
+				f.render(g);
+			}
 		}
 		
 		Iterator<Animal> animalIterator = animals.iterator();
@@ -234,10 +239,18 @@ public class Game implements Runnable {
 	}
 	
 	public static int getChunkIndex(Vector v) {
-		int idX = (int)(worldDim.get(0)/v.get(0))*numChunks;
-		int idY = (int)(worldDim.get(1)/v.get(1))*numChunks;
-		
-		int index = idX + idY * numChunks;
+		v.add(new Vector());
+		int a = (int) Math.sqrt(numChunks);
+		int idX = (int)(a*v.get(0)/worldDim.get(0));
+		int idY = (int)(a*v.get(1)/worldDim.get(1));
+//		System.out.println("X: " + v.get(0));
+//		System.out.println("Y: " + v.get(1));
+//		System.out.println("Ratio: " + a*v.get(0)/worldDim.get(0));
+//		System.out.println("Ratio: " + a*v.get(1)/worldDim.get(1));
+//		System.out.println("A: " + a);
+//		System.out.println("Idx: " + idX);
+//		System.out.println("Idy: " + idY);
+		int index = idX + idY * a;
 		return index;
 	}
 
