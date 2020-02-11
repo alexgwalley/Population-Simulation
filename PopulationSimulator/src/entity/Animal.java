@@ -81,22 +81,36 @@ public class Animal extends Entity{
 		else
 			g.drawString(name, (int) viewPos.get(0) - dna.getRadius(), (int) viewPos.get(1) - 20);
 		
-		// Draw Arc
-
-//		g.setColor(Color.GRAY);
-//		Vector leftEnd = Game.camera.toViewPos(getPos().add(heading.scale(dna.getFieldOfViewRadius()).rotateDegrees(-dna.getFieldOfViewAngle()*0.5)));
-//		Vector rightEnd = Game.camera.toViewPos(getPos().add(heading.scale(dna.getFieldOfViewRadius())));
-//		g.drawLine((int)actPos.get(0), (int)actPos.get(1), (int)leftEnd.get(0), (int)leftEnd.get(1));
-//		g.drawLine((int)actPos.get(0), (int)actPos.get(1), (int)rightEnd.get(0), (int)rightEnd.get(1));
+		// Draw Arc TODO
 		
-//		float angleRight = (float) leftEnd.getAngleDegrees();
-//		g.setColor(new Color(255, 255, 255, 120));
-//		g.fillArc((int)(actPos.get(0)-dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()/2), (int)(actPos.get(1)-dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()/2), (int) (dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()), (int)(dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()), (int) (angleRight), (int) dna.getFieldOfViewAngle());
-
 		float angleRight = (float) (-(heading).getAngleDegrees()-dna.getFieldOfViewAngle()*0.5);
+		Vector leftAntenna = actPos.add( heading.rotateDegrees((float) (dna.getFieldOfViewAngle()*0.5)).scale(dna.getFieldOfViewAngle()/Game.camera.getZoomAmount()) );
+		Vector rightAntenna = actPos.add( heading.rotateDegrees((float) (-dna.getFieldOfViewAngle()*0.5)).scale(dna.getFieldOfViewAngle()/Game.camera.getZoomAmount()) );
+		
+		//To draw left and right Antennas
+//		g.setColor(new Color(255, 0, 255));
+//		g.drawLine((int)actPos.get(0), (int)actPos.get(1), (int)leftAntenna.get(0), (int)leftAntenna.get(1));
+//		g.drawLine((int)actPos.get(0), (int)actPos.get(1), (int)rightAntenna.get(0), (int)rightAntenna.get(1));
+		
 		g.setColor(new Color(200, 200, 200, 120));
-		g.fillArc((int)(actPos.get(0)-dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()/2), (int)(actPos.get(1)-dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()/2), (int) (dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()), (int)(dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()), (int) (angleRight), (int) dna.getFieldOfViewAngle());
+		int[] xPoints = {(int)actPos.get(0), (int)leftAntenna.get(0), (int)rightAntenna.get(0)};
+		int[] yPoints = {(int)actPos.get(1), (int)leftAntenna.get(1), (int)rightAntenna.get(1)};
+		g.fillPolygon(xPoints, yPoints, 3);
+		
+		
+//		g.fillArc((int)(actPos.get(0)-dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()/2), 
+//				(int)(actPos.get(1)-dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()/2), 
+//				(int) (dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()), 
+//				(int)(dna.getFieldOfViewRadius()/Game.camera.getZoomAmount()), 
+//				(int) (angleRight), 
+//				(int) dna.getFieldOfViewAngle());
 
+		
+		// Draw Flee Radius Circle
+		g.setColor(new Color(255, 0, 200, 175));
+		int fleeDiam = (int) ((int)dna.getFleeRadius()*2/Game.camera.getZoomAmount());
+		Vector fleePos = actPos.sub(new Vector((float) fleeDiam*0.5f, (float) fleeDiam*0.5f));
+		g.drawOval((int) fleePos.get(0), (int) fleePos.get(1), fleeDiam, fleeDiam);
 		
 		// Draw mating circle
 		if(state == State.SEEK_MATE || state == State.GOING_TO_MATE) {
@@ -155,7 +169,7 @@ public class Animal extends Entity{
 			
 			Vector to = a.getPos().sub(this.getPos());
 			float dist = to.getMag();
-			if(dist < dna.getFieldOfViewRadius() &&  to.angleBetweenDegrees(this.heading) < dna.getFieldOfViewAngle()*0.5) { // TODO: Check within sight
+			if(dist < dna.getFieldOfViewRadius()+a.dna.getRadius() &&  to.angleBetweenDegrees(this.heading) < dna.getFieldOfViewAngle()*0.5) { // TODO: Check within sight
 				return a;
 			}
 			
@@ -182,11 +196,12 @@ public class Animal extends Entity{
 	private Animal beingChased() {
 		for(Animal a : Game.animals) {
 			if(a == this) continue;
-			if(a.state != State.HUNTING) continue;
+			if(!a.dna.getFood().containsKey(dna.getSpecies().toString())) continue;
+			if(a.state != State.HUNTING && a.state != State.SEEK_FOOD) continue;
 			
 			Vector to = a.getPos().sub(this.getPos());
 			float dist = to.getMag();
-			if(dist < dna.getFleeRadius()-a.getDna().getRadius()) {
+			if(dist < dna.getFleeRadius()+a.getDna().getRadius()) {
 				return a;
 			}
 		}
@@ -261,7 +276,7 @@ public class Animal extends Entity{
 			if(a.dna.getSpecies() != this.dna.getSpecies()) continue;
 			
 			Vector to = a.getPos().sub(this.getPos());
-			if(to.getMag() < dna.getMatingMinimum()+dna.getRadius()+a.getDna().getRadius() &&
+			if(to.getMag() < dna.getMatingRadius()+dna.getRadius()+a.getDna().getRadius() &&
 					this.state !=  State.MATING &&
 					a.state != State.MATING) {
 				return a;

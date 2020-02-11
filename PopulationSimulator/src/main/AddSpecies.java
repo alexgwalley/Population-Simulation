@@ -55,7 +55,7 @@ public class AddSpecies extends JFrame {
 							put(Species.speciesList.get(i).toString(), Integer.parseInt(speciesTolerance[i].getText()));
 					}
 				};
-				DNA d = new DNA(s, new Color((int)colorRed.getNumber(), (int)colorGreen.getNumber(), (int)colorBlue.getNumber()), food, (float)fova.getNumber(), (int)fovr.getNumber(),(float)movespeed.getNumber(),(int)radius.getNumber(),(float)mutrate.getNumber(),(int)eatrate.getNumber(),(int)fleeradius.getNumber(),(int)matemin.getNumber());
+				DNA d = new DNA(s, new Color((int)colorRed.getNumber(), (int)colorGreen.getNumber(), (int)colorBlue.getNumber()), food, (float)fova.getNumber(), (int)fovr.getNumber(),(float)movespeed.getNumber(),(int)radius.getNumber(),(float)mutrate.getNumber(),(int)eatrate.getNumber(),(int)fleeradius.getNumber(),(int)matemin.getNumber(), 60);
 				AnimalGenerator.generateSpecies(s, 10);
 			}
 			

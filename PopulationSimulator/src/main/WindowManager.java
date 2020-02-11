@@ -144,7 +144,7 @@ public class WindowManager {
 		
 		chartFrame.setSize(300, height);
 		chartFrame.setLocationRelativeTo(frame);
-		chartFrame.setResizable(false);
+		chartFrame.setResizable(true);
 		chartFrame.setLayout(null);
 		chartFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
@@ -197,6 +197,7 @@ public class WindowManager {
 		checkBoxes.add(new JCheckBox("Eating Speed"));
 		checkBoxes.add(new JCheckBox("Flee Radius"));
 		checkBoxes.add(new JCheckBox("Mate Minimum"));
+		checkBoxes.add(new JCheckBox("Mating Radius"));
 		
 		checkBoxes.get(0).setVisible(false);
 		checkBoxes.get(1).setVisible(false);
@@ -245,7 +246,7 @@ public class WindowManager {
 		chartFrame.repaint();
 	}
 	
-	public void updateChart(float[] xAxis, List<String>[] dataSections, DataType... filters) {
+	public void updateChart(float[] xAxis, List<String>[] dataSections) {
 		
 		String[] names = null;
 
@@ -266,24 +267,13 @@ public class WindowManager {
 			for(int i = 0; i < dataSections.length; i++) { // sections (i == number of section)
 				if(i == 1) continue; // Don't look at species name
 				
-				
-//				for(int n = 0; n < 2; n++) {
-//					for(int m = 0; m < data[n].length; m++) {
-//						data[n][m] = 0;
-//					}
-//				}
 				double[][] data = new double[2][xAxis.length];
 				int dataIndex = 0;
 				for(int j = s; j < dataSections[i].size(); j++) {// entries (j == number in section)
 					
-					//if( !Species.speciesList.get(s).getName().equalsIgnoreCase( dataSections[1].get(j) ) ) continue;
 					// If not looking at correct species row, skip
-					if(!dataSections[1].get(j).equalsIgnoreCase( Species.speciesList.get(s).getName() )) {
-						
-//						System.out.println(dataSections[1].get(j));
-//						System.out.println(Species.speciesList.get(s).getName());
-						continue;
-					}
+					if(!dataSections[1].get(j).equalsIgnoreCase( Species.speciesList.get(s).getName() )) continue;
+				
 					
 					data[0][dataIndex] = xAxis[j];
 					data[1][dataIndex] = Double.parseDouble( dataSections[i].get(j) );
@@ -293,7 +283,7 @@ public class WindowManager {
 				
 				// Add new data to series
 				String seriesName = Species.speciesList.get(s).toString()+names[i];
-				//if(i == 2) System.out.println(seriesName);
+
 				int k = i;
 				if(speciesCheckboxes.size() <= s) continue;
 				if(checkBoxes.get(k).isSelected() == true && speciesCheckboxes.get(s).isSelected() == true) {
@@ -302,7 +292,6 @@ public class WindowManager {
 					chart.updateXYSeries(seriesName, new double[]{}, new double[]{}, null);
 				
 			}
-			
 		}
 				
 		sw.repaintChart();

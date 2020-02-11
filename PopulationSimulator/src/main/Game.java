@@ -1,3 +1,6 @@
+//TODO: Fix the species size and graph problem
+//TODO: Add new gene for matingRadius and make display and hunting use that
+
 package main;
 
 import java.awt.Color;
@@ -130,14 +133,14 @@ public class Game implements Runnable {
 	}
 
 	private void startNew() {
-		new Species("herbivore");
-		new Species("omnivore");
-		new Species("predator");
+//		new Species("herbivore");
+//		new Species("omnivore");
+//		new Species("predator");
 		
-		foodGenerator.generateStartingSpawn(100);
-		animalGenerator.generateHerbivores(10);
-		animalGenerator.generatePredators(5);
-		animalGenerator.generatePredators(2);
+		foodGenerator.generateStartingSpawn(150);
+		animalGenerator.generateHerbivores(75);
+		animalGenerator.generatePredators(20);
+		animalGenerator.generateOmnivores(10);
 		
 		SaveLoadChart.wipeData();
 		
@@ -188,11 +191,9 @@ public class Game implements Runnable {
 						DataType.RADIUS, DataType.MUTATIONRATE, DataType.EATINGRATE, 
 						DataType.FLEERADIUS, DataType.MATINGMIN};
 				
-				lines = SaveLoadChart.loadData(Species.getSpecies("herbivore"), filters);
+				lines = SaveLoadChart.loadData();
 				
 				float[][] allValues = new float[filters.length][lines[0].size()];
-				float[] times;
-				
 				for(int i = 0; i < filters.length; i++) {
 					for(int j = 0; j < lines[0].size(); j++) {
 						if(i == 1) continue;
@@ -205,7 +206,7 @@ public class Game implements Runnable {
 					}
 				}
 				
-				window.updateChart(allValues[0], lines, filters);
+				window.updateChart(allValues[0], lines);
 				
 			} catch (IOException e) {
 				e.printStackTrace();

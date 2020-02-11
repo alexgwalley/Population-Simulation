@@ -22,10 +22,11 @@ public class DNA {
 	private int eatingRate;
 	private int fleeRadius;
 	private int matingMinimum;
+	private int matingRadius;
 	
 	public DNA(Species species, Color color, HashMap<String, Integer> food, float fieldOfViewAngle, 
 			int fieldOfViewRadius, float moveSpeed, int radius, float mutationRate, int eatingRate, int fleeRadius, 
-			int matingMinimum) {
+			int matingMinimum, int matingRadius) {
 		this.species = species;
 		this.color = color;
 		this.food = food;
@@ -37,6 +38,7 @@ public class DNA {
 		this.eatingRate = eatingRate;
 		this.fleeRadius = fleeRadius;
 		this.matingMinimum = matingMinimum;
+		this.matingRadius = matingRadius;
 	}
 
 
@@ -82,6 +84,10 @@ public class DNA {
 
 	public int getMatingMinimum() {
 		return matingMinimum;
+	}
+	
+	public int getMatingRadius() {
+		return matingRadius;
 	}
 	
 	public static DNA combine(Animal a1, Animal a2) {
@@ -195,7 +201,16 @@ public class DNA {
 			matingMinimum += scale;
 			matingMinimum = Math.max(0, matingMinimum);
 		}
-		return new DNA(species, new Color((int)colorRed, (int)colorGreen, (int)colorBlue),food,fieldOfViewAngle,fieldOfViewRadius,moveSpeed,radius,mutationRate,eatingRate,fleeRadius,matingMinimum);
+		
+		weight = PercentGenerator.newPercent();
+		int matingRadius = (int) ((weight*d1.getMatingMinimum()+(1-weight)*d2.getMatingMinimum()));
+		if(rand.nextFloat() < 0.05*mutationRate) {
+			scale = PercentGenerator.relPercent(mutationRate);
+			matingRadius += scale;
+			matingRadius = Math.max(0, matingMinimum);
+		}
+		
+		return new DNA(species, new Color((int)colorRed, (int)colorGreen, (int)colorBlue),food,fieldOfViewAngle,fieldOfViewRadius,moveSpeed,radius,mutationRate,eatingRate,fleeRadius,matingMinimum,matingRadius);
 	}
 
 }

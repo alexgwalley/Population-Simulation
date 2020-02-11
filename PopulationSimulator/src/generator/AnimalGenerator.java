@@ -40,10 +40,11 @@ public class AnimalGenerator {
 			float moveSpeed = (float) (1 + PercentGenerator.relPercent(mutationRate)*0.15);
 			int radius = (int) (30 + PercentGenerator.relPercent(mutationRate));
 			int eatingRate = (int) (10 + PercentGenerator.relPercent(mutationRate));
-			int fleeRadius = (int) (radius + 15 + PercentGenerator.relPercent(mutationRate));
+			int fleeRadius = (int) (radius + 30 + PercentGenerator.relPercent(mutationRate));
 			int matingMinimum = 80;
+			int matingRadius = (int) (radius + 60 + PercentGenerator.relPercent(mutationRate));
 			
-			DNA dna = new DNA(Species.getSpecies("herbivore"), color, food, fieldOfViewAngle, fieldOfViewRadius, moveSpeed, radius, mutationRate, eatingRate, fleeRadius, matingMin);
+			DNA dna = new DNA(Species.getSpecies("herbivore"), color, food, fieldOfViewAngle, fieldOfViewRadius, moveSpeed, radius, mutationRate, eatingRate, fleeRadius, matingMin, matingRadius);
 			
 			float foodAmt = 30;
 			Animal a = new Animal(pos, dna, foodAmt);
@@ -83,10 +84,11 @@ public class AnimalGenerator {
 			float moveSpeed = (float) (1 + PercentGenerator.relPercent(mutationRate)*0.15);
 			int radius = (int) (30 + PercentGenerator.relPercent(mutationRate));
 			int eatingRate = (int) (10 + PercentGenerator.relPercent(mutationRate));
-			int fleeRadius = (int) (radius + 15 + PercentGenerator.relPercent(mutationRate));
+			int fleeRadius = (int) (radius + 30 + PercentGenerator.relPercent(mutationRate));
 			int matingMinimum = 80;
+			int matingRadius = (int) (radius + 60 + PercentGenerator.relPercent(mutationRate));
 			
-			DNA dna = new DNA(Species.getSpecies("omnivore"), color, food, fieldOfViewAngle, fieldOfViewRadius, moveSpeed, radius, mutationRate, eatingRate, fleeRadius, matingMin);
+			DNA dna = new DNA(Species.getSpecies("omnivore"), color, food, fieldOfViewAngle, fieldOfViewRadius, moveSpeed, radius, mutationRate, eatingRate, fleeRadius, matingMin, matingRadius);
 			
 			float foodAmt = 30;
 			Animal a = new Animal(pos, dna, foodAmt);
@@ -104,9 +106,7 @@ public class AnimalGenerator {
 		random = new Random();
 		
 		HashMap food = new HashMap();
-		food.put("food", 30);
-		//food.put("basic", 100);
-		//food.put("basic", 30);
+		food.put("food", 0);
 		food.put("herbivore", 100);
 		food.put("omnivore", 50);
 		for(int i = 0; i < num; i++) { 
@@ -130,8 +130,10 @@ public class AnimalGenerator {
 			int eatingRate = (int) (10 + PercentGenerator.relPercent(mutationRate));
 			int fleeRadius = (int) (radius + 30 + PercentGenerator.relPercent(mutationRate));
 			int matingMinimum = 80;
+			int matingRadius = (int) (radius + 60 + PercentGenerator.relPercent(mutationRate));
 			
-			DNA dna = new DNA(Species.getSpecies("predator"), color, food, fieldOfViewAngle, fieldOfViewRadius, moveSpeed, radius, mutationRate, eatingRate, fleeRadius, matingMin);
+			
+			DNA dna = new DNA(Species.getSpecies("predator"), color, food, fieldOfViewAngle, fieldOfViewRadius, moveSpeed, radius, mutationRate, eatingRate, fleeRadius, matingMin, matingRadius);
 			
 			float foodAmt = 30;
 			Animal a = new Animal(pos, dna, foodAmt);

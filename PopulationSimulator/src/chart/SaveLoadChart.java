@@ -48,6 +48,7 @@ public class SaveLoadChart {
 			int totEatRate = 0;
 			int totFleeRadius = 0;
 			int totMateMin = 0;
+			int totMatingRadiusMin = 0;
 			for(Animal a : Game.animals) {
 				DNA d = a.getDna();
 				if(!a.getDna().getSpecies().equals(specie)) continue;
@@ -61,25 +62,24 @@ public class SaveLoadChart {
 				totEatRate+=d.getEatingRate();
 				totFleeRadius+=d.getFleeRadius();
 				totMateMin+=d.getMatingMinimum();
+				totMatingRadiusMin+=d.getMatingRadius();
 			}
 			bw.write(time+","+specie+","+totNum+","+totFood/totNum+","+totFOVa/totNum+","+totFOVr/totNum+","+
 					totMoveSpeed/totNum+","+totRadius/totNum+","+totMutRate/totNum+","+totEatRate/totNum+","+
-					totFleeRadius/totNum+","+totMateMin/totNum);
+					totFleeRadius/totNum+","+totMateMin/totNum +","+totMatingRadiusMin/totNum);
 			bw.newLine();
 		}
 		bw.close();
 	}
 	
-	public static List<String>[] loadData(Species specie, DataType... fil) throws IOException {
+	public static List<String>[] loadData() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("res/chart.dna"));
 		Object[] temp = br.lines().toArray();
 		String[] lines = new String[temp.length];
 		for(int i = 0; i<lines.length; i++) lines[i] = temp[i].toString();
-		ArrayList<String> out = new ArrayList<String>();
-		List<DataType> filters = Arrays.asList(fil);
 
-		List<String>[] outData = new ArrayList[12];
-		for(int i = 0; i < fil.length; i++) {
+		List<String>[] outData = new ArrayList[13];
+		for(int i = 0; i < 13; i++) {
 			outData[i] = new ArrayList<String>();
 		}
 		
