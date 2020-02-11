@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -27,6 +30,7 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
 import chart.DataType;
+import chart.SaveLoadChart;
 import entity.Species;
 
 public class WindowManager {
@@ -48,6 +52,9 @@ public class WindowManager {
 	private XYChart chart;
 	private XChartPanel<XYChart> chartPanel;
 	private DataType currentDisplay = DataType.NUM;
+	
+	private List<JCheckBox> checkBoxes;
+	private List<JCheckBox> speciesCheckboxes;
 	
 	private String title;
 	
@@ -144,45 +151,62 @@ public class WindowManager {
 		chart = new XYChart(200,200);
 		chart.addSeries("herbivore", new double[]{1d}, new double[]{1d});
 		chartPanel = new XChartPanel<XYChart>(chart);
-		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        chartPanel.setBackground(Color.white);
-		//chartFrame.add(chartPanel);
+		//chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        //chartPanel.setBackground(Color.white);
+		
+		chart = QuickChart.getChart("Simple XChart Real-time Demo", "Time", "Value", "popNum", new double[] {0}, new double[] {0});
+		chartFrame.add(chartPanel);
 		
 		chMenubar = new JMenuBar();
 		
-		// XChart
-		// Create Chart
-		chart = QuickChart.getChart("Simple XChart Real-time Demo", "Time", "Value", "popNum", new double[] {0}, new double[] {0});
-		//XYSeries popNumSeries = new XYSeries("popNum", new double[] {0}, new double[] {0}, new double[] {0}, org.knowm.xchart.internal.series.Series.DataType.Number);
-		//XYSeries foodNumSeries = new XYSeries("foodNum", new double[] {0}, new double[] {0}, new double[] {0}, org.knowm.xchart.internal.series.Series.DataType.Number);
-	    //chart.addSeries("popNum", new double[] {0});
-	    chart.addSeries("foodNum", new double[] {0});
-	    chart.addSeries("fovrNum", new double[] {0});
-	    chart.addSeries("fovaNum", new double[] {0});
-	    chart.addSeries("moveSpeedNum", new double[] {0});
-	    chart.addSeries("radiusNum", new double[] {0});
-	    chart.addSeries("mutationRateNum", new double[] {0});
-	    chart.addSeries("eatRateNum", new double[] {0});
-	    chart.addSeries("fleeRateNum", new double[] {0});
-	    chart.addSeries("mateMinNum", new double[] {0});
-		// Show it
+		String[] names = null;
+		speciesCheckboxes = new ArrayList<>();
+		
+		try {
+			names = SaveLoadChart.getNames();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		for(Species spec : Species.speciesList) {
+			for(String name : names){
+				chart.addSeries(spec.toString()+name, new double[] {0});
+				//System.out.println("Series Name: " + spec.toString() + name);
+			}
+			speciesCheckboxes.add(new JCheckBox(spec.getName().toUpperCase()));
+		}
+		
+
 	    sw = new SwingWrapper<XYChart>(chart);
 	    sw.displayChart();
 
 	    
+	    JPanel p = new JPanel();
+	    
+	    checkBoxes = new ArrayList<>();
+	    checkBoxes.add(new JCheckBox("TIME"));				  // Not shown
+	    checkBoxes.add(new JCheckBox("SPECIES NAME FILLER")); // Not shown
+		checkBoxes.add(new JCheckBox("Pop. Size"));
+		checkBoxes.add(new JCheckBox("Satisfaction"));
+		checkBoxes.add(new JCheckBox("FOV Angle"));
+		checkBoxes.add(new JCheckBox("FOV Radius"));
+		checkBoxes.add(new JCheckBox("Move Speed"));
+		checkBoxes.add(new JCheckBox("Size"));
+		checkBoxes.add(new JCheckBox("Mutation Rate"));
+		checkBoxes.add(new JCheckBox("Eating Speed"));
+		checkBoxes.add(new JCheckBox("Flee Radius"));
+		checkBoxes.add(new JCheckBox("Mate Minimum"));
 		
-		dataTypes = new JMenu("Show Data");
+		checkBoxes.get(0).setVisible(false);
+		checkBoxes.get(1).setVisible(false);
+		for(JCheckBox box : speciesCheckboxes) {
+			p.add(box);
+		}
 		
-		num = new JCheckBox("Pop. Size");
-		food = new JCheckBox("Hunger");
-		fova = new JCheckBox("FOV Angle");
-		fovr = new JCheckBox("FOV Radius");
-		movespeed = new JCheckBox("Move Speed");
-		radius = new JCheckBox("Size");
-		mutrate = new JCheckBox("Mutation Rate");
-		eatrate = new JCheckBox("Eating Speed");
-		fleerad = new JCheckBox("Flee Radius");
-		matemin = new JCheckBox("Mate Minimum");
+		for(JCheckBox box : checkBoxes) {
+			p.add(box);
+		}
 		
 		l = new DefaultListModel<String>();
 		for(int i = 0; i < Species.speciesList.size(); i++)
@@ -190,32 +214,13 @@ public class WindowManager {
 		speciesOptions = new JList<String>(l);
 		
 		addSpecies = new JButton("Add Species");
-		
 		chartFrame.add(speciesOptions);
-		
-		num.setSelected(true);
-		
-		JPanel p = new JPanel();
-		
+
+			
 		chartFrame.setLayout(new GridLayout());
 		
-		p.add(num);
-		p.add(fova);
-		p.add(food);
-		p.add(fovr);
-		p.add(movespeed);
-		p.add(radius);
-		p.add(mutrate);
-		p.add(eatrate);
-		p.add(fleerad);
-		p.add(matemin);
-		
-		
 		chartFrame.add(p);
-		
-		
-		chartFrame.show();
-		chMenubar.add(dataTypes);
+		chartFrame.setVisible(true);
 	}
 	
 	public void setChartText(String text) {
@@ -229,112 +234,53 @@ public class WindowManager {
 		chartFrame.repaint();
 	}
 	
-	public void updateChart(float[] xAxis, float[][] yAxis, DataType... filters) {
-		double[] errorBars = new double[xAxis.length];
-		for(int i = 0; i < errorBars.length; i++) {
-			errorBars[i] = 0;
-		}
+	public void updateChart(float[] xAxis, List<String>[] dataSections, DataType... filters) {
 		
-		double[][] popNum = new double[2][xAxis.length];
-		double[][] foodNum = new double[2][xAxis.length];
-		double[][] fovaNum = new double[2][xAxis.length];
-		double[][] fovrNum = new double[2][xAxis.length];
-		double[][] moveSpeedNum = new double[2][xAxis.length];
-		double[][] radiusNum = new double[2][xAxis.length];
-		double[][] mutationRateNum = new double[2][xAxis.length];
-		double[][] eatingRateNum = new double[2][xAxis.length];
-		double[][] fleeRadiusNum = new double[2][xAxis.length];
-		double[][] matingMinNum = new double[2][xAxis.length];
-		
-		for(int i = 0; i < xAxis.length; i++) {
-			popNum[0][i] = (double) xAxis[i];
-			popNum[1][i] = (double) yAxis[2][i];
-			
-			foodNum[0][i] = (double) xAxis[i];
-			foodNum[1][i] = (double) yAxis[3][i];
-			
-			fovaNum[0][i] = (double) xAxis[i];
-			fovaNum[1][i] = (double) yAxis[4][i];
-			
-			fovrNum[0][i] = (double) xAxis[i];
-			fovrNum[1][i] = (double) yAxis[5][i];
+		String[] names = null;
 
-			moveSpeedNum[0][i] = (double) xAxis[i];
-			moveSpeedNum[1][i] = (double) yAxis[6][i];
-			
-			radiusNum[0][i] = (double) xAxis[i];
-			radiusNum[1][i] = (double) yAxis[7][i];
-			
-			mutationRateNum[0][i] = (double) xAxis[i];
-			mutationRateNum[1][i] = (double) yAxis[8][i];
-			
-			eatingRateNum[0][i] = (double) xAxis[i];
-			eatingRateNum[1][i] = (double) yAxis[9][i];
-			
-			fleeRadiusNum[0][i] = (double) xAxis[i];
-			fleeRadiusNum[1][i] = (double) yAxis[10][i];
-			
-			matingMinNum[0][i] = (double) xAxis[i];
-			matingMinNum[1][i] = (double) yAxis[11][i];
-			
+		try {
+			names = SaveLoadChart.getNames();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return;
 		}
 		
-		
-		if(num.isSelected())
-			chart.updateXYSeries("popNum", popNum[0], popNum[1], null);
-		else
-			chart.updateXYSeries("popNum", new double[]{0}, new double[]{0}, null);
-		
-		if(food.isSelected())
-			chart.updateXYSeries("foodNum", foodNum[0], foodNum[1], null);
-		else
-			chart.updateXYSeries("foodNum", new double[]{}, new double[]{}, null);
-		
-		if(fova.isSelected())
-			chart.updateXYSeries("fovaNum", fovaNum[0], fovaNum[1], null);
-		else
-			chart.updateXYSeries("fovaNum", new double[]{}, new double[]{}, null);
-		
-		if(fovr.isSelected())
-			chart.updateXYSeries("fovrNum", fovrNum[0], fovrNum[1], null);
-		else
-			chart.updateXYSeries("fovrNum", new double[]{}, new double[]{}, null);
-		
-		if(movespeed.isSelected())
-			chart.updateXYSeries("moveSpeedNum", moveSpeedNum[0], moveSpeedNum[1], null);
-		else
-			chart.updateXYSeries("moveSpeedNum", new double[]{}, new double[]{}, null);
-		
-		if(radius.isSelected())
-			chart.updateXYSeries("radiusNum", radiusNum[0], radiusNum[1], null);
-		else
-			chart.updateXYSeries("radiusNum", new double[]{}, new double[]{}, null);
-		
-		if(mutrate.isSelected())
-			chart.updateXYSeries("mutationRateNum", mutationRateNum[0], mutationRateNum[1], null);
-		else
-			chart.updateXYSeries("mutationRateNum", new double[]{}, new double[]{}, null);
-		
-		if(eatrate.isSelected())
-			chart.updateXYSeries("eatRateNum", eatingRateNum[0], eatingRateNum[1], null);
-		else
-			chart.updateXYSeries("eatRateNum", new double[]{}, new double[]{}, null);
-		
-		if(fleerad.isSelected())
-			chart.updateXYSeries("fleeRateNum", fleeRadiusNum[0], fleeRadiusNum[1], null);
-		else
-			chart.updateXYSeries("fleeRateNum", new double[]{}, new double[]{}, null);
-		
-		if(matemin.isSelected())
-			chart.updateXYSeries("mateMinNum", matingMinNum[0], matingMinNum[1], null);
-		else
-			chart.updateXYSeries("mateMinNum", new double[]{}, new double[]{}, null);
-		
-		
+		for(int s = 0; s < Species.speciesList.size(); s++) {// Loop through species
+			
+			for(int i = 0; i < dataSections.length; i++) { // sections (i == number of section)
+				if(i == 1) continue; // Don't look at species name
+				
+				double[][] data = new double[2][xAxis.length/3];
+				int dataIndex = 0;
+				for(int j = s; j < dataSections[i].size(); j+=Species.speciesList.size()) {// entries (j == number in section)
+					
+					//if( !Species.speciesList.get(s).getName().equalsIgnoreCase( dataSections[1].get(j) ) ) continue;
+					// If not looking at correct species row, skip
+//					if(!dataSections[1].get(j).equalsIgnoreCase( Species.speciesList.get(s).getName() )) {
+//						continue;
+//					}
+					
+					data[0][dataIndex] = xAxis[j];
+					data[1][dataIndex] = Double.parseDouble( dataSections[i].get(j) );
+					dataIndex ++;
+				}
+				
+				
+				// Add new data to series
+				String seriesName = Species.speciesList.get(s).toString()+names[i];
+				//if(i == 2) System.out.println(seriesName);
+				int k = i;
+				if(checkBoxes.get(k).isSelected() == true && speciesCheckboxes.get(s).isSelected() == true) {
+					chart.updateXYSeries(seriesName, data[0], data[1], null);
+				}else 
+					chart.updateXYSeries(seriesName, new double[]{}, new double[]{}, null);
+				
+			}
+			
+		}
+				
 		sw.repaintChart();
 
-
-		//chart.addSeries(seriesName, xAxis, yAxis);
 		chartPanel.revalidate();
 		chartPanel.repaint();
 	}
@@ -349,24 +295,6 @@ public class WindowManager {
 	
 	public JFrame getFrame() {
 		return frame;
-	}
-	
-	private class ChangeData implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == num) {currentDisplay = DataType.NUM;}
-			if(e.getSource() == food) {currentDisplay = DataType.FOOD;}
-			if(e.getSource() == fova) {currentDisplay = DataType.FOVA;}
-			if(e.getSource() == fovr) {currentDisplay = DataType.FOVR;}
-			if(e.getSource() == movespeed) {currentDisplay = DataType.MOVESPEED;}
-			if(e.getSource() == radius) {currentDisplay = DataType.RADIUS;}
-			if(e.getSource() == mutrate) {currentDisplay = DataType.MUTATIONRATE;}
-			if(e.getSource() == eatrate) {currentDisplay = DataType.EATINGRATE;}
-			if(e.getSource() == fleerad) {currentDisplay = DataType.FLEERADIUS;}
-			if(e.getSource() == matemin) {currentDisplay = DataType.MATINGMIN;}
-		}
-		
 	}
 	
 }

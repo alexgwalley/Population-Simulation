@@ -50,12 +50,10 @@ public class AnimalGenerator {
 			
 			Game.animals.add(a);
 			new Heart(pos);
-<<<<<<< HEAD
 //			new Heart(pos);
 //			new Heart(pos);
 //			new Heart(pos);
 //			new Heart(pos);
-=======
 			
 			Game.animals.sort(new CustomAnimalComparator());
 			
@@ -92,7 +90,7 @@ public class AnimalGenerator {
 			int fleeRadius = (int) (radius + 15 + PercentGenerator.relPercent(mutationRate));
 			int matingMinimum = 80;
 			
-			DNA dna = new DNA(Species.getSpecies("predator"), color, food, fieldOfViewAngle, fieldOfViewRadius, moveSpeed, radius, mutationRate, eatingRate, fleeRadius, matingMin);
+			DNA dna = new DNA(Species.getSpecies("omnivore"), color, food, fieldOfViewAngle, fieldOfViewRadius, moveSpeed, radius, mutationRate, eatingRate, fleeRadius, matingMin);
 			
 			float foodAmt = 30;
 			Animal a = new Animal(pos, dna, foodAmt);

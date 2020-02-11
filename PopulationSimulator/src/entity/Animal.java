@@ -209,14 +209,11 @@ public class Animal extends Entity{
 			
 			if(f instanceof Animal) {
 				state = State.HUNTING;
-				if(to.getMag() < dna.getRadius()+((Animal) f).getDna().getRadius()) {
+				if(to.getMag() < dna.getRadius()+((Animal) f).getDna().getRadius()) 
 					eatFood(f);
-					System.out.println("Nom");
-				}
 			}else {
-				if(dna.getRadius()/2f < to.getMag() && to.getMag() < dna.getRadius()) {
+				if(dna.getRadius()/2f < to.getMag() && to.getMag() < dna.getRadius()) 
 					eatFood(f);
-				}
 			}
 		}
 	}

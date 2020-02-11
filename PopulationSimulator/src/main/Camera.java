@@ -174,11 +174,11 @@ public class Camera implements MouseMotionListener, MouseWheelListener, MouseInp
 			
 				Vector diff = mousePos.sub(viewPos);
 				
-				System.out.printf(" ( %f, %f ) dist: %f \n", viewPos.get(0), viewPos.get(1), diff.getMag());
+				//System.out.printf(" ( %f, %f ) dist: %f \n", viewPos.get(0), viewPos.get(1), diff.getMag());
 				
 				if(diff.getMag() < a.getDna().getRadius()) {
 					followAnimal(a);
-					System.out.println("Clicked on animal");
+					//System.out.println("Clicked on animal");
 					break;
 				}
 			}

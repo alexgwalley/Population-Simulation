@@ -95,6 +95,9 @@ public class Game implements Runnable {
 	}
 	
 	private void init() {
+		new Species("herbivore");
+		new Species("omnivore");
+		new Species("predator");
 		
 		for(int i = 0; i < numChunks; i++) {
 			foodChunks[i] = new ArrayList<Food>();
@@ -127,19 +130,15 @@ public class Game implements Runnable {
 	}
 	
 	private void startNew() {		
-		new Species("basic");
-		new Species("predator");
+		//new Species("basic");
 		
 		foodGenerator.generateStartingSpawn(100);
-		animalGenerator.generateBasics(18);
-		new Species("herbivore");
-		new Species("omnivore");
-		new Species("predator");
 		
-		foodGenerator.generateStartingSpawn();
-		animalGenerator.generateHerbivores(10);
-		animalGenerator.generatePredators(5);
-		animalGenerator.generatePredators(2);
+		
+		//foodGenerator.generateStartingSpawn();
+		animalGenerator.generateHerbivores(20);
+		animalGenerator.generatePredators(20);
+		animalGenerator.generateOmnivores(20);
 		
 		SaveLoadChart.wipeData();
 		
@@ -209,13 +208,14 @@ public class Game implements Runnable {
 						if(i == 1) continue;
 						try {
 							allValues[i][j] = Float.parseFloat(lines[i].get(j));
+							//System.out.println(allValues[0][j]);
 						}catch (Exception e){
 							System.out.println("Error Parsing: " + lines[i].get(j) + " i: " + i);
 						}
 					}
 				}
 				
-				window.updateChart(allValues[0], allValues, filters);
+				window.updateChart(allValues[0], lines, filters);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -305,7 +305,7 @@ public class Game implements Runnable {
 		int x = 0;
 		int y = 0;
 		for(int i = 0; i < 5; i++) {
-			leaderboard.add(new LeaderboardButton(null, i+1, x, y, 100, 30));
+			leaderboard.add(new LeaderboardButton(null, i+1, x, y, 200, 30));
 			y += 30;
 		}
 	}

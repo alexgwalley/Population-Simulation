@@ -78,26 +78,27 @@ public class SaveLoadChart {
 		ArrayList<String> out = new ArrayList<String>();
 		List<DataType> filters = Arrays.asList(fil);
 
-		List<String>[] outData = new ArrayList[fil.length];
+		List<String>[] outData = new ArrayList[12];
 		for(int i = 0; i < fil.length; i++) {
 			outData[i] = new ArrayList<String>();
 		}
 		
-		for(String line : lines) {
-			String[] data = line.split(",");
+		for(int i = 0; i < lines.length; i++) {
+			String[] data = lines[i].split(",");
 			
-			int index = 0;
+			//int index = 0;
 			for(int j = 0; j < data.length; j++) {
-				if(data.length > 1 && !data[1].equals(specie.toString())) continue;
-				if(filters.contains(DataType.valueOf(j))) {
-					outData[index].add(data[j]);
-					index += 1;
-				}
-//				out.add(data[index]);
+				outData[j].add(data[j]);
 			}
 		}
 
 		return outData;
+	}
+	
+	public static String[] getNames() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("res/DNAHelp.dna"));
+		String[] items = br.readLine().split(",");
+		return items;		
 	}
 
 }
