@@ -50,11 +50,7 @@ public class AnimalGenerator {
 			
 			Game.animals.add(a);
 			new Heart(pos);
-//			new Heart(pos);
-//			new Heart(pos);
-//			new Heart(pos);
-//			new Heart(pos);
-			
+
 			Game.animals.sort(new CustomAnimalComparator());
 			
 			System.out.println(Game.animals);
@@ -139,6 +135,25 @@ public class AnimalGenerator {
 			
 			float foodAmt = 30;
 			Animal a = new Animal(pos, dna, foodAmt);
+			
+			Game.animals.add(a);
+			new Heart(pos);
+			
+			Game.animals.sort(new CustomAnimalComparator());
+			
+			System.out.println(Game.animals);
+		}
+	}
+	
+	public static void generateSpecies(Species species, int num) {
+		Random random = new Random();
+		
+		for(int i = 0; i < num; i++) { 
+			Vector pos = new Vector(random.nextFloat(), random.nextFloat());
+			pos = pos.scale(Game.getWorldDimentions());
+			
+			float foodAmt = 30;
+			Animal a = new Animal(pos, species.baseDNA, 50);
 			
 			Game.animals.add(a);
 			new Heart(pos);

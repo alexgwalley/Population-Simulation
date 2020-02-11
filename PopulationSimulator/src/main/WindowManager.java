@@ -218,6 +218,27 @@ public class WindowManager {
 
 			
 		chartFrame.setLayout(new GridLayout());
+
+		p.add(num);
+		p.add(fova);
+		p.add(food);
+		p.add(fovr);
+		p.add(movespeed);
+		p.add(radius);
+		p.add(mutrate);
+		p.add(eatrate);
+		p.add(fleerad);
+		p.add(matemin);
+		p.add(addSpecies);
+		
+		addSpecies.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddSpecies();
+			}
+			
+		});
 		
 		chartFrame.add(p);
 		chartFrame.setVisible(true);

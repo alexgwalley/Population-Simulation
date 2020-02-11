@@ -128,17 +128,16 @@ public class Game implements Runnable {
 		foodGenerator.play();
 		paused = false; 
 	}
-	
-	private void startNew() {		
-		//new Species("basic");
+
+	private void startNew() {
+		new Species("herbivore");
+		new Species("omnivore");
+		new Species("predator");
 		
 		foodGenerator.generateStartingSpawn(100);
-		
-		
-		//foodGenerator.generateStartingSpawn();
-		animalGenerator.generateHerbivores(20);
-		animalGenerator.generatePredators(20);
-		animalGenerator.generateOmnivores(20);
+		animalGenerator.generateHerbivores(10);
+		animalGenerator.generatePredators(5);
+		animalGenerator.generatePredators(2);
 		
 		SaveLoadChart.wipeData();
 		
