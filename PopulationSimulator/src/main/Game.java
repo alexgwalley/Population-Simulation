@@ -176,15 +176,6 @@ public class Game implements Runnable {
 			
 		}
 		
-		//Check if the system needs to be saved or loaded.
-		//This is done so that saving and loading doesn't run into concurrent use errors.
-	
-//		try {
-//			if(SaveLoadGame.setToSave) SaveLoadGame.saveGame();
-//			if(SaveLoadGame.setToLoad) SaveLoadGame.loadGame();
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
 
 		if(System.currentTimeMillis()-prevTime2 >= 1000) {
 			

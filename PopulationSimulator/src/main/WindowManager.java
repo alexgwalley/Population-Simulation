@@ -219,17 +219,7 @@ public class WindowManager {
 			
 		chartFrame.setLayout(new GridLayout());
 
-		p.add(num);
-		p.add(fova);
-		p.add(food);
-		p.add(fovr);
-		p.add(movespeed);
-		p.add(radius);
-		p.add(mutrate);
-		p.add(eatrate);
-		p.add(fleerad);
-		p.add(matemin);
-		p.add(addSpecies);
+
 		
 		addSpecies.addActionListener(new ActionListener() {
 
@@ -259,6 +249,11 @@ public class WindowManager {
 		
 		String[] names = null;
 
+		if(xAxis.length < Species.speciesList.size()) return;
+		if(xAxis == null) return;
+		
+		//System.out.println(xAxis.length);
+		
 		try {
 			names = SaveLoadChart.getNames();
 		} catch (IOException e1) {
@@ -271,15 +266,24 @@ public class WindowManager {
 			for(int i = 0; i < dataSections.length; i++) { // sections (i == number of section)
 				if(i == 1) continue; // Don't look at species name
 				
-				double[][] data = new double[2][xAxis.length/3];
+				
+//				for(int n = 0; n < 2; n++) {
+//					for(int m = 0; m < data[n].length; m++) {
+//						data[n][m] = 0;
+//					}
+//				}
+				double[][] data = new double[2][xAxis.length];
 				int dataIndex = 0;
-				for(int j = s; j < dataSections[i].size(); j+=Species.speciesList.size()) {// entries (j == number in section)
+				for(int j = s; j < dataSections[i].size(); j++) {// entries (j == number in section)
 					
 					//if( !Species.speciesList.get(s).getName().equalsIgnoreCase( dataSections[1].get(j) ) ) continue;
 					// If not looking at correct species row, skip
-//					if(!dataSections[1].get(j).equalsIgnoreCase( Species.speciesList.get(s).getName() )) {
-//						continue;
-//					}
+					if(!dataSections[1].get(j).equalsIgnoreCase( Species.speciesList.get(s).getName() )) {
+						
+//						System.out.println(dataSections[1].get(j));
+//						System.out.println(Species.speciesList.get(s).getName());
+						continue;
+					}
 					
 					data[0][dataIndex] = xAxis[j];
 					data[1][dataIndex] = Double.parseDouble( dataSections[i].get(j) );
@@ -291,6 +295,7 @@ public class WindowManager {
 				String seriesName = Species.speciesList.get(s).toString()+names[i];
 				//if(i == 2) System.out.println(seriesName);
 				int k = i;
+				if(speciesCheckboxes.size() <= s) continue;
 				if(checkBoxes.get(k).isSelected() == true && speciesCheckboxes.get(s).isSelected() == true) {
 					chart.updateXYSeries(seriesName, data[0], data[1], null);
 				}else 
